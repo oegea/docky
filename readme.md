@@ -2,7 +2,7 @@
 
 This is a set of web services to use Passager Password Manager within an organization, enabling sharing capabilities and other interesting features.
 
-## Reasons to build a service
+## Reasons to build this
 
 This is a rapidly-developed service. It's unique mission is to replace firebase as the default backend for passager, an open source password manager. 
 
