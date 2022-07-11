@@ -26,41 +26,66 @@ const handleEmailVerificationRequest = async (req, res, mongoDbClient) => {
     }
   
     try {
-      const number = generateValidationNumber();
-      await sendEmail({
-        to: body.email,
-        subject: 'Pass Auth - Reset Password',
-        text: `
-          Hello,
+        const number = generateValidationNumber();
+        // select database 
+        const database = mongoDbClient.db('pass-authentication');
 
-          Your code to identify on Passager is ${number}.
+        const createdAt = new Date(Date.now());
+        const collection = database.collection('emailVerification');
 
-          Thank you for using Passager.
-
-          This e-mail has been sent by ${process.env.COMMON_ORGANIZATION_NAME}. Passager is an open source password manager. Passager developers might not have any kind of relation with ${process.env.COMMON_ORGANIZATION_NAME}.
-  
-          --
-  
-          Hola,
-
-          Tu código para identificarte en Passager es ${number}.
-
-          Gracias por usar Passager.
-
-          Este correo electrónico ha sido enviado por ${process.env.COMMON_ORGANIZATION_NAME}. Passager es una aplicación de gestión de contraseñas de código abierto. Los desarrolladores de Passager pueden no estar relacionados con ${process.env.COMMON_ORGANIZATION_NAME}.
-        `
-      })
+        try{
+            await collection.deleteMany({
+                email: body.email
+            });
     
-      success({
-        res,
-        message: 'Validation e-mail sent',
-      });
+            const result = await collection.insertOne({
+                email: body.email,
+                number,
+                createdAt
+            });
+        }catch(e) {
+            return error({
+                res,
+                message: 'Failed to insert email verification request',
+                httpCode: 500
+            });
+        }
+
+
+        await sendEmail({
+            to: body.email,
+            subject: 'Pass Auth - Reset Password',
+            text: `
+                Hello,
+
+                Your code to identify on Passager is ${number}.
+
+                Thank you for using Passager.
+
+                This e-mail has been sent by ${process.env.COMMON_ORGANIZATION_NAME}. Passager is an open source password manager. Passager developers might not have any kind of relation with ${process.env.COMMON_ORGANIZATION_NAME}.
+
+                --
+
+                Hola,
+
+                Tu código para identificarte en Passager es ${number}.
+
+                Gracias por usar Passager.
+
+                Este correo electrónico ha sido enviado por ${process.env.COMMON_ORGANIZATION_NAME}. Passager es una aplicación de gestión de contraseñas de código abierto. Los desarrolladores de Passager pueden no estar relacionados con ${process.env.COMMON_ORGANIZATION_NAME}.
+            `
+        })
+
+        success({
+            res,
+            message: 'Validation e-mail sent',
+        });
     } catch(e) {
-      console.error(e);
-      error({
-        res,
-        message: 'Error sending email',
-      });
+        console.error(e);
+        error({
+            res,
+            message: 'Error sending email',
+        });
     }
   }
 module.exports = handleEmailVerificationRequest;
