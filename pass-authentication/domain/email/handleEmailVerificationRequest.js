@@ -5,9 +5,9 @@ const sendEmail = require('../email/sendEmail.js');
 const generateValidationNumber = require('../number/generateValidationNumber.js');
 
 const handleEmailVerificationRequest = async (req, res, mongoDbClient) => {
-    const {body} = req;
+    const {params} = req;
   
-    if (!body || !body.email) {
+    if (!params || !params.email) {
       return error({
         res, 
         message: 'Email is required',
@@ -15,7 +15,7 @@ const handleEmailVerificationRequest = async (req, res, mongoDbClient) => {
       });
     }
   
-    const validateResult = await validateEmail(body.email);
+    const validateResult = await validateEmail(params.email);
   
     if (!validateResult) {
       return error({
@@ -35,11 +35,11 @@ const handleEmailVerificationRequest = async (req, res, mongoDbClient) => {
 
         try{
             await collection.deleteMany({
-                email: body.email
+                email: params.email
             });
     
             const result = await collection.insertOne({
-                email: body.email,
+                email: params.email,
                 number,
                 createdAt
             });
@@ -53,8 +53,8 @@ const handleEmailVerificationRequest = async (req, res, mongoDbClient) => {
 
 
         await sendEmail({
-            to: body.email,
-            subject: 'Pass Auth - Reset Password',
+            to: params.email,
+            subject: `Please verify your e-mail to use ${process.env.COMMON_ORGANIZATION_NAME}'s Passager`,
             text: `
                 Hello,
 
