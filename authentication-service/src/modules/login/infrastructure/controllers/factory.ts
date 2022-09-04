@@ -1,9 +1,8 @@
-import {StartLoginController} from "./StartLoginController"
+import { BasicController } from '../../../basic/infrastructure/controllers/BasicController'
+import { StartLoginController } from './StartLoginController'
+import { ValidateLoginController } from './ValidateLoginController'
 
-class LoginControllersFactory {
-    static startLoginController(req, res) {
-        return new StartLoginController(req, res)
-    }
-}
+const startLoginController = (req, res): BasicController => new StartLoginController(req, res)
+const validateLoginController = (req, res): BasicController => new ValidateLoginController(req, res)
 
-export {LoginControllersFactory}
+export { startLoginController, validateLoginController }
