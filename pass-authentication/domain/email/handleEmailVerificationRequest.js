@@ -54,25 +54,25 @@ const handleEmailVerificationRequest = async (req, res, mongoDbClient) => {
 
         await sendEmail({
             to: params.email,
-            subject: `Please verify your e-mail to use ${process.env.COMMON_ORGANIZATION_NAME}'s Passager`,
+            subject: `Please verify your e-mail to use ${process.env.COMMON_APP_NAME}`,
             text: `
                 Hello,
 
-                Your code to identify on Passager is ${number}.
+                Your code to identify on ${process.env.COMMON_APP_NAME} is ${number}.
 
-                Thank you for using Passager.
+                Thank you for using ${process.env.COMMON_APP_NAME}.
 
-                This e-mail has been sent by ${process.env.COMMON_ORGANIZATION_NAME}. Passager is an open source password manager. Passager developers might not have any kind of relation with ${process.env.COMMON_ORGANIZATION_NAME}.
+                This e-mail has been sent by ${process.env.COMMON_ORGANIZATION_NAME}.
 
                 --
 
                 Hola,
 
-                Tu código para identificarte en Passager es ${number}.
+                Tu código para identificarte en ${process.env.COMMON_APP_NAME} es ${number}.
 
-                Gracias por usar Passager.
+                Gracias por usar ${process.env.COMMON_APP_NAME}.
 
-                Este correo electrónico ha sido enviado por ${process.env.COMMON_ORGANIZATION_NAME}. Passager es una aplicación de gestión de contraseñas de código abierto. Los desarrolladores de Passager pueden no estar relacionados con ${process.env.COMMON_ORGANIZATION_NAME}.
+                Este correo electrónico ha sido enviado por ${process.env.COMMON_ORGANIZATION_NAME}.
             `
         })
 
