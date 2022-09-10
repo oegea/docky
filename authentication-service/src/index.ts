@@ -8,6 +8,7 @@ const app = express()
 app.get('/login/:email', (req, res) => {
   startLoginController(req, res).execute()
 })
+
 app.get('/login/:email/validate/:code', (req, res) => {
   validateLoginController(req, res).execute()
 })
