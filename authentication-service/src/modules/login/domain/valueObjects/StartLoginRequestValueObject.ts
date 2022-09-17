@@ -3,6 +3,7 @@ import { EmailValidatorRepository } from '../../domain/repositories/EmailValidat
 class StartLoginRequestValueObject {
   private readonly email: string
   private readonly emailValidatorRepository: EmailValidatorRepository
+  private randomNumber: number
 
   constructor ({
     email,
@@ -34,6 +35,18 @@ class StartLoginRequestValueObject {
   async emailFormatIsValid (): Promise<void> {
     const validationResult = await this.emailValidatorRepository.hasValidFormat(this.email)
     if (!validationResult) { throw new Error('StartLoginRequestValueObject: email format is not valid') }
+  }
+
+  setRandomNumber (randomNumber: number): void {
+    this.randomNumber = randomNumber
+  }
+
+  getRandomNumber (): number {
+    return this.randomNumber
+  }
+
+  getEmail (): string {
+    return this.email
   }
 }
 

@@ -1,10 +1,11 @@
 // Domain
-import { randomNumberGeneratorRepository } from '../../infrastructure/repositories/factory'
+import { randomNumberGeneratorRepository, loginRepository } from '../../infrastructure/repositories/factory'
 // Service
 import { StartLoginService } from './StartLoginService'
 
 const startLoginService = (): StartLoginService => new StartLoginService({
-  randomNumberGeneratorRepository: randomNumberGeneratorRepository()
+  randomNumberGeneratorRepository: randomNumberGeneratorRepository(),
+  loginRepository: loginRepository()
 })
 
 export { startLoginService }
