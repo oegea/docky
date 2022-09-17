@@ -14,7 +14,7 @@ class DeepEmailValidatorRepository implements EmailValidatorRepository {
       if (!validateResult) { return false }
 
       return validateResult.valid
-    } catch (e) {
+    } catch (e) {
       console.error(e)
       return false
     }

@@ -12,7 +12,7 @@ class StartLoginService {
     this.randomNumberGeneratorRepository = randomNumberGeneratorRepository
   }
 
-  	public async execute ({
+  public async execute ({
     startLoginRequestValueObject
   }: {
     startLoginRequestValueObject: StartLoginRequestValueObject

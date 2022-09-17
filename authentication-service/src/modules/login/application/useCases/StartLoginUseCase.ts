@@ -16,14 +16,14 @@ class StartLoginUseCase {
     this.startLoginService = startLoginService
   }
 
-  	public async execute ({ email }: {email: string}): Promise<void> {
+  public async execute ({ email }: {email: string}): Promise<void> {
     try {
       const startLoginRequestValueObject = await this.startLoginRequestValueObject({ email })
       return await this.startLoginService.execute({ startLoginRequestValueObject })
     } catch (e) {
       throw e.message
     }
-  	}
+  }
 }
 
 export { StartLoginUseCase }
