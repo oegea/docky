@@ -2,18 +2,18 @@ import { StartLoginRequestValueObject } from './StartLoginRequestValueObject'
 import { emailValidatorRepository } from '../../infrastructure/repositories/factory'
 
 const startLoginRequestValueObject = async ({
-    email
+  email
 }: {
-    email: string
+  email: string
 }): Promise<StartLoginRequestValueObject> => {
-    const startLoginRequestValueObject =  new StartLoginRequestValueObject({
-        email, 
-        emailValidatorRepository: emailValidatorRepository()
-    })
+  const startLoginRequestValueObject = new StartLoginRequestValueObject({
+    email,
+    emailValidatorRepository: emailValidatorRepository()
+  })
 
-    await startLoginRequestValueObject.validate()
+  await startLoginRequestValueObject.validate()
 
-    return startLoginRequestValueObject
+  return startLoginRequestValueObject
 }
 
 export { startLoginRequestValueObject }

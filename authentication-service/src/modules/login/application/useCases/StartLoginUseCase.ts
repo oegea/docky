@@ -1,26 +1,29 @@
-import {StartLoginRequestValueObject} from '../../domain/valueObjects/startLoginRequestValueObject'
+import { StartLoginRequestValueObject } from '../../domain/valueObjects/startLoginRequestValueObject'
+import { StartLoginService } from '../../domain/services/StartLoginService'
 
 class StartLoginUseCase {
+  private readonly startLoginRequestValueObject: ({ email }: {email: string}) => Promise<StartLoginRequestValueObject>
+  private readonly startLoginService: StartLoginService
 
-	private startLoginRequestValueObject: ({email}: {email: string}) => Promise<StartLoginRequestValueObject>
-
-	constructor({startLoginRequestValueObject}: {startLoginRequestValueObject: ({email}: {email: string}) => Promise<StartLoginRequestValueObject>}) {
-		this.startLoginRequestValueObject = startLoginRequestValueObject
-	}
-
-  public async execute ({email}: {email: string}): Promise<void> {
-		try {
-			const startLoginRequestValueObject = await this.startLoginRequestValueObject({email})
-		} catch(e){
-			throw e.message
-		}
-		
-    
-
-    // Generate a random number
-    // Store it
-    // Send e-mail
+  constructor ({
+    startLoginRequestValueObject,
+    startLoginService
+  }: {
+    startLoginRequestValueObject: ({ email }: {email: string}) => Promise<StartLoginRequestValueObject>
+    startLoginService: StartLoginService
+  }) {
+    this.startLoginRequestValueObject = startLoginRequestValueObject
+    this.startLoginService = startLoginService
   }
+
+  	public async execute ({ email }: {email: string}): Promise<void> {
+    try {
+      const startLoginRequestValueObject = await this.startLoginRequestValueObject({ email })
+      return await this.startLoginService.execute({ startLoginRequestValueObject })
+    } catch (e) {
+      throw e.message
+    }
+  	}
 }
 
 export { StartLoginUseCase }

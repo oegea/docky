@@ -1,4 +1,4 @@
-type EmailValidatorRepository = {
-    hasValidFormat(string): Promise<boolean>; 
-};
-export {EmailValidatorRepository}
+interface EmailValidatorRepository {
+  hasValidFormat: (email: string) => Promise<boolean>
+}
+export { EmailValidatorRepository }
