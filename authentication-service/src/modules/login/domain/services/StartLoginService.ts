@@ -28,7 +28,7 @@ class StartLoginService {
     // Store it
     this.loginRepository.save(startLoginRequestValueObject)
     // Send e-mail
-    console.log('TODO: Send e-mail')
+    console.log('TODO: Send e-mail with code '+startLoginRequestValueObject.getRandomNumber())
   }
 }
 
