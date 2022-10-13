@@ -10,7 +10,7 @@ class StartLoginController extends BasicController {
       await useCase.execute({ email })
       this.res.status(200).json({ success: true })
     } catch (e) {
-      this.res.status(500).json({ success: false, e })
+      this.res.status(500).json({ success: false, message: e })
     }
   }
 }
