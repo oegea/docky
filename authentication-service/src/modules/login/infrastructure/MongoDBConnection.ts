@@ -5,8 +5,7 @@ class MongoDBConnection {
     
     static getConnection() {
 
-        if (MongoDBConnection.connection === null){      
-            console.log(process.env.COMMON_MONGODB_CONNECTION_STRING)       
+        if (MongoDBConnection.connection === null){     
             MongoDBConnection.connection = new MongoClient(process.env.COMMON_MONGODB_CONNECTION_STRING)
         }
         return MongoDBConnection.connection
