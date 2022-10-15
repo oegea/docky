@@ -6,6 +6,7 @@ import {
 } from '../../infrastructure/repositories/factory'
 // Service
 import { StartLoginService } from './StartLoginService'
+import { ValidateLoginService } from './ValidateLoginService'
 
 const startLoginService = (): StartLoginService => new StartLoginService({
   emailSenderRepository: emailSenderRepository(),
@@ -13,4 +14,9 @@ const startLoginService = (): StartLoginService => new StartLoginService({
   randomNumberGeneratorRepository: randomNumberGeneratorRepository()
 })
 
-export { startLoginService }
+
+const validateLoginService = (): ValidateLoginService => new ValidateLoginService({
+  loginRepository: loginRepository()
+})
+
+export { startLoginService, validateLoginService }

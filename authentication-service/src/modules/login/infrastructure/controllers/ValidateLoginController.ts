@@ -1,8 +1,17 @@
 import { BasicController } from '../../../basic/infrastructure/controllers/BasicController'
+import { validateLoginUseCase } from '../../application/useCases/factory'
 
 class ValidateLoginController extends BasicController {
   public async execute (): Promise<void> {
-    this.res.status(200).json({ hello: 'world' })
+    try {
+      const { email, code } = this.req.params
+
+      const useCase = validateLoginUseCase()
+      const token = await useCase.execute({ email, code })
+      this.res.status(200).json({ success: true, token })
+    } catch (e) {
+      this.res.status(500).json({ success: false, message: e })
+    }
   }
 }
 

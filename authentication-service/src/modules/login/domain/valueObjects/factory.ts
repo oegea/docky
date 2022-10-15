@@ -1,4 +1,5 @@
 import { StartLoginRequestValueObject } from './StartLoginRequestValueObject'
+import { ValidateLoginRequestValueObject } from './ValidateLoginRequestValueObject'
 import { emailValidatorRepository } from '../../infrastructure/repositories/factory'
 
 const startLoginRequestValueObject = async ({
@@ -16,4 +17,22 @@ const startLoginRequestValueObject = async ({
   return startLoginRequestValueObject
 }
 
-export { startLoginRequestValueObject }
+const validateLoginRequestValueObject = async ( {
+  email,
+  code
+}: {
+  email: string
+  code: string
+}): Promise<ValidateLoginRequestValueObject> => {
+  const validateLoginRequestValueObject = new ValidateLoginRequestValueObject({
+    code,
+    email,
+    emailValidatorRepository: emailValidatorRepository()
+  })
+
+  await validateLoginRequestValueObject.validate()
+
+  return validateLoginRequestValueObject
+}
+
+export { startLoginRequestValueObject, validateLoginRequestValueObject }
