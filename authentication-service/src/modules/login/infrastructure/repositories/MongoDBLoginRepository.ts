@@ -9,7 +9,7 @@ class MongoDBLoginRepository implements LoginRepository {
     getMongoDbAuthCollection () {
         const mongoDbClient = MongoDBConnection.getConnection()
 
-        const database = mongoDbClient.db(process.env.PASS_DATABASE)
+        const database = mongoDbClient.db(process.env.COMMON_MONGODB_DATABASE)
         const collection = database.collection(process.env.PASS_AUTH_COLLECTION)
 
         return collection
