@@ -1,21 +1,20 @@
 import { ValidateLoginRequestValueObject } from '../valueObjects/ValidateLoginRequestValueObject'
-//import { TokenGeneratorRepository } from '../repositories/TokenGeneratorRepository'
+import { TokenGeneratorRepository } from '../repositories/TokenGeneratorRepository'
 import { LoginRepository } from '../repositories/LoginRepository'
-import { EmailSenderRepository } from '../repositories/EmailSenderRepository'
 
 class ValidateLoginService {
   private readonly loginRepository: LoginRepository
-  //private readonly tokenGeneratorRepository: TokenGeneratorRepository
+  private readonly tokenGeneratorRepository: TokenGeneratorRepository
 
   constructor ({
     loginRepository,
-    //tokenGeneratorRepository
+    tokenGeneratorRepository
   }: {
     loginRepository: LoginRepository
-    //tokenGeneratorRepository: TokenGeneratorRepository
+    tokenGeneratorRepository: TokenGeneratorRepository
   }) {
     this.loginRepository = loginRepository
-    //this.tokenGeneratorRepository = tokenGeneratorRepository
+    this.tokenGeneratorRepository = tokenGeneratorRepository
   }
 
   public async execute ({
@@ -30,9 +29,8 @@ class ValidateLoginService {
     if (codeIsValid === false)
         throw new Error('ValidateLoginService: received code is not valid')
 
-
-    return 'asdasdasdasd123'
-
+    const token = this.tokenGeneratorRepository.generateToken(validateLoginRequestValueObject)
+    return token
 
   }
 }
