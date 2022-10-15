@@ -22,7 +22,7 @@ const validateLoginRequestValueObject = async ( {
   code
 }: {
   email: string
-  code: string
+  code: number
 }): Promise<ValidateLoginRequestValueObject> => {
   const validateLoginRequestValueObject = new ValidateLoginRequestValueObject({
     code,

@@ -1,7 +1,7 @@
 import { EmailValidatorRepository } from '../../domain/repositories/EmailValidatoryRepository'
 
 class ValidateLoginRequestValueObject {
-  private readonly code: string
+  private readonly code: number
   private readonly email: string
   private readonly emailValidatorRepository: EmailValidatorRepository
 
@@ -10,7 +10,7 @@ class ValidateLoginRequestValueObject {
     email,
     emailValidatorRepository
   }: {
-    code: string
+    code: number
     email: string
     emailValidatorRepository: EmailValidatorRepository
   }) {
@@ -40,7 +40,7 @@ class ValidateLoginRequestValueObject {
     if (!validationResult) { throw new Error('ValidateLoginRequestValueObject: email format is not valid') }
   }
 
-  getCode (): string {
+  getCode (): number {
     return this.code
   }
 

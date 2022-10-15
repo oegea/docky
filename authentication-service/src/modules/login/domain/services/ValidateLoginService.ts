@@ -24,6 +24,12 @@ class ValidateLoginService {
     validateLoginRequestValueObject: ValidateLoginRequestValueObject
   }): Promise<string> {
 
+    // Should not continue if provided code and email is not valid
+    const codeIsValid = await this.loginRepository.verifyCode(validateLoginRequestValueObject)
+
+    if (codeIsValid === false)
+        throw new Error('ValidateLoginService: received code is not valid')
+
 
     return 'asdasdasdasd123'
 
