@@ -1,23 +1,30 @@
 # Passager Password Manager Backend
 
-This is a set of web services to use Passager Password Manager within an organization, enabling sharing capabilities and other interesting features without requiring a centralized services offered by the app's maintainers.
+This project is a set of web services to use Passager Password Manager within an organization, enabling password sharing capabilities and other features which are available only when Passager doesn't run in local mode.
 
 ## Reasons to build this
 
-This project unique mission is to replace firebase as the default backend for passager, an open source password manager. 
+This project's unique mission is to replace firebase as the default backend for Passager Password Manager.
 
-Before developing this set of services, Passager was able both to store passwords locally using localStorage, and in the cloud by using firebase as the main backend.
+Before developing this project, Passager was able both to store passwords locally using localStorage, and in the cloud by using firebase as the main backend.
 
-Unfortunatelly, Firebase was not the ideal solution when compiling Passager as a mobile app, and many problems aroused when running Passager on a mobile device and trying to use the cloud storage.
+Unfortunatelly, Firebase was not the ideal solution when compiling Passager as a mobile app using Capacitor, as the Firebase web SDK is not 100% compatible and the login process doesn't work without requiring third party plugins that are complex to configure.
 
-This set of basic web services offer a way to use Passager storing passwords remotely, and being able to share passwords with other people, without limiting compatibility to browsers, and enabling those features when Passager is executed as a mobile app. 
+This set of basic web services offer a way to use Passager remotely, even when it is compiled as a mobile app. 
 
-Additionally, with this new approach each organization is able to serve these services and maintain their own passager database and infrastructure, so maintainers of Passager does not need to maintain systems and worry much about personal data processing.
+Additionally, with this new approach each organization is able to serve these services and maintain their own database and infrastructure, so maintainers of Passager does not need to maintain and be responsible for a set of centralized systems, which allow the maintainers to focus their efforts in Passager's Open Source development, instead of focusing them on offering a high-available service and comply with data processing laws and regulations.
 
 ## Required configuration
 
-These services need to be configured before running. Configuration is stored in a `.env` file. A template is provided (`.env_template`), please rename it to `.env` and complete it with real configuration parameters.
+These services need to be configured before running. 
+
+Configuration is stored in a file named `.env`. 
+
+A template is provided (`.env_template`), please rename it to `.env` and complete it with real configuration parameters.
+
+Do not forget to install dependencies by running `npm i` inside each service directory.
 
 ## Available services
 
-* `authentication-service`: Completes the log in process by sending a code via e-mail, generates a jwt token once the e-mail is validated. 
+* `authentication-service`: Completes the login process by sending a code via e-mail, and generating a jwt token once the e-mail is validated. 
+* `documents-service`: Allows to perform basic CRUD operations to a set of database schemas while ensuring that specific permission rules are meet.
