@@ -1,1 +1,1 @@
-console.log('Hello world!')
+export {MongoDBConnection} from './infrastructure/MongoDBConnection'

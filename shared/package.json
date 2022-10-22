@@ -2,7 +2,7 @@
   "name": "passager-backend-shared-kernel",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "dist/src/index.js",
   "scripts": {
     "start": "echo ⛔️ This package is a set of dependencies and cannot be executed by itself",
     "build": "clear && echo ⌛️ Compiling code... && tsc && echo ✅ Build completed successfully!",

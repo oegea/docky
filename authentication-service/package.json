@@ -9,7 +9,8 @@
     "build": "clear && echo ⌛️ Compiling code... && tsc && echo ✅ Build completed successfully! && echo 💻 Start it by running npm run start:background",
     "test": "jest",
     "lint": "eslint",
-    "lint:fix": "eslint src/**/*.ts --fix"
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "preinstall": "npm link ../shared"
   },
   "author": "",
   "license": "ISC",

@@ -3,7 +3,7 @@ import { LoginRepository } from '../../domain/repositories/LoginRepository'
 import { StartLoginRequestValueObject } from '../../domain/valueObjects/StartLoginRequestValueObject'
 import { ValidateLoginRequestValueObject } from '../../domain/valueObjects/ValidateLoginRequestValueObject'
 // Infrastructure
-import {MongoDBConnection} from '../MongoDBConnection'
+import {MongoDBConnection} from 'passager-backend-shared-kernel'
 class MongoDBLoginRepository implements LoginRepository {
 
     getMongoDbAuthCollection () {
