@@ -1,27 +1,22 @@
-import { EmailValidatorRepository } from '../../domain/repositories/EmailValidatoryRepository'
+import { EmailValueObject } from './EmailValueObject'
 
 const CONFIG_SPLIT_MARK: string = ', '
 
 class StartLoginRequestValueObject {
-  private readonly email: string
-  private readonly emailValidatorRepository: EmailValidatorRepository
+  private readonly emailValueObject: EmailValueObject
   private randomNumber: number
 
   constructor ({
-    email,
-    emailValidatorRepository
+    emailValueObject,
   }: {
-    email: string
-    emailValidatorRepository: EmailValidatorRepository
+    emailValueObject: EmailValueObject
   }) {
-    this.email = email
-    this.emailValidatorRepository = emailValidatorRepository
+    this.emailValueObject = emailValueObject
   }
 
   async validate (): Promise<void> {
-    this.emailIsString()
-    this.emailLengthIsValid()
-    await this.emailFormatIsValid()
+
+    await this.emailValueObject.validate()
 
     if (
       this.emailValidationIsEnabled() === true && 
@@ -31,28 +26,13 @@ class StartLoginRequestValueObject {
     }
   }
 
-  emailIsString (): void {
-    if (typeof this.email !== 'string') { throw new Error(`StartLoginRequestValueObject: Invalid type provided for email property. Expected string, got ${typeof this.email}`) }
-  }
-
-  emailLengthIsValid (): void {
-    if (this.email.length < 1) { throw new Error('StartLoginRequestValueObject: email property could not be shorter than 1 character.') }
-
-    if (this.email.length > 255) { throw new Error('StartLoginRequestValueObject: email property could not be larger than 255 characters.') }
-  }
-
-  async emailFormatIsValid (): Promise<void> {
-    const validationResult = await this.emailValidatorRepository.hasValidFormat(this.email)
-    if (!validationResult) { throw new Error('StartLoginRequestValueObject: email format is not valid') }
-  }
-
   emailValidationIsEnabled(): boolean {
     return (process.env.PASS_AUTH_LIMIT_ACCESS_BY_EMAIL === 'true')
   }
 
   emailIsSpecificallyAllowed(): boolean {
     const allowedEmails = process.env.PASS_AUTH_ALLOWED_EMAILS.split(CONFIG_SPLIT_MARK)
-    const foundEmails = allowedEmails.find((allowedEmail) => allowedEmail === this.email)
+    const foundEmails = allowedEmails.find((allowedEmail) => allowedEmail === this.getEmail())
     return (foundEmails !== undefined)
   }
 
@@ -76,11 +56,11 @@ class StartLoginRequestValueObject {
   }
 
   getEmail (): string {
-    return this.email
+    return this.emailValueObject.getEmail()
   }
 
   getDomainFromEmail(): string {
-    return this.email.split('@')[1] || ''
+    return this.getEmail().split('@')[1] || ''
   }
 }
 

@@ -1,43 +1,22 @@
-import { EmailValidatorRepository } from '../../domain/repositories/EmailValidatoryRepository'
+import { EmailValueObject } from './EmailValueObject'
 
 class ValidateLoginRequestValueObject {
   private readonly code: number
-  private readonly email: string
-  private readonly emailValidatorRepository: EmailValidatorRepository
+  private readonly emailValueObject: EmailValueObject
 
   constructor ({
     code,
-    email,
-    emailValidatorRepository
+    emailValueObject
   }: {
     code: number
-    email: string
-    emailValidatorRepository: EmailValidatorRepository
+    emailValueObject: EmailValueObject
   }) {
     this.code = code
-    this.email = email
-    this.emailValidatorRepository = emailValidatorRepository
+    this.emailValueObject = emailValueObject
   }
 
   async validate (): Promise<void> {
-    this.emailIsString()
-    this.emailLengthIsValid()
-    await this.emailFormatIsValid()
-  }
-
-  emailIsString (): void {
-    if (typeof this.email !== 'string') { throw new Error(`ValidateLoginRequestValueObject: Invalid type provided for email property. Expected string, got ${typeof this.email}`) }
-  }
-
-  emailLengthIsValid (): void {
-    if (this.email.length < 1) { throw new Error('ValidateLoginRequestValueObject: email property could not be shorter than 1 character.') }
-
-    if (this.email.length > 255) { throw new Error('ValidateLoginRequestValueObject: email property could not be larger than 255 characters.') }
-  }
-
-  async emailFormatIsValid (): Promise<void> {
-    const validationResult = await this.emailValidatorRepository.hasValidFormat(this.email)
-    if (!validationResult) { throw new Error('ValidateLoginRequestValueObject: email format is not valid') }
+    await this.emailValueObject.validate()
   }
 
   getCode (): number {
@@ -45,7 +24,7 @@ class ValidateLoginRequestValueObject {
   }
 
   getEmail (): string {
-    return this.email
+    return this.emailValueObject.getEmail()
   }
 }
 
