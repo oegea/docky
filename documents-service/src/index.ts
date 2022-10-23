@@ -5,7 +5,9 @@ import { createDocumentController } from './modules/document/infrastructure/cont
 dotenv.config({ path: '../.env' })
 const app = express()
 
-app.post(':collection', (req, res) => {
+app.use(express.json())
+
+app.post('/documents/:collection', (req, res) => {
   createDocumentController(req, res).execute()
 })
 

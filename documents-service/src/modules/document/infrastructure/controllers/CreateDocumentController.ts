@@ -1,12 +1,11 @@
 import { SharedController } from 'passager-backend-shared-kernel'
-import { startLoginUseCase } from '../../application/useCases/factory'
+// import { createDocumentUseCase } from '../../application/useCases/factory'
 
 class CreateDocumentController extends SharedController {
   public async safeExecute (): Promise<void> {
-    const { email } = this.req.params
+    const { collection } = this.req.params
+    const document = this.req.body
 
-    const useCase = startLoginUseCase()
-    await useCase.execute({ email })
     this.success()
   }
 }
