@@ -10,5 +10,5 @@ app.post(':collection', (req, res) => {
 })
 
 app.listen(process.env.DOCS_PORT, () => {
-  console.log(`Authentication service is running on port ${process.env.DOCS_PORT}`)
+  console.log(`Documents service is running on port ${process.env.DOCS_PORT}`)
 })

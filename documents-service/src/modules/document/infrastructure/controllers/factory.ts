@@ -1,8 +1,6 @@
 import { SharedController } from 'passager-backend-shared-kernel'
-import { StartLoginController } from './StartLoginController'
-import { ValidateLoginController } from './ValidateLoginController'
+import { CreateDocumentController } from './CreateDocumentController'
 
-const startLoginController = (req, res): SharedController => new StartLoginController(req, res)
-const validateLoginController = (req, res): SharedController => new ValidateLoginController(req, res)
+const createDocumentController = (req, res): SharedController => new CreateDocumentController(req, res)
 
-export { startLoginController, validateLoginController }
+export { createDocumentController }

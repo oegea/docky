@@ -1,7 +1,7 @@
 import { SharedController } from 'passager-backend-shared-kernel'
 import { startLoginUseCase } from '../../application/useCases/factory'
 
-class StartLoginController extends SharedController {
+class CreateDocumentController extends SharedController {
   public async safeExecute (): Promise<void> {
     const { email } = this.req.params
 
@@ -11,4 +11,4 @@ class StartLoginController extends SharedController {
   }
 }
 
-export { StartLoginController }
+export { CreateDocumentController }
