@@ -1,5 +1,6 @@
 import { CreateDocumentRequestValueObject } from '../valueObjects/CreateDocumentRequestValueObject'
 import { DocumentRepository } from '../repositories/DocumentRepository'
+import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 
 class CreateDocumentService {
   private readonly documentRepository: DocumentRepository
@@ -16,7 +17,7 @@ class CreateDocumentService {
     createDocumentRequestValueObject
   }: {
     createDocumentRequestValueObject: CreateDocumentRequestValueObject
-  }): Promise<object> {
+  }): Promise<DocumentEntity> {
 
     const documentCreationResult = await this.documentRepository.create(createDocumentRequestValueObject)
 

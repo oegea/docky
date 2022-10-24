@@ -1,6 +1,8 @@
 // Domain
 import { DocumentRepository } from '../../domain/repositories/DocumentRepository'
 import { CreateDocumentRequestValueObject } from '../../domain/valueObjects/CreateDocumentRequestValueObject'
+import { documentEntity } from '../../domain/entities/factory'
+import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 // Infrastructure
 import {MongoDBConnection} from 'passager-backend-shared-kernel'
 
@@ -15,7 +17,7 @@ class MongoDBDocumentRepository implements DocumentRepository {
         return collection
     }
 
-    async create (createDocumentRequestValueObject: CreateDocumentRequestValueObject): Promise<object> {
+    async create (createDocumentRequestValueObject: CreateDocumentRequestValueObject): Promise<DocumentEntity> {
         
         const collectionName = createDocumentRequestValueObject.getCollection()
         const document = createDocumentRequestValueObject.getDocument()
@@ -27,9 +29,13 @@ class MongoDBDocumentRepository implements DocumentRepository {
             return null
         }
 
-        // TODO: Map id from MongoDB to a common domain format
-
-        return document
+        // Map id from MongoDB to a common domain format
+        const documentEntityResult = await documentEntity({
+            id: `${document['_id']}`,
+            collection: collectionName,
+            documentPlainObject: document
+        })
+        return documentEntityResult
     }
 }
 

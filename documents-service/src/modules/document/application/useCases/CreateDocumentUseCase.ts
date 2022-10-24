@@ -19,7 +19,8 @@ class CreateDocumentUseCase {
   public async execute ({ collection, document }: {collection: string, document: object}): Promise<object> {
     try {
       const createDocumentRequestValueObject = await this.createDocumentRequestValueObject({ collection, document })
-      return await this.createDocumentService.execute({ createDocumentRequestValueObject })
+      const documentEntityResult =  await this.createDocumentService.execute({ createDocumentRequestValueObject })
+      return documentEntityResult.toJson()
     } catch (e) {
       throw e.message
     }
