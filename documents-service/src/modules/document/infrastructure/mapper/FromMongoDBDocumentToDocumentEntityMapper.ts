@@ -21,29 +21,26 @@ class FromMongoDBDocumentToDocumentEntityMapper {
     }
 
     private removeInternalFields(documentPlainObject: object): object {
-      const documentKeys = Object.keys(document)
+      const documentKeys = Object.keys(documentPlainObject)
       const filteredDocument = documentKeys.reduce((documentObject, documentKey) => {
         if (documentKey.startsWith(INTERNAL_FIELDS_PREFIX)) {
           return documentObject
         }
 
-        documentObject[documentKey] = document[documentKey]
+        documentObject[documentKey] = documentPlainObject[documentKey]
         return documentObject
       }, {})
       return filteredDocument
     }
   
     public async map(): Promise<DocumentEntity> {
-
       // Fields starting with underscore are internal fields and must be removed
       const filteredDocument = this.removeInternalFields(this.documentPlainObject)
-
       const documentEntityResult = await this.documentEntity({
-        id: `${filteredDocument['_id']}`,
+        id: `${this.documentPlainObject['_id']}`,
         collection: this.collection,
         documentPlainObject: filteredDocument
       })
-
       return documentEntityResult
     } 
   
