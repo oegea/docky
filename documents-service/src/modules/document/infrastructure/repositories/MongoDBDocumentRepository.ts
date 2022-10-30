@@ -1,12 +1,22 @@
 // Domain
 import { DocumentRepository } from '../../domain/repositories/DocumentRepository'
 import { CreateDocumentRequestValueObject } from '../../domain/valueObjects/CreateDocumentRequestValueObject'
-import { documentEntity } from '../../domain/entities/factory'
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 // Infrastructure
 import {MongoDBConnection} from 'passager-backend-shared-kernel'
+import {FromMongoDBDocumentToDocumentEntityMapper} from '../mapper/FromMongoDBDocumentToDocumentEntityMapper'
 
 class MongoDBDocumentRepository implements DocumentRepository {
+
+    private readonly fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper
+
+    constructor({
+        fromMongoDBDocumentToDocumentEntityMapper
+    }: {
+        fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper
+    }) {
+        this.fromMongoDBDocumentToDocumentEntityMapper = fromMongoDBDocumentToDocumentEntityMapper
+    }
 
     getMongoDbAuthCollection (collectionName: string) {
         const mongoDbClient = MongoDBConnection.getConnection()
@@ -30,11 +40,11 @@ class MongoDBDocumentRepository implements DocumentRepository {
         }
 
         // Map id from MongoDB to a common domain format
-        const documentEntityResult = await documentEntity({
-            id: `${document['_id']}`,
+        const documentEntityResult = await this.fromMongoDBDocumentToDocumentEntityMapper({
             collection: collectionName,
             documentPlainObject: document
-        })
+        }).map()
+        
         return documentEntityResult
     }
 }

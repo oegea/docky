@@ -14,11 +14,6 @@ class CreateDocumentRequestValueObject {
     this.document = document
   }
 
-  async validate (): Promise<void> {
-    // TODO: Validate that collection is part of the application config
-  }
-
-
   getCollection (): string {
     return this.collection
   }

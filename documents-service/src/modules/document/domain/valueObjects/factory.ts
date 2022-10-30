@@ -12,8 +12,6 @@ const createDocumentRequestValueObject = async({
     document
   })
 
-  await createDocumentRequestValueObject.validate()
-
   return createDocumentRequestValueObject
 }
 

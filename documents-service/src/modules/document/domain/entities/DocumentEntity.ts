@@ -1,4 +1,4 @@
-const INTERNAL_FIELDS_PREFIX = '_'
+export const INTERNAL_FIELDS_PREFIX = '_'
 
 class DocumentEntity {
 
@@ -30,15 +30,14 @@ class DocumentEntity {
     }
   
 
-    getValuesFromPlainObject(document: object): {key: string, value: object}[] {
+    private getValuesFromPlainObject(document: object): {key: string, value: object}[] {
       const documentKeys = Object.keys(document)
       const values = documentKeys
-        .filter((documentKey) => (documentKey.startsWith(INTERNAL_FIELDS_PREFIX) === false)) // starting with '_' is reserved to internal fields
         .map((documentKey) => ({key: documentKey, value: document[documentKey]}))
       return values
     }
 
-    toJson() {
+    public toJson() {
       let jsonResult = {
         id: this.id
       }
@@ -50,11 +49,17 @@ class DocumentEntity {
       return jsonResult
     }
 
-    async validate(): Promise<void>  {
-
+    public async validate(): Promise<void>  {
+      if (this.hasInvalidFieldNames()){
+        throw new Error('DocumentEntity: document contains invalid field names')
+      }
     }
-    
-  
+
+    private hasInvalidFieldNames(): boolean {
+      const invalidFieldNames = this.values.filter((documentValue) => documentValue.key.startsWith(INTERNAL_FIELDS_PREFIX))
+
+      return invalidFieldNames.length > 0
+    }
   }
   
   export { DocumentEntity }
