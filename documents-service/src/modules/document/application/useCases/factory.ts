@@ -1,5 +1,5 @@
 // Domain
-import { createDocumentRequestValueObject, deleteDocumentRequestValueObject, getDocumentRequestValueObject } from '../../domain/valueObjects/factory'
+import { createDocumentRequestValueObject } from '../../domain/valueObjects/factory'
 import { documentEntity } from '../../domain/entities/factory'
 import { createDocumentService, deleteDocumentService, getDocumentService } from '../../domain/services/factory'
 // Use cases
