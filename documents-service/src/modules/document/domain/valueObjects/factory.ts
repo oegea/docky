@@ -1,4 +1,5 @@
 import { CreateDocumentRequestValueObject } from './CreateDocumentRequestValueObject'
+import { DeleteDocumentRequestValueObject } from './DeleteDocumentRequestValueObject'
 import { GetDocumentRequestValueObject } from './GetDocumentRequestValueObject'
 
 const createDocumentRequestValueObject = async({
@@ -16,6 +17,21 @@ const createDocumentRequestValueObject = async({
   return createDocumentRequestValueObject
 }
 
+const deleteDocumentRequestValueObject = async({
+  collection,
+  id
+}: {
+  collection: string,
+  id: string
+}): Promise<DeleteDocumentRequestValueObject> => {
+  const deleteDocumentRequestValueObject = new DeleteDocumentRequestValueObject({
+    collection,
+    id
+  })
+
+  return deleteDocumentRequestValueObject
+}
+
 const getDocumentRequestValueObject = async({
   collection,
   id
@@ -31,4 +47,4 @@ const getDocumentRequestValueObject = async({
   return getDocumentRequestValueObject
 }
 
-export { createDocumentRequestValueObject, getDocumentRequestValueObject }
+export { createDocumentRequestValueObject, deleteDocumentRequestValueObject, getDocumentRequestValueObject }

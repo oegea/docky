@@ -1,4 +1,3 @@
-import { GetDocumentRequestValueObject } from '../valueObjects/GetDocumentRequestValueObject'
 import { DocumentRepository } from '../repositories/DocumentRepository'
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 
@@ -14,12 +13,12 @@ class GetDocumentService {
   }
 
   public async execute ({
-    getDocumentRequestValueObject
+    documentEntity
   }: {
-    getDocumentRequestValueObject: GetDocumentRequestValueObject
+    documentEntity: DocumentEntity
   }): Promise<DocumentEntity> {
 
-    const getDocumentResult = await this.documentRepository.get(getDocumentRequestValueObject)
+    const getDocumentResult = await this.documentRepository.get(documentEntity)
 
     if (getDocumentResult === null)
         throw new Error('GetDocumentService: error while getting a document')

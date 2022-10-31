@@ -1,30 +1,30 @@
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
-import { GetDocumentService } from '../../domain/services/GetDocumentService'
+import { DeleteDocumentService } from '../../domain/services/DeleteDocumentService'
 
-class GetDocumentUseCase {
+class DeleteDocumentUseCase {
   private readonly documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
-  private readonly getDocumentService: GetDocumentService
+  private readonly deleteDocumentService: DeleteDocumentService
 
   constructor ({
     documentEntity,
-    getDocumentService
+    deleteDocumentService
   }: {
     documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
-    getDocumentService: GetDocumentService
+    deleteDocumentService: DeleteDocumentService
   }) {
     this.documentEntity = documentEntity
-    this.getDocumentService = getDocumentService
+    this.deleteDocumentService = deleteDocumentService
   }
 
-  public async execute ({ collection, id }: {collection: string, id: string}): Promise<object> {
+  public async execute ({ collection, id }: {collection: string, id: string}): Promise<Boolean> {
     try {
       const documentEntity = await this.documentEntity({ collection, id, documentPlainObject: {} })
-      const documentEntityResult =  await this.getDocumentService.execute({ documentEntity })
-      return documentEntityResult.toJson()
+      const deleteResult =  await this.deleteDocumentService.execute({ documentEntity })
+      return deleteResult
     } catch (e) {
       throw e.message
     }
   }
 }
 
-export { GetDocumentUseCase }
+export { DeleteDocumentUseCase }

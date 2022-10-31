@@ -1,9 +1,9 @@
 import { CreateDocumentRequestValueObject } from '../valueObjects/CreateDocumentRequestValueObject'
-import { GetDocumentRequestValueObject } from '../valueObjects/GetDocumentRequestValueObject'
 import { DocumentEntity } from '../entities/DocumentEntity'
 
 interface DocumentRepository {
   create: (createDocumentRequestValueObject: CreateDocumentRequestValueObject) => Promise<DocumentEntity>
-  get: (getDocumentRequestValueObject: GetDocumentRequestValueObject) => Promise<DocumentEntity>
+  delete: (documentEntity: DocumentEntity) => Promise<Boolean>
+  get: (documentEntity: DocumentEntity) => Promise<DocumentEntity>
 }
 export { DocumentRepository }

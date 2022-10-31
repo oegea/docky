@@ -28,13 +28,20 @@ class DocumentEntity {
 
       this.values = this.getValuesFromPlainObject(documentPlainObject)
     }
-  
 
     private getValuesFromPlainObject(document: object): {key: string, value: object}[] {
       const documentKeys = Object.keys(document)
       const values = documentKeys
         .map((documentKey) => ({key: documentKey, value: document[documentKey]}))
       return values
+    }
+
+    public getId() {
+      return this.id
+    }
+
+    public getCollection() {
+      return this.collection
     }
 
     public toJson() {

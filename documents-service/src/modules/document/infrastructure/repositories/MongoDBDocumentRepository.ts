@@ -1,7 +1,6 @@
 // Domain
 import { DocumentRepository } from '../../domain/repositories/DocumentRepository'
 import { CreateDocumentRequestValueObject } from '../../domain/valueObjects/CreateDocumentRequestValueObject'
-import { GetDocumentRequestValueObject } from '../../domain/valueObjects/GetDocumentRequestValueObject'
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 // Infrastructure
 import { ObjectId } from 'mongodb'
@@ -50,9 +49,24 @@ class MongoDBDocumentRepository implements DocumentRepository {
         return documentEntityResult
     }
 
-    async get (getDocumentRequestValueObject: GetDocumentRequestValueObject): Promise<DocumentEntity> {
-        const collectionName = getDocumentRequestValueObject.getCollection()
-        const id = getDocumentRequestValueObject.getId()
+    async delete (documentEntity: DocumentEntity): Promise<Boolean> {
+        const collectionName = documentEntity.getCollection()
+        const id = documentEntity.getId()
+
+        const collection = this.getMongoDbCollection(collectionName)
+        try{
+           await collection.deleteMany({'_id': new ObjectId(id)})
+        }catch(e) {
+            console.error(e)
+            return false
+        }
+
+        return true
+    }
+
+    async get (documentEntity: DocumentEntity): Promise<DocumentEntity> {
+        const collectionName = documentEntity.getCollection()
+        const id = documentEntity.getId()
 
         const collection = this.getMongoDbCollection(collectionName)
         let result = null

@@ -1,8 +1,10 @@
 // Domain
-import { createDocumentRequestValueObject, getDocumentRequestValueObject } from '../../domain/valueObjects/factory'
-import { createDocumentService, getDocumentService } from '../../domain/services/factory'
+import { createDocumentRequestValueObject, deleteDocumentRequestValueObject, getDocumentRequestValueObject } from '../../domain/valueObjects/factory'
+import { documentEntity } from '../../domain/entities/factory'
+import { createDocumentService, deleteDocumentService, getDocumentService } from '../../domain/services/factory'
 // Use cases
 import { CreateDocumentUseCase } from './CreateDocumentUseCase'
+import { DeleteDocumentUseCase } from './DeleteDocumentUseCase'
 import { GetDocumentUseCase } from './GetDocumentUseCase'
 
 const createDocumentUseCase = (): CreateDocumentUseCase => new CreateDocumentUseCase({
@@ -10,9 +12,14 @@ const createDocumentUseCase = (): CreateDocumentUseCase => new CreateDocumentUse
     createDocumentService: createDocumentService()
 })
 
+const deleteDocumentUseCase = (): DeleteDocumentUseCase => new DeleteDocumentUseCase({
+    documentEntity,
+    deleteDocumentService: deleteDocumentService()
+})
+
 const getDocumentUseCase = (): GetDocumentUseCase => new GetDocumentUseCase({
-    getDocumentRequestValueObject,
+    documentEntity,
     getDocumentService: getDocumentService()
 })
 
-export { createDocumentUseCase, getDocumentUseCase }
+export { createDocumentUseCase, deleteDocumentUseCase, getDocumentUseCase }

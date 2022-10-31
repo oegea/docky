@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv'
 import express from 'express'
-import { createDocumentController, getDocumentController } from './modules/document/infrastructure/controllers/factory'
+import { createDocumentController, deleteDocumentController, getDocumentController } from './modules/document/infrastructure/controllers/factory'
 import { expressValidateTokenMiddleware } from 'passager-backend-shared-kernel'
 
 dotenv.config({ path: '../.env' })
@@ -15,6 +15,10 @@ app.post('/documents/:collection', (req, res) => {
 
 app.get('/documents/:collection/:id', (req, res) => {
   getDocumentController(req, res).execute()
+})
+
+app.delete('/documents/:collection/:id', (req, res) => {
+  deleteDocumentController(req, res).execute()
 })
 
 app.listen(process.env.DOCS_PORT, () => {
