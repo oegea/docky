@@ -1,22 +1,29 @@
 // Domain
-import { DocumentRepository } from '../../domain/repositories/DocumentRepository'
 import { CreateDocumentRequestValueObject } from '../../domain/valueObjects/CreateDocumentRequestValueObject'
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
+import { DocumentEntityListValueObject } from '../../domain/valueObjects/DocumentEntityListValueObject'
+import { DocumentRepository } from '../../domain/repositories/DocumentRepository'
+import { FindDocumentRequestValueObject } from '../../domain/valueObjects/FindDocumentRequestValueObject'
+import { FromMongoDBDocumentToDocumentEntityMapper } from '../mapper/FromMongoDBDocumentToDocumentEntityMapper'
+import { FromMongoDBFindToDocumentEntityListMapper } from '../mapper/FromMongoDBFindToDocumentEntityListMapper'
 // Infrastructure
 import { ObjectId } from 'mongodb'
-import {MongoDBConnection} from 'passager-backend-shared-kernel'
-import {FromMongoDBDocumentToDocumentEntityMapper} from '../mapper/FromMongoDBDocumentToDocumentEntityMapper'
+import { MongoDBConnection } from 'passager-backend-shared-kernel'
 
 class MongoDBDocumentRepository implements DocumentRepository {
 
     private readonly fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper
+    private readonly fromMongoDBFindToDocumentEntityListMapper: ({ collection, mongoDBFindResult}: {collection: string, mongoDBFindResult : any }) => FromMongoDBFindToDocumentEntityListMapper
 
     constructor({
-        fromMongoDBDocumentToDocumentEntityMapper
+        fromMongoDBDocumentToDocumentEntityMapper,
+        fromMongoDBFindToDocumentEntityListMapper
     }: {
-        fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper
+        fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper,
+        fromMongoDBFindToDocumentEntityListMapper: ({ collection, mongoDBFindResult}: {collection: string, mongoDBFindResult : any }) => FromMongoDBFindToDocumentEntityListMapper
     }) {
         this.fromMongoDBDocumentToDocumentEntityMapper = fromMongoDBDocumentToDocumentEntityMapper
+        this.fromMongoDBFindToDocumentEntityListMapper = fromMongoDBFindToDocumentEntityListMapper
     }
 
     getMongoDbCollection (collectionName: string) {
@@ -40,7 +47,7 @@ class MongoDBDocumentRepository implements DocumentRepository {
             return null
         }
 
-        // Map id from MongoDB to a common domain format
+        // Map to DocumentEntity
         const documentEntityResult = await this.fromMongoDBDocumentToDocumentEntityMapper({
             collection: collectionName,
             documentPlainObject: document
@@ -80,13 +87,31 @@ class MongoDBDocumentRepository implements DocumentRepository {
         if(result === null)
             return null
 
-        // Map id from MongoDB to a common domain format
+        // Map to DocumentEntity
         const documentEntityResult = await this.fromMongoDBDocumentToDocumentEntityMapper({
             collection: collectionName,
             documentPlainObject: result
         }).map()
 
         return documentEntityResult
+    }
+
+    async find(findDocumentRequestValueObject: FindDocumentRequestValueObject): Promise<DocumentEntityListValueObject> {
+        const collectionName = findDocumentRequestValueObject.getCollection()
+        const criteria = findDocumentRequestValueObject.getCriteria()
+
+        const collection = this.getMongoDbCollection(collectionName)
+        
+        let result: DocumentEntityListValueObject
+        try{
+            const resultCursor = await collection.find(criteria)
+            result = await this.fromMongoDBFindToDocumentEntityListMapper({collection: collectionName, mongoDBFindResult: resultCursor}).map()
+        }catch(e) {
+            console.error(e)
+            return null
+        }
+
+        return result
     }
 }
 

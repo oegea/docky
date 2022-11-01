@@ -2,6 +2,7 @@
 import { documentEntity } from '../../domain/entities/factory'
 // Mappers
 import { FromMongoDBDocumentToDocumentEntityMapper } from './FromMongoDBDocumentToDocumentEntityMapper'
+import { FromMongoDBFindToDocumentEntityListMapper } from './FromMongoDBFindToDocumentEntityListMapper'
 
 const fromMongoDBDocumentToDocumentEntityMapper = ({
     collection,
@@ -11,4 +12,16 @@ const fromMongoDBDocumentToDocumentEntityMapper = ({
     documentPlainObject: object
 }) => new FromMongoDBDocumentToDocumentEntityMapper({collection, documentEntity, documentPlainObject})
 
-export { fromMongoDBDocumentToDocumentEntityMapper }
+const fromMongoDBFindToDocumentEntityListMapper = ({
+    collection,
+    mongoDBFindResult
+} : {
+    collection: string,
+    mongoDBFindResult : any
+}) => new FromMongoDBFindToDocumentEntityListMapper({
+    collection,
+    mongoDBFindResult,
+    fromMongoDBDocumentToDocumentEntityMapper
+})
+
+export { fromMongoDBDocumentToDocumentEntityMapper, fromMongoDBFindToDocumentEntityListMapper }
