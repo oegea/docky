@@ -113,6 +113,21 @@ class MongoDBDocumentRepository implements DocumentRepository {
 
         return result
     }
+
+    async update(documentEntity: DocumentEntity): Promise<Boolean> {
+        const id = documentEntity.getId()
+        const collectionName = documentEntity.getCollection()
+        const document = documentEntity.getPlainObject()
+
+        const collection = this.getMongoDbCollection(collectionName)
+        try{
+           const result = await collection.replaceOne({'_id': new ObjectId(id)}, document);
+           return (result.modifiedCount > 0)
+        }catch(e) {
+            console.error(e)
+            return false
+        }
+    }
 }
 
 export { MongoDBDocumentRepository }

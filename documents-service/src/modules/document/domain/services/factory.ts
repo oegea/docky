@@ -7,6 +7,7 @@ import { CreateDocumentService } from './CreateDocumentService'
 import { GetDocumentService } from './GetDocumentService'
 import { DeleteDocumentService } from './DeleteDocumentService'
 import { FindDocumentService } from './FindDocumentService'
+import { PatchDocumentService } from './PatchDocumentService'
 
 const createDocumentService = (): CreateDocumentService => new CreateDocumentService({
   documentRepository: documentRepository()
@@ -25,4 +26,9 @@ const getDocumentService = (): GetDocumentService => new GetDocumentService({
   documentRepository: documentRepository()
 })
 
-export { createDocumentService, deleteDocumentService, findDocumentService, getDocumentService }
+const patchDocumentService = (): PatchDocumentService => new PatchDocumentService({
+  documentRepository: documentRepository(),
+  getDocumentService: getDocumentService()
+})
+
+export { createDocumentService, deleteDocumentService, findDocumentService, getDocumentService, patchDocumentService }

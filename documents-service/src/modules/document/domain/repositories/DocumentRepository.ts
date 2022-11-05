@@ -8,5 +8,6 @@ interface DocumentRepository {
   delete: (documentEntity: DocumentEntity) => Promise<Boolean>
   find: (findDocumentRequestValueObject: FindDocumentRequestValueObject) => Promise<DocumentEntityListValueObject>
   get: (documentEntity: DocumentEntity) => Promise<DocumentEntity>
+  update: (documentEntity: DocumentEntity) => Promise<Boolean>
 }
 export { DocumentRepository }

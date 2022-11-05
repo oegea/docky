@@ -8,13 +8,15 @@ import {
     createDocumentService, 
     deleteDocumentService, 
     getDocumentService,
-    findDocumentService 
+    findDocumentService,
+    patchDocumentService 
 } from '../../domain/services/factory'
 // Use cases
 import { CreateDocumentUseCase } from './CreateDocumentUseCase'
 import { DeleteDocumentUseCase } from './DeleteDocumentUseCase'
 import { GetDocumentUseCase } from './GetDocumentUseCase'
 import { FindDocumentUseCase } from './FindDocumentUseCase'
+import { PatchDocumentUseCase } from './PatchDocumentUseCase'
 
 const createDocumentUseCase = (): CreateDocumentUseCase => new CreateDocumentUseCase({
     createDocumentRequestValueObject,
@@ -36,4 +38,9 @@ const findDocumentUseCase = (): FindDocumentUseCase => new FindDocumentUseCase({
     findDocumentService: findDocumentService()
 })
 
-export { createDocumentUseCase, deleteDocumentUseCase, getDocumentUseCase, findDocumentUseCase }
+const patchDocumentUseCase = (): PatchDocumentUseCase => new PatchDocumentUseCase({
+    documentEntity,
+    patchDocumentService: patchDocumentService()
+})
+
+export { createDocumentUseCase, deleteDocumentUseCase, getDocumentUseCase, findDocumentUseCase, patchDocumentUseCase }

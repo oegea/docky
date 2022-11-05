@@ -44,14 +44,22 @@ class DocumentEntity {
       return this.collection
     }
 
-    public toJson() {
+    public getPlainObject() {
       let jsonResult = {
-        id: this.id
       }
 
       this.values.forEach(keyValue => {
         jsonResult[keyValue.key] = keyValue.value
       })
+
+      return jsonResult
+    }
+
+    public toJson(): object {
+      let jsonResult = {
+        id: this.id,
+        ...this.getPlainObject()
+      }
 
       return jsonResult
     }

@@ -4,7 +4,8 @@ import {
   createDocumentController, 
   deleteDocumentController, 
   getDocumentController,
-  findDocumentController 
+  findDocumentController,
+  patchDocumentController 
 } from './modules/document/infrastructure/controllers/factory'
 import { expressValidateTokenMiddleware } from 'passager-backend-shared-kernel'
 
@@ -28,6 +29,10 @@ app.delete('/documents/:collection/:id', (req, res) => {
 
 app.post('/documents/:collection/find', (req, res) => {
   findDocumentController(req, res).execute()
+})
+
+app.patch('/documents/:collection/:id', (req, res) => {
+  patchDocumentController(req, res).execute()
 })
 
 app.listen(process.env.DOCS_PORT, () => {
