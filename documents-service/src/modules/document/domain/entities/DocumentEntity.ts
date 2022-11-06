@@ -1,4 +1,5 @@
 export const INTERNAL_FIELDS_PREFIX = '_'
+export const FIELD_ID_NAME = 'id'
 
 class DocumentEntity {
 
@@ -71,7 +72,7 @@ class DocumentEntity {
     }
 
     private hasInvalidFieldNames(): boolean {
-      const invalidFieldNames = this.values.filter((documentValue) => documentValue.key.startsWith(INTERNAL_FIELDS_PREFIX))
+      const invalidFieldNames = this.values.filter((documentValue) => documentValue.key.startsWith(INTERNAL_FIELDS_PREFIX) || documentValue.key === FIELD_ID_NAME)
 
       return invalidFieldNames.length > 0
     }
