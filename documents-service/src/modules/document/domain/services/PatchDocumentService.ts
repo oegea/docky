@@ -1,20 +1,15 @@
 import { DocumentEntity } from '../entities/DocumentEntity'
 import { DocumentRepository } from '../repositories/DocumentRepository'
-import { GetDocumentService } from './GetDocumentService'
 
 class PatchDocumentService {
   private readonly documentRepository: DocumentRepository
-  private readonly getDocumentService: GetDocumentService
 
   constructor ({
-    documentRepository,
-    getDocumentService
+    documentRepository
   }: {
-    documentRepository: DocumentRepository,
-    getDocumentService: GetDocumentService
+    documentRepository: DocumentRepository
   }) {
     this.documentRepository = documentRepository
-    this.getDocumentService = getDocumentService
   }
 
   public async execute ({
@@ -23,30 +18,12 @@ class PatchDocumentService {
     documentEntity: DocumentEntity
   }): Promise<DocumentEntity> {
 
-    // Get the existing document
-    const existingDocument = await this.getDocumentService.execute({documentEntity})
+    const documentUpdateResult = await this.documentRepository.patch(documentEntity)
 
-    // Merge documents
-    const existingFields = existingDocument.getPlainObject()
-    const updatedFields = documentEntity.getPlainObject()
-
-    const mergeResult = {
-        ...existingFields,
-        ...updatedFields
-    }
-
-    const updatedDocument = new DocumentEntity({
-        id: documentEntity.getId(),
-        collection: documentEntity.getCollection(),
-        documentPlainObject: mergeResult
-    })
-
-    const documentUpdateResult = await this.documentRepository.update(updatedDocument)
-
-    if (documentUpdateResult === null ||  documentUpdateResult === false)
+    if (documentUpdateResult === null)
         throw new Error('PatchDocumentService: error while patching a document')
 
-    return updatedDocument
+    return documentUpdateResult
   }
 }
 

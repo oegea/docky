@@ -27,8 +27,7 @@ const getDocumentService = (): GetDocumentService => new GetDocumentService({
 })
 
 const patchDocumentService = (): PatchDocumentService => new PatchDocumentService({
-  documentRepository: documentRepository(),
-  getDocumentService: getDocumentService()
+  documentRepository: documentRepository()
 })
 
 export { createDocumentService, deleteDocumentService, findDocumentService, getDocumentService, patchDocumentService }

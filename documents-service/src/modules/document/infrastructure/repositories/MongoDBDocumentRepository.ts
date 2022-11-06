@@ -76,13 +76,7 @@ class MongoDBDocumentRepository implements DocumentRepository {
         const id = documentEntity.getId()
 
         const collection = this.getMongoDbCollection(collectionName)
-        let result = null
-        try{
-            result = await collection.findOne({'_id': new ObjectId(id)})
-        }catch(e) {
-            console.error(e)
-            return null
-        }
+        const result = await this.getMongoDBDocumentById(collection, id)
         
         if(result === null)
             return null
@@ -94,6 +88,18 @@ class MongoDBDocumentRepository implements DocumentRepository {
         }).map()
 
         return documentEntityResult
+    }
+
+    private async getMongoDBDocumentById(collection: any, id: string): Promise<Object> {
+        let result = null
+        try{
+            result = await collection.findOne({'_id': new ObjectId(id)})
+        }catch(e) {
+            console.error(e)
+            return null
+        }
+        
+        return result
     }
 
     async find(findDocumentRequestValueObject: FindDocumentRequestValueObject): Promise<DocumentEntityListValueObject> {
@@ -114,18 +120,30 @@ class MongoDBDocumentRepository implements DocumentRepository {
         return result
     }
 
-    async update(documentEntity: DocumentEntity): Promise<Boolean> {
+    async patch(documentEntity: DocumentEntity): Promise<DocumentEntity> {
         const id = documentEntity.getId()
         const collectionName = documentEntity.getCollection()
         const document = documentEntity.getPlainObject()
-
         const collection = this.getMongoDbCollection(collectionName)
+        
         try{
-           const result = await collection.replaceOne({'_id': new ObjectId(id)}, document);
-           return (result.modifiedCount > 0)
+            await collection.updateOne({'_id': new ObjectId(id)}, {
+                "$set": document
+            })
+
+            const result = await this.getMongoDBDocumentById(collection, id)
+
+            if (result === null)
+                return null
+
+            return await this.fromMongoDBDocumentToDocumentEntityMapper({
+                collection: collectionName,
+                documentPlainObject: result
+            }).map()
+            
         }catch(e) {
             console.error(e)
-            return false
+            return null
         }
     }
 }
