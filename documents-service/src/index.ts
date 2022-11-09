@@ -15,6 +15,8 @@ const app = express()
 app.use(expressValidateTokenMiddleware)
 app.use(express.json())
 
+/* Documents */
+
 app.post('/documents/:collection', (req, res) => {
   createDocumentController(req, res).execute()
 })
@@ -33,6 +35,28 @@ app.post('/documents/:collection/find', (req, res) => {
 
 app.patch('/documents/:collection/:id', (req, res) => {
   patchDocumentController(req, res).execute()
+})
+
+/* Subdocuments */
+
+app.post('/document/:collection/:parentId/:subcollection', (req, res) => {
+  res.status(501).json({success: false, message: 'Subdocument creation is not yet implemented'})
+})
+
+app.get('/documents/:collection/:parentId/:subcollection/:id', (req, res) => {
+  res.status(501).json({success: false, message: 'Subdocument get is not yet implemented'})
+})
+
+app.delete('/document/:collection/:parentId/:subcollection/:id', (req, res) => {
+  res.status(501).json({success: false, message: 'Subdocument delete is not yet implemented'})
+})
+
+app.post('/documents/:collection/:parentId/:subcollection/find', (req, res) => {
+  res.status(501).json({success: false, message: 'Subdocument find is not yet implemented'})
+})
+
+app.patch('/documents/:collection/:parentId/:subcollection/:id', (req, res) => {
+  res.status(501).json({success: false, message: 'Subdocument update is not yet implemented'})
 })
 
 app.listen(process.env.DOCS_PORT, () => {
