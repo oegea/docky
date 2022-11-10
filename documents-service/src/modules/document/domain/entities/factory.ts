@@ -1,4 +1,5 @@
 import { DocumentEntity } from './DocumentEntity'
+import { SubDocumentEntity } from './SubDocumentEntity'
 
 const documentEntity = async({
     id,
@@ -20,4 +21,30 @@ const documentEntity = async({
   return documentEntity
 }
 
-export { documentEntity }
+const subDocumentEntity = async({
+  collection,
+  documentPlainObject = {},
+  id,
+  parentId,
+  subCollection
+}: {
+  collection: string,
+  documentPlainObject: object,
+  id: string,
+  parentId: string,
+  subCollection: string
+}): Promise<SubDocumentEntity> => {
+  const subDocumentEntity = new SubDocumentEntity({
+    id,
+    collection,
+    documentPlainObject,
+    parentId,
+    subCollection
+  })
+
+  await subDocumentEntity.validate()
+
+  return subDocumentEntity
+}
+
+export { documentEntity, subDocumentEntity }

@@ -3,30 +3,21 @@ export const FIELD_ID_NAME = 'id'
 
 class DocumentEntity {
 
-    private readonly id: string
-    private readonly collection: string
-    private readonly parentId: String
-    private readonly subCollection: string
-    private readonly values: {key: string, value: object}[]
+    protected id: string
+    protected collection: string
+    protected values: {key: string, value: object}[]
   
     constructor ({
       id,
       collection,
-      parentId = null,
-      subCollection = null,
       documentPlainObject = {}
     }: {
       id: string,
       collection: string,
-      parentId?: string,
-      subCollection?: string,
       documentPlainObject?: object
     }) {
       this.id = id
       this.collection = collection
-      this.parentId = parentId
-      this.subCollection = subCollection
-
       this.values = this.getValuesFromPlainObject(documentPlainObject)
     }
 
