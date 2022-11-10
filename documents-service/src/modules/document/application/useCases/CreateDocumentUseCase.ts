@@ -1,25 +1,25 @@
-import { CreateDocumentRequestValueObject } from '../../domain/valueObjects/CreateDocumentRequestValueObject'
+import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { CreateDocumentService } from '../../domain/services/CreateDocumentService'
 
 class CreateDocumentUseCase {
-  private readonly createDocumentRequestValueObject: ({ collection, document }: {collection: string, document: object}) => Promise<CreateDocumentRequestValueObject>
+  private readonly documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
   private readonly createDocumentService: CreateDocumentService
 
   constructor ({
-    createDocumentRequestValueObject,
+    documentEntity,
     createDocumentService
   }: {
-    createDocumentRequestValueObject: ({ collection, document }: {collection: string, document: object}) => Promise<CreateDocumentRequestValueObject>
+    documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
     createDocumentService: CreateDocumentService
   }) {
-    this.createDocumentRequestValueObject = createDocumentRequestValueObject
+    this.documentEntity = documentEntity
     this.createDocumentService = createDocumentService
   }
 
   public async execute ({ collection, document }: {collection: string, document: object}): Promise<object> {
     try {
-      const createDocumentRequestValueObject = await this.createDocumentRequestValueObject({ collection, document })
-      const documentEntityResult =  await this.createDocumentService.execute({ createDocumentRequestValueObject })
+      const documentEntity = await this.documentEntity({ id: null, collection, documentPlainObject: document })
+      const documentEntityResult =  await this.createDocumentService.execute({ documentEntity })
       return documentEntityResult.toJson()
     } catch (e) {
       throw e.message

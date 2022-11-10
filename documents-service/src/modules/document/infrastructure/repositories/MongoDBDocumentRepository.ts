@@ -1,5 +1,4 @@
 // Domain
-import { CreateDocumentRequestValueObject } from '../../domain/valueObjects/CreateDocumentRequestValueObject'
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { DocumentEntityListValueObject } from '../../domain/valueObjects/DocumentEntityListValueObject'
 import { DocumentRepository } from '../../domain/repositories/DocumentRepository'
@@ -35,10 +34,10 @@ class MongoDBDocumentRepository implements DocumentRepository {
         return collection
     }
 
-    async create (createDocumentRequestValueObject: CreateDocumentRequestValueObject): Promise<DocumentEntity> {
+    async create (documentEntity: DocumentEntity): Promise<DocumentEntity> {
         
-        const collectionName = createDocumentRequestValueObject.getCollection()
-        const document = createDocumentRequestValueObject.getDocument()
+        const collectionName = documentEntity.getCollection()
+        const document = documentEntity.getPlainObject()
         const collection = this.getMongoDbCollection(collectionName)
         try{
             await collection.insertOne(document)

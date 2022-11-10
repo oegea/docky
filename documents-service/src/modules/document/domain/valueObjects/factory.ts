@@ -1,21 +1,5 @@
-import { CreateDocumentRequestValueObject } from './CreateDocumentRequestValueObject'
 import { FindDocumentRequestValueObject } from './FindDocumentRequestValueObject'
 import { DocumentEntityListValueObject } from './DocumentEntityListValueObject'
-
-const createDocumentRequestValueObject = async({
-  collection,
-  document
-}: {
-  collection: string,
-  document: object
-}): Promise<CreateDocumentRequestValueObject> => {
-  const createDocumentRequestValueObject = new CreateDocumentRequestValueObject({
-    collection,
-    document
-  })
-
-  return createDocumentRequestValueObject
-}
 
 const documentEntityListValueObject = async(): Promise<DocumentEntityListValueObject> => new DocumentEntityListValueObject()
 
@@ -34,4 +18,4 @@ const findDocumentRequestValueObject = async({
   return findDocumentRequestValueObject
 }
 
-export { createDocumentRequestValueObject, documentEntityListValueObject, findDocumentRequestValueObject }
+export { documentEntityListValueObject, findDocumentRequestValueObject }

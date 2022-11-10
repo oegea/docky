@@ -1,4 +1,3 @@
-import { CreateDocumentRequestValueObject } from '../valueObjects/CreateDocumentRequestValueObject'
 import { DocumentRepository } from '../repositories/DocumentRepository'
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 
@@ -14,12 +13,12 @@ class CreateDocumentService {
   }
 
   public async execute ({
-    createDocumentRequestValueObject
+    documentEntity
   }: {
-    createDocumentRequestValueObject: CreateDocumentRequestValueObject
+    documentEntity: DocumentEntity
   }): Promise<DocumentEntity> {
 
-    const documentCreationResult = await this.documentRepository.create(createDocumentRequestValueObject)
+    const documentCreationResult = await this.documentRepository.create(documentEntity)
 
     if (documentCreationResult === null)
         throw new Error('CreateDocumentService: error while creating a new document')

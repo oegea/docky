@@ -1,6 +1,5 @@
 // Domain
-import { 
-    createDocumentRequestValueObject, 
+import {
     findDocumentRequestValueObject 
 } from '../../domain/valueObjects/factory'
 import { documentEntity } from '../../domain/entities/factory'
@@ -19,7 +18,7 @@ import { FindDocumentUseCase } from './FindDocumentUseCase'
 import { PatchDocumentUseCase } from './PatchDocumentUseCase'
 
 const createDocumentUseCase = (): CreateDocumentUseCase => new CreateDocumentUseCase({
-    createDocumentRequestValueObject,
+    documentEntity,
     createDocumentService: createDocumentService()
 })
 
