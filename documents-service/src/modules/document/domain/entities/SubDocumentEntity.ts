@@ -2,7 +2,7 @@ import { DocumentEntity } from "./DocumentEntity"
 
 class SubDocumentEntity extends DocumentEntity {
 
-    private readonly parentId: String
+    private readonly parentId: string
     private readonly subCollection: string
   
     constructor ({
@@ -23,11 +23,11 @@ class SubDocumentEntity extends DocumentEntity {
       this.subCollection = subCollection
     }
 
-    public getParentId(): String{
+    public getParentId(): string{
       return this.parentId
     }
 
-    public getSubCollection(): String {
+    public getSubCollection(): string {
       return this.subCollection
     }
 
