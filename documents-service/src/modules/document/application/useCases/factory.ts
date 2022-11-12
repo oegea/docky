@@ -2,9 +2,10 @@
 import {
     findDocumentRequestValueObject 
 } from '../../domain/valueObjects/factory'
-import { documentEntity } from '../../domain/entities/factory'
+import { documentEntity, subDocumentEntity } from '../../domain/entities/factory'
 import { 
-    createDocumentService, 
+    createDocumentService,
+    createSubDocumentService, 
     deleteDocumentService, 
     getDocumentService,
     findDocumentService,
@@ -12,6 +13,7 @@ import {
 } from '../../domain/services/factory'
 // Use cases
 import { CreateDocumentUseCase } from './CreateDocumentUseCase'
+import { CreateSubDocumentUseCase } from './CreateSubDocumentUseCase'
 import { DeleteDocumentUseCase } from './DeleteDocumentUseCase'
 import { GetDocumentUseCase } from './GetDocumentUseCase'
 import { FindDocumentUseCase } from './FindDocumentUseCase'
@@ -20,6 +22,11 @@ import { PatchDocumentUseCase } from './PatchDocumentUseCase'
 const createDocumentUseCase = (): CreateDocumentUseCase => new CreateDocumentUseCase({
     documentEntity,
     createDocumentService: createDocumentService()
+})
+
+const createSubDocumentUseCase = (): CreateSubDocumentUseCase => new CreateSubDocumentUseCase({
+    subDocumentEntity,
+    createSubDocumentService: createSubDocumentService()
 })
 
 const deleteDocumentUseCase = (): DeleteDocumentUseCase => new DeleteDocumentUseCase({
@@ -42,4 +49,11 @@ const patchDocumentUseCase = (): PatchDocumentUseCase => new PatchDocumentUseCas
     patchDocumentService: patchDocumentService()
 })
 
-export { createDocumentUseCase, deleteDocumentUseCase, getDocumentUseCase, findDocumentUseCase, patchDocumentUseCase }
+export { 
+    createDocumentUseCase, 
+    createSubDocumentUseCase,
+    deleteDocumentUseCase, 
+    getDocumentUseCase, 
+    findDocumentUseCase, 
+    patchDocumentUseCase 
+}
