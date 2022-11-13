@@ -30,6 +30,7 @@ class CreateSubDocumentService {
       await this.getDocumentService.execute({documentEntity: parentDocumentEntity})
       return true
     } catch(exception) {
+      console.log(exception)
       return false
     }
 

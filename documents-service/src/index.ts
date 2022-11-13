@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv'
 import express from 'express'
 import { 
   createDocumentController, 
+  createSubDocumentController,
   deleteDocumentController, 
   getDocumentController,
   findDocumentController,
@@ -39,8 +40,8 @@ app.patch('/documents/:collection/:id', (req, res) => {
 
 /* Subdocuments */
 
-app.post('/document/:collection/:parentId/:subcollection', (req, res) => {
-  res.status(501).json({success: false, message: 'Subdocument creation is not yet implemented'})
+app.post('/documents/:collection/:parentId/:subCollection', (req, res) => {
+  createSubDocumentController(req, res).execute()
 })
 
 app.get('/documents/:collection/:parentId/:subcollection/:id', (req, res) => {

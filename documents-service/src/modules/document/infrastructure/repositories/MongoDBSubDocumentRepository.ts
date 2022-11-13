@@ -7,10 +7,10 @@ import { MongoDBConnection } from 'passager-backend-shared-kernel'
 
 class MongoDBSubDocumentRepository implements SubDocumentRepository {
 
-
     constructor() {
     }
 
+    // TODO: Move this to a common class to handle common MongoDb operations
     getMongoDbCollection (collectionName: string) {
         const mongoDbClient = MongoDBConnection.getConnection()
 
@@ -20,25 +20,42 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
         return collection
     }
 
-    async create (documentEntity: SubDocumentEntity): Promise<SubDocumentEntity> {
-        return null
-        /*const collectionName = documentEntity.getCollection()
-        const document = documentEntity.getPlainObject()
+    private getPlainSubDocument (subDocumentEntity: SubDocumentEntity): object {
+        return {
+            _id: new ObjectId(),
+            ...subDocumentEntity.getPlainObject()
+        }
+    }
+
+    private async insertSubDocument (subDocumentEntity: SubDocumentEntity, plainSubDocument: object): Promise<string> {
+        const collectionName = subDocumentEntity.getCollection()
+        const subCollectionName = subDocumentEntity.getSubCollection()
+        const parentId = subDocumentEntity.getParentId()
         const collection = this.getMongoDbCollection(collectionName)
-        try{
-            await collection.insertOne(document)
-        }catch(e) {
-            console.error(e)
+
+        try {
+            await collection.updateOne({'_id': new ObjectId(parentId)}, {
+                "$push": {
+                    [`_${subCollectionName}`]: plainSubDocument
+                }
+            })
+            return plainSubDocument['_id'].toString()
+        } catch (e) {
             return null
         }
+    }
 
-        // Map to DocumentEntity
-        const documentEntityResult = await this.fromMongoDBDocumentToDocumentEntityMapper({
-            collection: collectionName,
-            documentPlainObject: document
-        }).map()
+    async create (subDocumentEntity: SubDocumentEntity): Promise<SubDocumentEntity> {
 
-        return documentEntityResult*/
+        const plainSubDocument = this.getPlainSubDocument(subDocumentEntity)
+        const subDocumentId = await this.insertSubDocument(subDocumentEntity, plainSubDocument)
+
+        if (subDocumentId === null)
+            return null
+
+        subDocumentEntity.setId(subDocumentId)
+
+        return subDocumentEntity
     }
 }
 

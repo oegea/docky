@@ -22,6 +22,9 @@ class DocumentEntity {
     }
 
     private getValuesFromPlainObject(document: object): {key: string, value: object}[] {
+      if (document === null)
+        return []
+
       const documentKeys = Object.keys(document)
       const values = documentKeys
         .map((documentKey) => ({key: documentKey, value: document[documentKey]}))
@@ -30,6 +33,10 @@ class DocumentEntity {
 
     public getId() {
       return this.id
+    }
+
+    public setId(id: string) {
+      this.id = id
     }
 
     public getCollection() {
