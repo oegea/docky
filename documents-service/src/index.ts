@@ -5,6 +5,7 @@ import {
   createSubDocumentController,
   deleteDocumentController, 
   getDocumentController,
+  getSubDocumentController,
   findDocumentController,
   patchDocumentController 
 } from './modules/document/infrastructure/controllers/factory'
@@ -44,19 +45,19 @@ app.post('/documents/:collection/:parentId/:subCollection', (req, res) => {
   createSubDocumentController(req, res).execute()
 })
 
-app.get('/documents/:collection/:parentId/:subcollection/:id', (req, res) => {
-  res.status(501).json({success: false, message: 'Subdocument get is not yet implemented'})
+app.get('/documents/:collection/:parentId/:subCollection/:id', (req, res) => {
+  getSubDocumentController(req, res).execute()
 })
 
-app.delete('/document/:collection/:parentId/:subcollection/:id', (req, res) => {
+app.delete('/document/:collection/:parentId/:subCollection/:id', (req, res) => {
   res.status(501).json({success: false, message: 'Subdocument delete is not yet implemented'})
 })
 
-app.post('/documents/:collection/:parentId/:subcollection/find', (req, res) => {
+app.post('/documents/:collection/:parentId/:subCollection/find', (req, res) => {
   res.status(501).json({success: false, message: 'Subdocument find is not yet implemented'})
 })
 
-app.patch('/documents/:collection/:parentId/:subcollection/:id', (req, res) => {
+app.patch('/documents/:collection/:parentId/:subCollection/:id', (req, res) => {
   res.status(501).json({success: false, message: 'Subdocument update is not yet implemented'})
 })
 

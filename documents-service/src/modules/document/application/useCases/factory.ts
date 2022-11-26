@@ -8,6 +8,7 @@ import {
     createSubDocumentService, 
     deleteDocumentService, 
     getDocumentService,
+    getSubDocumentService,
     findDocumentService,
     patchDocumentService 
 } from '../../domain/services/factory'
@@ -16,6 +17,7 @@ import { CreateDocumentUseCase } from './CreateDocumentUseCase'
 import { CreateSubDocumentUseCase } from './CreateSubDocumentUseCase'
 import { DeleteDocumentUseCase } from './DeleteDocumentUseCase'
 import { GetDocumentUseCase } from './GetDocumentUseCase'
+import { GetSubDocumentUseCase } from './GetSubDocumentUseCase'
 import { FindDocumentUseCase } from './FindDocumentUseCase'
 import { PatchDocumentUseCase } from './PatchDocumentUseCase'
 
@@ -39,6 +41,11 @@ const getDocumentUseCase = (): GetDocumentUseCase => new GetDocumentUseCase({
     getDocumentService: getDocumentService()
 })
 
+const getSubDocumentUseCase = (): GetSubDocumentUseCase => new GetSubDocumentUseCase({
+    subDocumentEntity,
+    getSubDocumentService: getSubDocumentService()
+})
+
 const findDocumentUseCase = (): FindDocumentUseCase => new FindDocumentUseCase({
     findDocumentRequestValueObject,
     findDocumentService: findDocumentService()
@@ -53,7 +60,8 @@ export {
     createDocumentUseCase, 
     createSubDocumentUseCase,
     deleteDocumentUseCase, 
-    getDocumentUseCase, 
+    getDocumentUseCase,
+    getSubDocumentUseCase, 
     findDocumentUseCase, 
     patchDocumentUseCase 
 }
