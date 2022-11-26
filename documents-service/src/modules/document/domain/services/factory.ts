@@ -9,6 +9,7 @@ import { documentEntity } from '../entities/factory'
 import { CreateDocumentService } from './CreateDocumentService'
 import { CreateSubDocumentService } from './CreateSubDocumentService'
 import { GetDocumentService } from './GetDocumentService'
+import { GetSubDocumentService } from './GetSubDocumentService'
 import { DeleteDocumentService } from './DeleteDocumentService'
 import { FindDocumentService } from './FindDocumentService'
 import { PatchDocumentService } from './PatchDocumentService'
@@ -36,8 +37,12 @@ const getDocumentService = (): GetDocumentService => new GetDocumentService({
   documentRepository: documentRepository()
 })
 
+const getSubDocumentService = (): GetSubDocumentService => new GetSubDocumentService({
+  subDocumentRepository: subDocumentRepository()
+})
+
 const patchDocumentService = (): PatchDocumentService => new PatchDocumentService({
   documentRepository: documentRepository()
 })
 
-export { createDocumentService, createSubDocumentService, deleteDocumentService, findDocumentService, getDocumentService, patchDocumentService }
+export { createDocumentService, createSubDocumentService, deleteDocumentService, findDocumentService, getDocumentService, getSubDocumentService, patchDocumentService }
