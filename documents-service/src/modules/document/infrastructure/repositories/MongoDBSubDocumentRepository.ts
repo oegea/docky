@@ -20,6 +20,38 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
         return collection
     }
 
+    private async getMongoDBSubDocumentById(collection: any, parentId: string, id: string, subCollection: string): Promise<Object> {
+        let result = null
+        try{
+            result = await collection.findOne(
+                {
+                    '_id': new ObjectId(parentId),
+                    [`_${subCollection}._id`]: new ObjectId(id)
+                },
+                {
+                    projection: {
+                        '_id': 0, 
+                        [`_${subCollection}.$`]: 1
+                    }
+                }
+            )
+
+        }catch(e) {
+            console.error(e)
+            return null
+        }
+
+        if (
+            result !== null && 
+            result.hasOwnProperty(`_${subCollection}`) &&
+            Array.isArray(result[`_${subCollection}`]) &&
+            result[`_${subCollection}`].length === 1
+        )
+            return result[`_${subCollection}`][0]
+        
+        return null
+    }
+
     private getPlainSubDocument (subDocumentEntity: SubDocumentEntity): object {
         return {
             _id: new ObjectId(),
@@ -54,6 +86,29 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
             return null
 
         subDocumentEntity.setId(subDocumentId)
+
+        return subDocumentEntity
+    }
+
+    async get (subDocumentEntity: SubDocumentEntity): Promise<SubDocumentEntity> {
+        const collectionName = subDocumentEntity.getCollection()
+        const subCollection = subDocumentEntity.getSubCollection()
+        const id = subDocumentEntity.getId()
+        const parentId = subDocumentEntity.getParentId()
+
+        const collection = this.getMongoDbCollection(collectionName)
+
+        const result = await this.getMongoDBSubDocumentById(collection, parentId, id, subCollection)
+
+        if (result === null)
+            return null
+
+        let documentPlainObject = {
+            ...result
+        }
+        delete documentPlainObject['_id']
+
+        await subDocumentEntity.setDocumentPlainObject(documentPlainObject)
 
         return subDocumentEntity
     }

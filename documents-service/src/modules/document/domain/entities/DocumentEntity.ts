@@ -54,6 +54,11 @@ class DocumentEntity {
       return jsonResult
     }
 
+    public async setDocumentPlainObject(documentPlainObject) {
+      this.values = this.getValuesFromPlainObject(documentPlainObject)
+      await this.validate()
+    }
+
     public toJson(): object {
       let jsonResult = {
         id: this.id,

@@ -1,7 +1,7 @@
 import { SubDocumentRepository } from '../repositories/SubDocumentRepository'
 import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 
-class GetDocumentService {
+class GetSubDocumentService {
   private readonly subDocumentRepository: SubDocumentRepository
 
   constructor ({
@@ -27,4 +27,4 @@ class GetDocumentService {
   }
 }
 
-export { GetDocumentService }
+export { GetSubDocumentService }
