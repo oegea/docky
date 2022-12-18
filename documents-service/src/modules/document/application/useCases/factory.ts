@@ -7,6 +7,7 @@ import {
     createDocumentService,
     createSubDocumentService, 
     deleteDocumentService, 
+    deleteSubDocumentService,
     getDocumentService,
     getSubDocumentService,
     findDocumentService,
@@ -16,6 +17,7 @@ import {
 import { CreateDocumentUseCase } from './CreateDocumentUseCase'
 import { CreateSubDocumentUseCase } from './CreateSubDocumentUseCase'
 import { DeleteDocumentUseCase } from './DeleteDocumentUseCase'
+import { DeleteSubDocumentUseCase } from './DeleteSubDocumentUseCase'
 import { GetDocumentUseCase } from './GetDocumentUseCase'
 import { GetSubDocumentUseCase } from './GetSubDocumentUseCase'
 import { FindDocumentUseCase } from './FindDocumentUseCase'
@@ -34,6 +36,11 @@ const createSubDocumentUseCase = (): CreateSubDocumentUseCase => new CreateSubDo
 const deleteDocumentUseCase = (): DeleteDocumentUseCase => new DeleteDocumentUseCase({
     documentEntity,
     deleteDocumentService: deleteDocumentService()
+})
+
+const deleteSubDocumentUseCase = (): DeleteSubDocumentUseCase => new DeleteSubDocumentUseCase({
+    subDocumentEntity,
+    deleteSubDocumentService: deleteSubDocumentService()
 })
 
 const getDocumentUseCase = (): GetDocumentUseCase => new GetDocumentUseCase({
@@ -60,6 +67,7 @@ export {
     createDocumentUseCase, 
     createSubDocumentUseCase,
     deleteDocumentUseCase, 
+    deleteSubDocumentUseCase,
     getDocumentUseCase,
     getSubDocumentUseCase, 
     findDocumentUseCase, 

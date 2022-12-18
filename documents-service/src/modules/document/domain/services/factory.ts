@@ -11,6 +11,7 @@ import { CreateSubDocumentService } from './CreateSubDocumentService'
 import { GetDocumentService } from './GetDocumentService'
 import { GetSubDocumentService } from './GetSubDocumentService'
 import { DeleteDocumentService } from './DeleteDocumentService'
+import { DeleteSubDocumentService } from './DeleteSubDocumentService'
 import { FindDocumentService } from './FindDocumentService'
 import { PatchDocumentService } from './PatchDocumentService'
 
@@ -29,6 +30,11 @@ const deleteDocumentService = (): DeleteDocumentService => new DeleteDocumentSer
   getDocumentService: getDocumentService()
 })
 
+const deleteSubDocumentService = (): DeleteSubDocumentService => new DeleteSubDocumentService({
+  subDocumentRepository: subDocumentRepository(),
+  getSubDocumentService: getSubDocumentService()
+})
+
 const findDocumentService = (): FindDocumentService => new FindDocumentService({
   documentRepository: documentRepository()
 })
@@ -45,4 +51,13 @@ const patchDocumentService = (): PatchDocumentService => new PatchDocumentServic
   documentRepository: documentRepository()
 })
 
-export { createDocumentService, createSubDocumentService, deleteDocumentService, findDocumentService, getDocumentService, getSubDocumentService, patchDocumentService }
+export { 
+  createDocumentService, 
+  createSubDocumentService, 
+  deleteDocumentService, 
+  deleteSubDocumentService, 
+  findDocumentService, 
+  getDocumentService, 
+  getSubDocumentService, 
+  patchDocumentService 
+}

@@ -112,6 +112,29 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
 
         return subDocumentEntity
     }
+
+    async delete (subDocumentEntity: SubDocumentEntity): Promise<boolean> {
+        const collectionName = subDocumentEntity.getCollection()
+        const subCollection = subDocumentEntity.getSubCollection()
+        const id = subDocumentEntity.getId()
+        const parentId = subDocumentEntity.getParentId()
+
+        const collection = this.getMongoDbCollection(collectionName)
+
+        try {
+            await collection.updateOne({'_id': new ObjectId(parentId)}, {
+                "$pull": {
+                    [`_${subCollection}`]: {
+                        '_id': new ObjectId(id)
+                    }
+                }
+            })
+            return true
+        } catch (e) {
+            return false
+        }
+
+    }
 }
 
 export { MongoDBSubDocumentRepository }

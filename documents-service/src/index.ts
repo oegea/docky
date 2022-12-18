@@ -3,7 +3,8 @@ import express from 'express'
 import { 
   createDocumentController, 
   createSubDocumentController,
-  deleteDocumentController, 
+  deleteDocumentController,
+  deleteSubDocumentController, 
   getDocumentController,
   getSubDocumentController,
   findDocumentController,
@@ -49,8 +50,8 @@ app.get('/documents/:collection/:parentId/:subCollection/:id', (req, res) => {
   getSubDocumentController(req, res).execute()
 })
 
-app.delete('/document/:collection/:parentId/:subCollection/:id', (req, res) => {
-  res.status(501).json({success: false, message: 'Subdocument delete is not yet implemented'})
+app.delete('/documents/:collection/:parentId/:subCollection/:id', (req, res) => {
+  deleteSubDocumentController(req, res).execute()
 })
 
 app.post('/documents/:collection/:parentId/:subCollection/find', (req, res) => {
