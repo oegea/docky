@@ -1,8 +1,11 @@
 import { FindDocumentRequestValueObject } from './FindDocumentRequestValueObject'
 import { FindSubDocumentRequestValueObject } from './FindSubDocumentRequestValueObject'
 import { DocumentEntityListValueObject } from './DocumentEntityListValueObject'
+import { SubDocumentEntityListValueObject } from './SubDocumentEntityListValueObject'
 
 const documentEntityListValueObject = async(): Promise<DocumentEntityListValueObject> => new DocumentEntityListValueObject()
+
+const subDocumentEntityListValueObject = async(): Promise<SubDocumentEntityListValueObject> => new SubDocumentEntityListValueObject()
 
 const findDocumentRequestValueObject = async({
   collection,
@@ -40,4 +43,4 @@ const findSubDocumentRequestValueObject = async({
   return findSubDocumentRequestValueObject
 }
 
-export { documentEntityListValueObject, findDocumentRequestValueObject, findSubDocumentRequestValueObject }
+export { documentEntityListValueObject, subDocumentEntityListValueObject, findDocumentRequestValueObject, findSubDocumentRequestValueObject }
