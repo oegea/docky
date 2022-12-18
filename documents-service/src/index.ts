@@ -8,7 +8,9 @@ import {
   getDocumentController,
   getSubDocumentController,
   findDocumentController,
-  patchDocumentController 
+  findSubDocumentController,
+  patchDocumentController,
+  patchSubDocumentController
 } from './modules/document/infrastructure/controllers/factory'
 import { expressValidateTokenMiddleware } from 'passager-backend-shared-kernel'
 
@@ -55,11 +57,11 @@ app.delete('/documents/:collection/:parentId/:subCollection/:id', (req, res) => 
 })
 
 app.post('/documents/:collection/:parentId/:subCollection/find', (req, res) => {
-  res.status(501).json({success: false, message: 'Subdocument find is not yet implemented'})
+  findSubDocumentController(req, res).execute()
 })
 
 app.patch('/documents/:collection/:parentId/:subCollection/:id', (req, res) => {
-  res.status(501).json({success: false, message: 'Subdocument update is not yet implemented'})
+  patchSubDocumentController(req, res).execute()
 })
 
 app.listen(process.env.DOCS_PORT, () => {
