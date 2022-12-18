@@ -1,6 +1,7 @@
 // Domain
 import {
-    findDocumentRequestValueObject 
+    findDocumentRequestValueObject,
+    findSubDocumentRequestValueObject
 } from '../../domain/valueObjects/factory'
 import { documentEntity, subDocumentEntity } from '../../domain/entities/factory'
 import { 
@@ -11,6 +12,7 @@ import {
     getDocumentService,
     getSubDocumentService,
     findDocumentService,
+    findSubDocumentService,
     patchDocumentService 
 } from '../../domain/services/factory'
 // Use cases
@@ -21,6 +23,7 @@ import { DeleteSubDocumentUseCase } from './DeleteSubDocumentUseCase'
 import { GetDocumentUseCase } from './GetDocumentUseCase'
 import { GetSubDocumentUseCase } from './GetSubDocumentUseCase'
 import { FindDocumentUseCase } from './FindDocumentUseCase'
+import { FindSubDocumentUseCase } from './FindSubDocumentUseCase'
 import { PatchDocumentUseCase } from './PatchDocumentUseCase'
 
 const createDocumentUseCase = (): CreateDocumentUseCase => new CreateDocumentUseCase({
@@ -58,6 +61,11 @@ const findDocumentUseCase = (): FindDocumentUseCase => new FindDocumentUseCase({
     findDocumentService: findDocumentService()
 })
 
+const findSubDocumentUseCase = (): FindSubDocumentUseCase => new FindSubDocumentUseCase({
+    findSubDocumentRequestValueObject,
+    findSubDocumentService: findSubDocumentService()
+})
+
 const patchDocumentUseCase = (): PatchDocumentUseCase => new PatchDocumentUseCase({
     documentEntity,
     patchDocumentService: patchDocumentService()
@@ -71,5 +79,6 @@ export {
     getDocumentUseCase,
     getSubDocumentUseCase, 
     findDocumentUseCase, 
+    findSubDocumentUseCase,
     patchDocumentUseCase 
 }
