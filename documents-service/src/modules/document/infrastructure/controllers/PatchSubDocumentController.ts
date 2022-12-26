@@ -1,4 +1,4 @@
-import { SharedController } from 'passager-backend-shared-kernel'
+/*import { SharedController } from 'passager-backend-shared-kernel'
 import { patchSubDocumentUseCase } from '../../application/useCases/factory'
 
 class PatchSubDocumentController extends SharedController {
@@ -13,4 +13,4 @@ class PatchSubDocumentController extends SharedController {
   }
 }
 
-export { PatchSubDocumentController }
+export { PatchSubDocumentController }*/

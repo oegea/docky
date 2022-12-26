@@ -7,7 +7,7 @@ import { FindSubDocumentController } from './FindSubDocumentController'
 import { GetDocumentController } from './GetDocumentController'
 import { GetSubDocumentController } from './GetSubDocumentController'
 import { PatchDocumentController } from './PatchDocumentController'
-import { PatchSubDocumentController } from './PatchSubDocumentController'
+// import { PatchSubDocumentController } from './PatchSubDocumentController'
 import { SharedController } from 'passager-backend-shared-kernel'
 
 const createDocumentController = (req, res): SharedController => new CreateDocumentController(req, res)
@@ -19,7 +19,7 @@ const findSubDocumentController = (req, res): SharedController => new FindSubDoc
 const getDocumentController = (req, res): SharedController => new GetDocumentController(req, res)
 const getSubDocumentController = (req, res): SharedController => new GetSubDocumentController(req, res)
 const patchDocumentController = (req, res): SharedController => new PatchDocumentController(req, res)
-const patchSubDocumentController = (req, res): SharedController => new PatchSubDocumentController(req, res)
+// const patchSubDocumentController = (req, res): SharedController => new PatchSubDocumentController(req, res)
 
 export { 
     createDocumentController, 
@@ -31,5 +31,5 @@ export {
     getDocumentController, 
     getSubDocumentController,
     patchDocumentController,
-    patchSubDocumentController
+    // patchSubDocumentController
 }

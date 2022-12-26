@@ -1,6 +1,8 @@
 // Domain
 import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 import { SubDocumentRepository } from '../../domain/repositories/SubDocumentRepository'
+import { SubDocumentEntityListValueObject } from '../../domain/valueObjects/SubDocumentEntityListValueObject'
+import { FindSubDocumentRequestValueObject } from '../../domain/valueObjects/FindSubDocumentRequestValueObject'
 // Infrastructure
 import { ObjectId } from 'mongodb'
 import { MongoDBConnection } from 'passager-backend-shared-kernel'
@@ -134,6 +136,92 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
             return false
         }
 
+    }
+
+    private async getAllSubDocumentsFromParent (findSubDocumentRequestValueObject: FindSubDocumentRequestValueObject): Promise<Array<object>> {
+        const collectionName = findSubDocumentRequestValueObject.getCollection()
+        const subCollection = findSubDocumentRequestValueObject.getSubCollection()
+        const parentId = findSubDocumentRequestValueObject.getParentId()
+
+        const collection = this.getMongoDbCollection(collectionName)
+
+        let result = null
+        try{
+            result = await collection.findOne(
+                {
+                    '_id': new ObjectId(parentId)
+                },
+                {
+                    projection: {
+                        '_id': 0, 
+                        [`_${subCollection}`]: 1
+                    }
+                }
+            )
+
+        }catch(e) {
+            console.error(e)
+            return null
+        }
+
+        const subDocuments = result[`_${subCollection}`]
+
+        return subDocuments
+    }
+
+    private async filterSubDocuments (findSubDocumentRequestValueObject: FindSubDocumentRequestValueObject, subDocuments: Array<object>): Promise<SubDocumentEntityListValueObject> {
+        
+        const parentId = findSubDocumentRequestValueObject.getParentId()
+        const collectionName = findSubDocumentRequestValueObject.getCollection()
+        const subCollection = findSubDocumentRequestValueObject.getSubCollection()
+        
+        // Filter subdocuments that match criteria
+        const subDocumentEntityListValueObject = new SubDocumentEntityListValueObject()
+        for (let subDocument of subDocuments) {
+
+            // Does it match criteria?
+            const criteria = findSubDocumentRequestValueObject.getCriteria()
+
+            let match = true
+            for (let criteriaKey of Object.keys(criteria)) {
+                if (criteria[criteriaKey] !== subDocument[criteriaKey]) {
+                    match = false
+                    break
+                }
+            }
+
+            if (match === false)
+                continue
+
+            let documentPlainObject = {
+                ...subDocument
+            }
+            delete documentPlainObject['_id']
+
+            const subDocumentEntity = new SubDocumentEntity({
+                documentPlainObject: documentPlainObject,
+                id: subDocument['_id'].toString(),
+                parentId: parentId,
+                collection: collectionName,
+                subCollection: subCollection
+            })
+
+            subDocumentEntityListValueObject.addDocument({document: subDocumentEntity})
+        }
+
+
+        return subDocumentEntityListValueObject
+    }
+
+    async find (findSubDocumentRequestValueObject: FindSubDocumentRequestValueObject): Promise<SubDocumentEntityListValueObject> {
+
+        const subDocuments = await this.getAllSubDocumentsFromParent(findSubDocumentRequestValueObject)
+
+        if (subDocuments === null)
+            return null
+
+        const subDocumentEntityListValueObject = await this.filterSubDocuments(findSubDocumentRequestValueObject, subDocuments)
+        return subDocumentEntityListValueObject
     }
 }
 
