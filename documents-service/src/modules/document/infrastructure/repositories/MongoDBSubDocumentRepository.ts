@@ -193,9 +193,14 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
             return null
         }
 
-        const subDocuments = result[`_${subCollection}`]
+        if (
+            result !== null && 
+            result.hasOwnProperty(`_${subCollection}`) &&
+            Array.isArray(result[`_${subCollection}`]) 
+        )
+            return result[`_${subCollection}`]
 
-        return subDocuments
+        return []
     }
 
     // Why is this outside domain? Because the database has the responsibility of filtering results
@@ -239,6 +244,40 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
         }).map()
 
         return subDocumentEntityListValueObject
+    }
+
+    async patch (subDocumentEntity: SubDocumentEntity): Promise<SubDocumentEntity> {
+        
+        const collectionName = subDocumentEntity.getCollection()
+        const subCollection = subDocumentEntity.getSubCollection()
+        const id = subDocumentEntity.getId()
+        const parentId = subDocumentEntity.getParentId()
+        const plainObject = subDocumentEntity.getPlainObject()
+
+        const collection = this.getMongoDbCollection(collectionName)
+
+        const plainSubDocument = {
+            _id: new ObjectId(id),
+            ...plainObject
+        }
+        
+        try {
+            await collection.updateOne({'_id': new ObjectId(parentId)}, {
+                "$set": {
+                    [`_${subCollection}.$[element]`]: plainSubDocument
+                }
+            }, {
+                arrayFilters: [
+                    {
+                        "element._id": new ObjectId(id)
+                    }
+                ]
+            })
+            return subDocumentEntity
+        } catch (e) {
+            return null
+        }
+
     }
 }
 

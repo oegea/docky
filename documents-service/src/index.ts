@@ -10,7 +10,7 @@ import {
   findDocumentController,
   findSubDocumentController,
   patchDocumentController,
-  // patchSubDocumentController
+  patchSubDocumentController
 } from './modules/document/infrastructure/controllers/factory'
 import { expressValidateTokenMiddleware } from 'passager-backend-shared-kernel'
 
@@ -61,7 +61,7 @@ app.post('/documents/:collection/:parentId/:subCollection/find', (req, res) => {
 })
 
 app.patch('/documents/:collection/:parentId/:subCollection/:id', (req, res) => {
-  // patchSubDocumentController(req, res).execute()
+  patchSubDocumentController(req, res).execute()
 })
 
 app.listen(process.env.DOCS_PORT, () => {

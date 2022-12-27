@@ -7,5 +7,6 @@ interface SubDocumentRepository {
   get: (SubDocumentEntity: SubDocumentEntity) => Promise<SubDocumentEntity>
   delete: (SubDocumentEntity: SubDocumentEntity) => Promise<Boolean>
   find: (findSubDocumentRequestValueObject: FindSubDocumentRequestValueObject) => Promise<SubDocumentEntityListValueObject>
+  patch: (subDocumentEntity: SubDocumentEntity) => Promise<SubDocumentEntity>
 }
 export { SubDocumentRepository }

@@ -13,7 +13,8 @@ import {
     getSubDocumentService,
     findDocumentService,
     findSubDocumentService,
-    patchDocumentService 
+    patchDocumentService,
+    patchSubDocumentService 
 } from '../../domain/services/factory'
 // Use cases
 import { CreateDocumentUseCase } from './CreateDocumentUseCase'
@@ -25,6 +26,7 @@ import { GetSubDocumentUseCase } from './GetSubDocumentUseCase'
 import { FindDocumentUseCase } from './FindDocumentUseCase'
 import { FindSubDocumentUseCase } from './FindSubDocumentUseCase'
 import { PatchDocumentUseCase } from './PatchDocumentUseCase'
+import { PatchSubDocumentUseCase } from './PatchSubDocumentUseCase'
 
 const createDocumentUseCase = (): CreateDocumentUseCase => new CreateDocumentUseCase({
     documentEntity,
@@ -71,6 +73,11 @@ const patchDocumentUseCase = (): PatchDocumentUseCase => new PatchDocumentUseCas
     patchDocumentService: patchDocumentService()
 })
 
+const patchSubDocumentUseCase = (): PatchSubDocumentUseCase => new PatchSubDocumentUseCase({
+    subDocumentEntity,
+    patchSubDocumentService: patchSubDocumentService()
+})
+
 export { 
     createDocumentUseCase, 
     createSubDocumentUseCase,
@@ -80,5 +87,6 @@ export {
     getSubDocumentUseCase, 
     findDocumentUseCase, 
     findSubDocumentUseCase,
-    patchDocumentUseCase 
+    patchDocumentUseCase,
+    patchSubDocumentUseCase 
 }
