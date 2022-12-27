@@ -2,8 +2,8 @@ import { DocumentEntity, INTERNAL_FIELDS_PREFIX } from '../../domain/entities/Do
 
 class FromMongoDBDocumentToDocumentEntityMapper {
 
-    private readonly collection: string
-    private readonly documentPlainObject: object
+    protected readonly collection: string
+    protected readonly documentPlainObject: object
     private readonly documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
   
     constructor ({
@@ -20,7 +20,7 @@ class FromMongoDBDocumentToDocumentEntityMapper {
       this.documentPlainObject = documentPlainObject
     }
 
-    private removeInternalFields(documentPlainObject: object): object {
+    protected removeInternalFields(documentPlainObject: object): object {
       const documentKeys = Object.keys(documentPlainObject)
       const filteredDocument = documentKeys.reduce((documentObject, documentKey) => {
         if (documentKey.startsWith(INTERNAL_FIELDS_PREFIX)) {

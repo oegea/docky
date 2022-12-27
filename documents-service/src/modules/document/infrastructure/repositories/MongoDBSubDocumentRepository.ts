@@ -3,13 +3,42 @@ import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 import { SubDocumentRepository } from '../../domain/repositories/SubDocumentRepository'
 import { SubDocumentEntityListValueObject } from '../../domain/valueObjects/SubDocumentEntityListValueObject'
 import { FindSubDocumentRequestValueObject } from '../../domain/valueObjects/FindSubDocumentRequestValueObject'
+// import { FromMongoDBDocumentToDocumentEntityMapper } from '../mapper/FromMongoDBDocumentToDocumentEntityMapper'
+import { FromMongoDBFindToSubDocumentEntityListMapper } from '../mapper/FromMongoDBFindToSubDocumentEntityListMapper'
 // Infrastructure
 import { ObjectId } from 'mongodb'
 import { MongoDBConnection } from 'passager-backend-shared-kernel'
 
 class MongoDBSubDocumentRepository implements SubDocumentRepository {
 
-    constructor() {
+    private fromMongoDBFindToSubDocumentEntityListMapper: ({
+        collection,
+        parentId,
+        subCollection,
+        mongoDBFindResult
+    } : {
+        collection: string,
+        parentId: string,
+        subCollection: string,
+        mongoDBFindResult: Array<object>
+    }) => FromMongoDBFindToSubDocumentEntityListMapper
+
+    constructor({
+        fromMongoDBFindToSubDocumentEntityListMapper
+    }: {
+        fromMongoDBFindToSubDocumentEntityListMapper: ({
+            collection,
+            parentId,
+            subCollection,
+            mongoDBFindResult
+        } : {
+            collection: string,
+            parentId: string,
+            subCollection: string,
+            mongoDBFindResult: Array<object>
+        }) => FromMongoDBFindToSubDocumentEntityListMapper
+    }) {
+        this.fromMongoDBFindToSubDocumentEntityListMapper = fromMongoDBFindToSubDocumentEntityListMapper
     }
 
     // TODO: Move this to a common class to handle common MongoDb operations
@@ -169,18 +198,12 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
         return subDocuments
     }
 
-    private async filterSubDocuments (findSubDocumentRequestValueObject: FindSubDocumentRequestValueObject, subDocuments: Array<object>): Promise<SubDocumentEntityListValueObject> {
-        
-        const parentId = findSubDocumentRequestValueObject.getParentId()
-        const collectionName = findSubDocumentRequestValueObject.getCollection()
-        const subCollection = findSubDocumentRequestValueObject.getSubCollection()
-        
-        // Filter subdocuments that match criteria
-        const subDocumentEntityListValueObject = new SubDocumentEntityListValueObject()
+    // Why is this outside domain? Because the database has the responsibility of filtering results
+    // As a temporary solution until we have a better way to handle this, we will filter the results manually
+    // Filtering records should not be part of the business logic
+    private async filterSubDocuments (criteria: object, subDocuments: Array<object>): Promise<Array<object>> {
+        const filteredSubDocuments = []
         for (let subDocument of subDocuments) {
-
-            // Does it match criteria?
-            const criteria = findSubDocumentRequestValueObject.getCriteria()
 
             let match = true
             for (let criteriaKey of Object.keys(criteria)) {
@@ -193,24 +216,9 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
             if (match === false)
                 continue
 
-            let documentPlainObject = {
-                ...subDocument
-            }
-            delete documentPlainObject['_id']
-
-            const subDocumentEntity = new SubDocumentEntity({
-                documentPlainObject: documentPlainObject,
-                id: subDocument['_id'].toString(),
-                parentId: parentId,
-                collection: collectionName,
-                subCollection: subCollection
-            })
-
-            subDocumentEntityListValueObject.addDocument({document: subDocumentEntity})
+            filteredSubDocuments.push(subDocument)
         }
-
-
-        return subDocumentEntityListValueObject
+        return filteredSubDocuments
     }
 
     async find (findSubDocumentRequestValueObject: FindSubDocumentRequestValueObject): Promise<SubDocumentEntityListValueObject> {
@@ -219,8 +227,17 @@ class MongoDBSubDocumentRepository implements SubDocumentRepository {
 
         if (subDocuments === null)
             return null
+        
+        const criteria = findSubDocumentRequestValueObject.getCriteria()
+        const filteredSubDocuments = await this.filterSubDocuments(criteria, subDocuments)
 
-        const subDocumentEntityListValueObject = await this.filterSubDocuments(findSubDocumentRequestValueObject, subDocuments)
+        const subDocumentEntityListValueObject = await this.fromMongoDBFindToSubDocumentEntityListMapper({
+            parentId: findSubDocumentRequestValueObject.getParentId(),
+            collection: findSubDocumentRequestValueObject.getCollection(),
+            subCollection: findSubDocumentRequestValueObject.getSubCollection(),
+            mongoDBFindResult: filteredSubDocuments
+        }).map()
+
         return subDocumentEntityListValueObject
     }
 }
