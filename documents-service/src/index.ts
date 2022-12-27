@@ -12,7 +12,14 @@ import {
   patchDocumentController,
   patchSubDocumentController
 } from './modules/document/infrastructure/controllers/factory'
-import { expressValidateTokenMiddleware } from 'passager-backend-shared-kernel'
+
+import { 
+  EventBusRepository, 
+  expressValidateTokenMiddleware, 
+  NativeEventBusRepository,
+  TYPE_COMMAND, 
+  TYPE_QUERY, 
+} from 'passager-backend-shared-kernel'
 
 dotenv.config({ path: '../.env' })
 const app = express()
@@ -64,6 +71,15 @@ app.patch('/documents/:collection/:parentId/:subCollection/:id', (req, res) => {
   patchSubDocumentController(req, res).execute()
 })
 
-app.listen(process.env.DOCS_PORT, () => {
+const start = () => app.listen(process.env.DOCS_PORT, () => {
   console.log(`Documents service is running on port ${process.env.DOCS_PORT}`)
 })
+
+
+export {
+  EventBusRepository, 
+  NativeEventBusRepository,
+  start,
+  TYPE_COMMAND, 
+  TYPE_QUERY,
+}
