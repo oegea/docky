@@ -1,15 +1,20 @@
 import { SubDocumentRepository } from '../repositories/SubDocumentRepository'
 import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
+import { GetOperationPermissionsService } from '../../../permissions/domain/services/GetOperationPermissionsService'
 
 class GetSubDocumentService {
   private readonly subDocumentRepository: SubDocumentRepository
+  private readonly getOperationPermissionsService: GetOperationPermissionsService
 
   constructor ({
-    subDocumentRepository
+    subDocumentRepository,
+    getOperationPermissionsService
   }: {
-    subDocumentRepository: SubDocumentRepository
+    subDocumentRepository: SubDocumentRepository,
+    getOperationPermissionsService: GetOperationPermissionsService
   }) {
     this.subDocumentRepository = subDocumentRepository
+    this.getOperationPermissionsService = getOperationPermissionsService
   }
 
   public async execute ({
@@ -17,6 +22,10 @@ class GetSubDocumentService {
   }: {
     subDocumentEntity: SubDocumentEntity
   }): Promise<SubDocumentEntity> {
+
+    const hasPermission = await this.getOperationPermissionsService.execute()
+    if (!hasPermission)
+      throw new Error('GetSubDocumentService: insufficient permissions to perform this operation')
 
     const getSubDocumentResult = await this.subDocumentRepository.get(subDocumentEntity)
 

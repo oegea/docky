@@ -16,49 +16,61 @@ import { FindDocumentService } from './FindDocumentService'
 import { FindSubDocumentService } from './FindSubDocumentService'
 import { PatchDocumentService } from './PatchDocumentService'
 import { PatchSubDocumentService } from './PatchSubDocumentService'
+// Other modules services
+import { getOperationPermissionsService } from '../../../permissions/domain/services/factory'
 
 const createDocumentService = (): CreateDocumentService => new CreateDocumentService({
-  documentRepository: documentRepository()
+  documentRepository: documentRepository(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const createSubDocumentService = (): CreateSubDocumentService => new CreateSubDocumentService({
   documentEntity,
   subDocumentRepository: subDocumentRepository(),
-  getDocumentService: getDocumentService()
+  getDocumentService: getDocumentService(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const deleteDocumentService = (): DeleteDocumentService => new DeleteDocumentService({
   documentRepository: documentRepository(),
-  getDocumentService: getDocumentService()
+  getDocumentService: getDocumentService(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const deleteSubDocumentService = (): DeleteSubDocumentService => new DeleteSubDocumentService({
   subDocumentRepository: subDocumentRepository(),
-  getSubDocumentService: getSubDocumentService()
+  getSubDocumentService: getSubDocumentService(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const findDocumentService = (): FindDocumentService => new FindDocumentService({
-  documentRepository: documentRepository()
+  documentRepository: documentRepository(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const findSubDocumentService = (): FindSubDocumentService => new FindSubDocumentService({
-  subDocumentRepository: subDocumentRepository()
+  subDocumentRepository: subDocumentRepository(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const getDocumentService = (): GetDocumentService => new GetDocumentService({
-  documentRepository: documentRepository()
+  documentRepository: documentRepository(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const getSubDocumentService = (): GetSubDocumentService => new GetSubDocumentService({
-  subDocumentRepository: subDocumentRepository()
+  subDocumentRepository: subDocumentRepository(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const patchDocumentService = (): PatchDocumentService => new PatchDocumentService({
-  documentRepository: documentRepository()
+  documentRepository: documentRepository(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 const patchSubDocumentService = (): PatchSubDocumentService => new PatchSubDocumentService({
-  subDocumentRepository: subDocumentRepository()
+  subDocumentRepository: subDocumentRepository(),
+  getOperationPermissionsService: getOperationPermissionsService()
 })
 
 export { 

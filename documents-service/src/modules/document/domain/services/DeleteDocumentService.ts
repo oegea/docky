@@ -1,20 +1,26 @@
 import { DocumentRepository } from '../repositories/DocumentRepository'
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { GetDocumentService } from './GetDocumentService'
+import { GetOperationPermissionsService } from '../../../permissions/domain/services/GetOperationPermissionsService'
+
 
 class DeleteDocumentService {
   private readonly documentRepository: DocumentRepository
   private readonly getDocumentService: GetDocumentService
+  private readonly getOperationPermissionsService: GetOperationPermissionsService
 
   constructor ({
     documentRepository,
-    getDocumentService
+    getDocumentService,
+    getOperationPermissionsService
   }: {
     documentRepository: DocumentRepository,
-    getDocumentService: GetDocumentService
+    getDocumentService: GetDocumentService,
+    getOperationPermissionsService: GetOperationPermissionsService
   }) {
     this.documentRepository = documentRepository
     this.getDocumentService = getDocumentService
+    this.getOperationPermissionsService = getOperationPermissionsService
   }
 
   public async execute ({
@@ -22,6 +28,10 @@ class DeleteDocumentService {
   }: {
     documentEntity: DocumentEntity
   }): Promise<Boolean> {
+
+    const hasPermission = await this.getOperationPermissionsService.execute()
+    if (!hasPermission)
+      throw new Error('DeleteDocumentService: insufficient permissions to perform this operation')
 
     try {
       await this.getDocumentService.execute({documentEntity})

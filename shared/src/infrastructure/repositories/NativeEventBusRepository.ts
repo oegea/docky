@@ -7,7 +7,7 @@ class NativeEventBusRepository implements EventBusRepository {
          type: string,
          name: string,
          callback: (type: string, name: string, payload: any) => any
-    }>
+    }> = []
 
     command (command: string, payload: any): Promise<any> {
         // Find all subscriptions

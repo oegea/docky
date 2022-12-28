@@ -75,6 +75,9 @@ const start = () => app.listen(process.env.DOCS_PORT, () => {
   console.log(`Documents service is running on port ${process.env.DOCS_PORT}`)
 })
 
+start()
+
+new NativeEventBusRepository().subscribe(TYPE_QUERY, 'GET_OPERATION_PERMISSIONS', async (type, name, payload) => true)
 
 export {
   EventBusRepository, 
