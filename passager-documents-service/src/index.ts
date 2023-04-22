@@ -2,6 +2,7 @@ import {start, NativeEventBusRepository, TYPE_QUERY} from 'documents-service/dis
 
 const eventBusRepository = new NativeEventBusRepository()
 const onGetOperationPermissions = async (type: string, name: string, payload: string) => {
+    console.log('onGetOperationPermissions', type, name, payload)
     return false
 }
 
