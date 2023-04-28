@@ -7,7 +7,11 @@ class FindDocumentController extends SharedController {
     const criteria = this.req.body
 
     const useCase = findDocumentUseCase()
-    const searchResult = await useCase.execute({ collection, criteria })
+    const searchResult = await useCase.execute({ 
+      collection,
+      currentUserId: this.req.user.email, 
+      criteria 
+    })
 
     this.success(searchResult)
   }

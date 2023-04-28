@@ -1,5 +1,8 @@
 import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 import { DeleteSubDocumentService } from '../../domain/services/DeleteSubDocumentService'
+import { 
+  userIdValueObject
+} from 'passager-backend-shared-kernel'
 
 class DeleteSubDocumentUseCase {
   private readonly subDocumentEntity: ({ collection, documentPlainObject, id, parentId, subCollection }: { collection: string, documentPlainObject: object, id: string, parentId: string, subCollection: string }) => Promise<SubDocumentEntity>
@@ -16,10 +19,25 @@ class DeleteSubDocumentUseCase {
     this.deleteSubDocumentService = deleteSubDocumentService
   }
 
-  public async execute ({ collection, parentId, subCollection, id }: {collection: string, parentId: string, subCollection: string, id: string}): Promise<Boolean> {
+  public async execute ({ 
+    collection, 
+    currentUserId,
+    parentId, 
+    subCollection, 
+    id 
+  }: {
+    collection: string, 
+    currentUserId: string,
+    parentId: string, 
+    subCollection: string, 
+    id: string
+  }): Promise<Boolean> {
     try {
+      const currentUserIdValueObject = await userIdValueObject({
+        userId: currentUserId
+      })
       const subDocumentEntity = await this.subDocumentEntity({collection, parentId, subCollection, id, documentPlainObject: {}})
-      const deleteResult =  await this.deleteSubDocumentService.execute({ subDocumentEntity })
+      const deleteResult =  await this.deleteSubDocumentService.execute({ currentUserIdValueObject, subDocumentEntity })
       return deleteResult
     } catch (e) {
       throw e.message

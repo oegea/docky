@@ -7,7 +7,13 @@ class CreateSubDocumentController extends SharedController {
     const documentPlainObject = this.req.body
 
     const useCase = createSubDocumentUseCase()
-    const documentCreationResult = await useCase.execute({collection, documentPlainObject, parentId, subCollection})
+    const documentCreationResult = await useCase.execute({
+      collection, 
+      currentUserId: this.req.user.email,
+      documentPlainObject, 
+      parentId, 
+      subCollection
+    })
 
     this.success(documentCreationResult)
   }

@@ -7,7 +7,12 @@ class PatchDocumentController extends SharedController {
     const document = this.req.body
 
     const useCase = patchDocumentUseCase()
-    const documentPatchResult = await useCase.execute({ collection, id, document })
+    const documentPatchResult = await useCase.execute({ 
+      collection,
+      currentUserId: this.req.user.email, 
+      id, 
+      document 
+    })
 
     this.success(documentPatchResult)
   }

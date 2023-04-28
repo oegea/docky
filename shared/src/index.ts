@@ -3,7 +3,8 @@ import { expressValidateTokenMiddleware } from './infrastructure/expressValidate
 import { SharedController } from './infrastructure/controllers/SharedController'
 import { NativeEventBusRepository } from './infrastructure/repositories/NativeEventBusRepository'
 import { EventBusRepository, TYPE_COMMAND, TYPE_QUERY } from './domain/repositories/EventBusRepository'
-
+import { userIdValueObject } from './domain/valueObjects/factory'
+import { UserIdValueObject } from './domain/valueObjects/UserIdValueObject'
 export { 
     EventBusRepository,
     expressValidateTokenMiddleware, 
@@ -11,5 +12,7 @@ export {
     NativeEventBusRepository,
     SharedController ,
     TYPE_COMMAND,
-    TYPE_QUERY
+    TYPE_QUERY,
+    userIdValueObject,
+    UserIdValueObject
 }

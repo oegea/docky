@@ -7,7 +7,11 @@ class CreateDocumentController extends SharedController {
     const document = this.req.body
 
     const useCase = createDocumentUseCase()
-    const documentCreationResult = await useCase.execute({ collection, document })
+    const documentCreationResult = await useCase.execute({ 
+      collection,
+      currentUserId: this.req.user.email, 
+      document 
+    })
 
     this.success(documentCreationResult)
   }

@@ -1,5 +1,8 @@
 import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 import { PatchSubDocumentService } from '../../domain/services/PatchSubDocumentService'
+import { 
+  userIdValueObject
+} from 'passager-backend-shared-kernel'
 
 class PatchSubDocumentUseCase {
 
@@ -17,8 +20,25 @@ class PatchSubDocumentUseCase {
     this.patchSubDocumentService = patchSubDocumentService
   }
 
-  public async execute ({ collection, parentId, subCollection, id, document }: {collection: string, parentId: string, subCollection: string, id: string, document: object}): Promise<object> {
+  public async execute ({ 
+    collection, 
+    currentUserId,
+    parentId, 
+    subCollection, 
+    id, 
+    document
+  }: {
+    collection: string, 
+    currentUserId: string,
+    parentId: string, 
+    subCollection: string, 
+    id: string, 
+    document: object
+  }): Promise<object> {
     try {
+      const currentUserIdValueObject = await userIdValueObject({
+        userId: currentUserId
+      })
       const subDocumentEntity = await this.subDocumentEntity({
         id,
         collection,
@@ -26,7 +46,7 @@ class PatchSubDocumentUseCase {
         subCollection,
         documentPlainObject: document
       })
-      const result =  await this.patchSubDocumentService.execute({ subDocumentEntity })
+      const result =  await this.patchSubDocumentService.execute({ currentUserIdValueObject, subDocumentEntity })
       return result.toJson()
     } catch (e) {
       throw e.message

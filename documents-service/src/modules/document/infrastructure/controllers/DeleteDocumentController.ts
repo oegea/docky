@@ -6,7 +6,11 @@ class DeleteDocumentController extends SharedController {
     const { collection, id } = this.req.params
 
     const useCase = deleteDocumentUseCase()
-    const documentDeletionResult = await useCase.execute({ collection, id })
+    const documentDeletionResult = await useCase.execute({ 
+      collection,
+      currentUserId: this.req.user.email, 
+      id 
+    })
 
     this.success(documentDeletionResult)
   }

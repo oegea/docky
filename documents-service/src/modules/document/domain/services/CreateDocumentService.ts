@@ -2,12 +2,12 @@ import { DocumentRepository } from '../repositories/DocumentRepository'
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { GetOperationPermissionsService } from '../../../permissions/domain/services/GetOperationPermissionsService'
 import { OperationPayloadPermissionsValueObject } from '../../../permissions/domain/valueObjects/OperationPayloadPermissionsValueObject'
+import { UserIdValueObject } from 'passager-backend-shared-kernel'
 
 class CreateDocumentService {
   private readonly documentRepository: DocumentRepository
   private readonly getOperationPermissionsService: GetOperationPermissionsService
-  private readonly operationPayloadPermissionsValueObject: ({ collection, id, subCollection, parentId, operationType, payload }: { collection: string; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
-
+  private readonly operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
   constructor ({
     documentRepository,
     getOperationPermissionsService,
@@ -15,7 +15,7 @@ class CreateDocumentService {
   }: {
     documentRepository: DocumentRepository,
     getOperationPermissionsService: GetOperationPermissionsService,
-    operationPayloadPermissionsValueObject: ({ collection, id, subCollection, parentId, operationType, payload }: { collection: string; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+    operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
   }) {
     this.documentRepository = documentRepository
     this.getOperationPermissionsService = getOperationPermissionsService
@@ -23,13 +23,16 @@ class CreateDocumentService {
   }
 
   public async execute ({
+    currentUserIdValueObject,
     documentEntity
   }: {
+    currentUserIdValueObject: UserIdValueObject,
     documentEntity: DocumentEntity
   }): Promise<DocumentEntity> {
 
     const operationPayloadPermissionsValueObject = await this.operationPayloadPermissionsValueObject({
       collection: documentEntity.getCollection(),
+      currentUserIdValueObject,
       id: documentEntity.getId(),
       subCollection: null,
       parentId: null,

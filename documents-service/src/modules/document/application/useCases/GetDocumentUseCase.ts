@@ -1,5 +1,8 @@
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { GetDocumentService } from '../../domain/services/GetDocumentService'
+import { 
+  userIdValueObject
+} from 'passager-backend-shared-kernel'
 
 class GetDocumentUseCase {
   private readonly documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
@@ -16,10 +19,21 @@ class GetDocumentUseCase {
     this.getDocumentService = getDocumentService
   }
 
-  public async execute ({ collection, id }: {collection: string, id: string}): Promise<object> {
+  public async execute ({ 
+    collection,
+    currentUserId, 
+    id 
+  }: {
+    collection: string, 
+    currentUserId: string,
+    id: string
+  }): Promise<object> {
     try {
+      const currentUserIdValueObject = await userIdValueObject({
+        userId: currentUserId
+      })
       const documentEntity = await this.documentEntity({ collection, id, documentPlainObject: {} })
-      const documentEntityResult =  await this.getDocumentService.execute({ documentEntity })
+      const documentEntityResult =  await this.getDocumentService.execute({ currentUserIdValueObject, documentEntity })
       return documentEntityResult.toJson()
     } catch (e) {
       throw e.message

@@ -6,7 +6,11 @@ class GetDocumentController extends SharedController {
     const { collection, id } = this.req.params
 
     const useCase = getDocumentUseCase()
-    const getDocumentResult = await useCase.execute({ collection, id })
+    const getDocumentResult = await useCase.execute({ 
+      collection,
+      currentUserId: this.req.user.email, 
+      id 
+    })
 
     this.success(getDocumentResult)
   }

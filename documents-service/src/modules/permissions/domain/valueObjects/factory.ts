@@ -1,8 +1,9 @@
 import { OperationPayloadPermissionsValueObject } from './OperationPayloadPermissionsValueObject'
-
+import { UserIdValueObject } from 'passager-backend-shared-kernel'
 
 const operationPayloadPermissionsValueObject = async({
     collection,
+    currentUserIdValueObject,
     id,
     subCollection,
     parentId,
@@ -10,6 +11,7 @@ const operationPayloadPermissionsValueObject = async({
     payload
 }: {
     collection: string,
+    currentUserIdValueObject: UserIdValueObject,
     id: string,
     subCollection: string,
     parentId: string,
@@ -18,6 +20,7 @@ const operationPayloadPermissionsValueObject = async({
 }): Promise<OperationPayloadPermissionsValueObject> => {
     const operationPayloadPermissionsValueObject = new OperationPayloadPermissionsValueObject({
         collection,
+        currentUserIdValueObject,
         id,
         subCollection,
         parentId,

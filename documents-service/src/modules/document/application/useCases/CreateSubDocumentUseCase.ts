@@ -1,5 +1,8 @@
 import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 import { CreateSubDocumentService } from '../../domain/services/CreateSubDocumentService'
+import { 
+  userIdValueObject
+} from 'passager-backend-shared-kernel'
 
 class CreateSubDocumentUseCase {
   private readonly subDocumentEntity: ({ collection, documentPlainObject, id, parentId, subCollection }: { collection: string, documentPlainObject: object, id: string, parentId: string, subCollection: string }) => Promise<SubDocumentEntity>
@@ -18,16 +21,21 @@ class CreateSubDocumentUseCase {
 
   public async execute ({ 
     collection, 
+    currentUserId,
     documentPlainObject, 
     parentId, 
     subCollection 
   }: { 
     collection: string, 
+    currentUserId: string,
     documentPlainObject: object, 
     parentId: string, 
     subCollection: string 
   }): Promise<object> {
     try {
+      const currentUserIdValueObject = await userIdValueObject({
+        userId: currentUserId
+      })
       const subDocumentEntity = await this.subDocumentEntity({ 
         collection, 
         documentPlainObject, 
@@ -35,7 +43,7 @@ class CreateSubDocumentUseCase {
         parentId, 
         subCollection 
       })
-      const documentEntityResult =  await this.createSubDocumentService.execute({ subDocumentEntity })
+      const documentEntityResult =  await this.createSubDocumentService.execute({ currentUserIdValueObject, subDocumentEntity })
       return documentEntityResult.toJson()
     } catch (e) {
       throw e.message

@@ -1,5 +1,8 @@
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { DeleteDocumentService } from '../../domain/services/DeleteDocumentService'
+import { 
+  userIdValueObject
+} from 'passager-backend-shared-kernel'
 
 class DeleteDocumentUseCase {
   private readonly documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
@@ -16,10 +19,21 @@ class DeleteDocumentUseCase {
     this.deleteDocumentService = deleteDocumentService
   }
 
-  public async execute ({ collection, id }: {collection: string, id: string}): Promise<Boolean> {
+  public async execute ({ 
+    collection,
+    currentUserId, 
+    id 
+  }: {
+    collection: string,
+    currentUserId: string, 
+    id: string
+  }): Promise<Boolean> {
     try {
+      const currentUserIdValueObject = await userIdValueObject({
+        userId: currentUserId
+      })
       const documentEntity = await this.documentEntity({ collection, id, documentPlainObject: {} })
-      const deleteResult =  await this.deleteDocumentService.execute({ documentEntity })
+      const deleteResult =  await this.deleteDocumentService.execute({ currentUserIdValueObject, documentEntity })
       return deleteResult
     } catch (e) {
       throw e.message

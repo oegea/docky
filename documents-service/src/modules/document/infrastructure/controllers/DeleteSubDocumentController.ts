@@ -7,7 +7,13 @@ class DeleteSubDocumentController extends SharedController {
     const { collection, parentId, subCollection, id } = this.req.params
 
     const useCase = deleteSubDocumentUseCase()
-    const documentDeletionResult = await useCase.execute({ collection, parentId, subCollection, id })
+    const documentDeletionResult = await useCase.execute({ 
+      collection,
+      currentUserId: this.req.user.email, 
+      parentId, 
+      subCollection, 
+      id 
+    })
 
     this.success(documentDeletionResult)
   }

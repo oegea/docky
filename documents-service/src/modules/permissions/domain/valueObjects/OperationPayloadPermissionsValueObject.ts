@@ -1,6 +1,9 @@
+import { UserIdValueObject } from 'passager-backend-shared-kernel'
+
 class OperationPayloadPermissionsValueObject {
 
     private readonly collection: string
+    private readonly currentUserIdValueObject: UserIdValueObject
     private readonly id: string
     private readonly subCollection: string
     private readonly parentId: string
@@ -9,6 +12,7 @@ class OperationPayloadPermissionsValueObject {
 
     constructor ({
         collection,
+        currentUserIdValueObject,
         id,
         subCollection,
         parentId,
@@ -16,6 +20,7 @@ class OperationPayloadPermissionsValueObject {
         payload
     }: {
         collection: string,
+        currentUserIdValueObject: UserIdValueObject,
         id: string,
         subCollection: string,
         parentId: string,
@@ -23,6 +28,7 @@ class OperationPayloadPermissionsValueObject {
         payload: any
     }) {
         this.collection = collection
+        this.currentUserIdValueObject = currentUserIdValueObject
         this.id = id
         this.subCollection = subCollection
         this.parentId = parentId
@@ -32,6 +38,10 @@ class OperationPayloadPermissionsValueObject {
 
     getCollection (): string {
         return this.collection
+    }
+
+    getCurrentUserIdValueObject (): UserIdValueObject {
+        return this.currentUserIdValueObject
     }
 
     getId (): string {

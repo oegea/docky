@@ -4,13 +4,14 @@ import { SubDocumentEntity } from '../entities/SubDocumentEntity'
 import { GetDocumentService } from './GetDocumentService'
 import { GetOperationPermissionsService } from '../../../permissions/domain/services/GetOperationPermissionsService'
 import { OperationPayloadPermissionsValueObject } from '../../../permissions/domain/valueObjects/OperationPayloadPermissionsValueObject'
+import { UserIdValueObject } from 'passager-backend-shared-kernel'
 
 class CreateSubDocumentService {
   private readonly documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
   private readonly getDocumentService: GetDocumentService
   private readonly subDocumentRepository: SubDocumentRepository
   private readonly getOperationPermissionsService: GetOperationPermissionsService
-  private readonly operationPayloadPermissionsValueObject: ({ collection, id, subCollection, parentId, operationType, payload }: { collection: string; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+  private readonly operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
 
   constructor ({
     documentEntity,
@@ -23,7 +24,7 @@ class CreateSubDocumentService {
     getDocumentService: GetDocumentService,
     subDocumentRepository: SubDocumentRepository,
     getOperationPermissionsService: GetOperationPermissionsService,
-    operationPayloadPermissionsValueObject: ({ collection, id, subCollection, parentId, operationType, payload }: { collection: string; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+    operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
   }) {
     this.documentEntity = documentEntity
     this.getDocumentService = getDocumentService
@@ -32,12 +33,12 @@ class CreateSubDocumentService {
     this.operationPayloadPermissionsValueObject = operationPayloadPermissionsValueObject
   }
 
-  private async parentDocumentExists({subDocumentEntity}: {subDocumentEntity: SubDocumentEntity}) {
+  private async parentDocumentExists({currentUserIdValueObject, subDocumentEntity}: {currentUserIdValueObject: UserIdValueObject, subDocumentEntity: SubDocumentEntity}) {
     try {
       const parentId = subDocumentEntity.getParentId()
       const collection = subDocumentEntity.getCollection()
       const parentDocumentEntity = await this.documentEntity({id: parentId, collection, documentPlainObject: null})
-      await this.getDocumentService.execute({documentEntity: parentDocumentEntity})
+      await this.getDocumentService.execute({currentUserIdValueObject, documentEntity: parentDocumentEntity})
       return true
     } catch(exception) {
       console.log(exception)
@@ -47,16 +48,19 @@ class CreateSubDocumentService {
   }
 
   public async execute ({
+    currentUserIdValueObject,
     subDocumentEntity
   }: {
+    currentUserIdValueObject: UserIdValueObject,
     subDocumentEntity: SubDocumentEntity
   }): Promise<SubDocumentEntity> {
 
-    if (await this.parentDocumentExists({subDocumentEntity}) === false) 
+    if (await this.parentDocumentExists({currentUserIdValueObject, subDocumentEntity}) === false) 
       throw new Error('CreateSubDocumentService: parent document is not accessible')
 
     const operationPayloadPermissionsValueObject = await this.operationPayloadPermissionsValueObject({
       collection: subDocumentEntity.getCollection(),
+      currentUserIdValueObject,
       id: subDocumentEntity.getId(),
       subCollection: subDocumentEntity.getSubCollection(),
       parentId: subDocumentEntity.getParentId(),
