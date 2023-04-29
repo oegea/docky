@@ -24,14 +24,7 @@ class FindDocumentService {
     this.operationPayloadPermissionsValueObject = operationPayloadPermissionsValueObject
   }
 
-  public async execute ({
-    currentUserIdValueObject,
-    findDocumentRequestValueObject
-  }: {
-    currentUserIdValueObject: UserIdValueObject,
-    findDocumentRequestValueObject: FindDocumentRequestValueObject
-  }): Promise<DocumentEntityListValueObject> {
-
+  private async checkPermissions(findDocumentRequestValueObject: FindDocumentRequestValueObject, currentUserIdValueObject: UserIdValueObject) {
     const operationPayloadPermissionsValueObject = await this.operationPayloadPermissionsValueObject({
       collection: findDocumentRequestValueObject.getCollection(),
       currentUserIdValueObject,
@@ -47,6 +40,18 @@ class FindDocumentService {
     })
     if (!hasPermission)
       throw new Error('FindDocumentService: insufficient permissions to perform this operation')
+  }
+
+  public async execute ({
+    currentUserIdValueObject,
+    findDocumentRequestValueObject
+  }: {
+    currentUserIdValueObject: UserIdValueObject,
+    findDocumentRequestValueObject: FindDocumentRequestValueObject
+  }): Promise<DocumentEntityListValueObject> {
+
+    if (currentUserIdValueObject.getUserId() !== 'SYSTEM')
+      await this.checkPermissions(findDocumentRequestValueObject, currentUserIdValueObject)
 
     const findResult = await this.documentRepository.find(findDocumentRequestValueObject)
 

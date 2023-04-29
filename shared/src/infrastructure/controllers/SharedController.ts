@@ -15,6 +15,18 @@ class SharedController {
       }
     }
 
+    public async internalExecute(...args: any[]): Promise<any> {
+      try {
+        return await this.safeInternalExecute(...args)
+      } catch (e) {
+        return null
+      }
+    }
+
+    protected async safeInternalExecute(...args: any[]): Promise<any> {
+      throw new Error('notImplementedException')
+    }
+
     protected async safeExecute(): Promise<void> {
       this.error('notImplementedException')
     }

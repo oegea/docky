@@ -21,6 +21,7 @@ import {
   TYPE_QUERY, 
 } from 'passager-backend-shared-kernel'
 
+
 dotenv.config({ path: '../.env' })
 const app = express()
 
@@ -71,9 +72,17 @@ app.patch('/documents/:collection/:parentId/:subCollection/:id', (req, res) => {
   patchSubDocumentController(req, res).execute()
 })
 
-const start = () => app.listen(process.env.DOCS_PORT, () => {
+const setupEvents = async () => {
+  const nativeEventBusRepository = new NativeEventBusRepository()
+  nativeEventBusRepository.subscribe(TYPE_QUERY, 'FIND_DOCUMENT', async (type: string, name: string, payloadObject: any) => {
+    const result = await findDocumentController(null, null).internalExecute(payloadObject.collection, payloadObject.criteria)
+    return result
+  })
+}
+
+const start = () => setupEvents().then(() => app.listen(process.env.DOCS_PORT, () => {
   console.log(`Documents service is running on port ${process.env.DOCS_PORT}`)
-})
+}))
 
 export {
   EventBusRepository, 

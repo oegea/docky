@@ -1,18 +1,47 @@
 import {start, NativeEventBusRepository, TYPE_QUERY} from 'documents-service/dist'
+import { createDocument as createUserDocument } from './users'
 
 const eventBusRepository = new NativeEventBusRepository()
-const onGetOperationPermissions = async (type: string, name: string, payload: string) => {
-    /*const {
-        collection,
-        id,
-        subCollection, parentId,
-        operationType,
-        payload
-    } = payload*/
-    console.log('onGetOperationPermissions', type, name, payload)
-    return false
+const onGetOperationPermissions = async (type: string, name: string, payloadObject: any) => {
+    const {
+        operationType
+    } = payloadObject
+    let result = false
+    switch(operationType){
+        case 'create_document':
+            result = await createUserDocument(result, payloadObject)
+            break
+        
+        case 'create_subdocument':
+            break
+        
+        case 'delete_document':
+            break
+        
+        case 'delete_subdocument':
+            break
+
+        case 'find_document':
+            break
+        
+        case 'find_subdocument':
+            break
+
+        case 'get_document':
+            break
+
+        case 'get_subdocument':
+            break
+
+        case 'patch_document':
+            break
+
+        case 'patch_subdocument':
+            break
+    }
+
+    return result
 }
 
 eventBusRepository.subscribe(TYPE_QUERY, 'GET_OPERATION_PERMISSIONS', onGetOperationPermissions)
-
 start()
