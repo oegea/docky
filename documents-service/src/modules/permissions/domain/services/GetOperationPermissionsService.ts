@@ -27,6 +27,9 @@ class GetOperationPermissionsService {
     const operationType = operationPayloadPermissionsValueObject.getOperationType()
     const payload = operationPayloadPermissionsValueObject.getPayload()
 
+    if (currentUserId === 'SYSTEM')
+      return true
+
     const hasPermissions = await this.eventBusRepository.query(
       'GET_OPERATION_PERMISSIONS', {
         collection,

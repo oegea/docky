@@ -50,8 +50,7 @@ class FindDocumentService {
     findDocumentRequestValueObject: FindDocumentRequestValueObject
   }): Promise<DocumentEntityListValueObject> {
 
-    if (currentUserIdValueObject.getUserId() !== 'SYSTEM')
-      await this.checkPermissions(findDocumentRequestValueObject, currentUserIdValueObject)
+    await this.checkPermissions(findDocumentRequestValueObject, currentUserIdValueObject)
 
     const findResult = await this.documentRepository.find(findDocumentRequestValueObject)
 
