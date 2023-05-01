@@ -41,32 +41,76 @@ export const createDocument = async (currentResult: boolean, payloadObject: any)
     return true
 }
 
-export const deleteDocument = (result: boolean, payloadObject: object) => {
-    /*const {
-        collection,
-        currentUserId,
-        id,
-        payload
-    } = payloadObject*/
-    return result
-}
+export const deleteDocument = async (currentResult: boolean, payloadObject: any) => {
+    const {
+        collection
+    } = payloadObject
 
-export const findDocument = (result: boolean, payloadObject: object) => {
-    /*const {
-        collection,
-        currentUserId,
-        id,
-        payload
-    } = payloadObject*/
+    if (collection !== 'users')
+        return currentResult
+
     return false
 }
 
-export const getDocument = (result: boolean, payloadObject: object) => {
-    /*const {
+export const findDocument = async (currentResult: boolean, payloadObject: any) => {
+    const {
+        collection,
+        currentUserId,
+        payload
+    } = payloadObject
+
+    if (collection !== 'users')
+        return currentResult
+
+    if (payload.email !== currentUserId) 
+        return false
+
+    return true
+}
+
+export const getDocument = async (currentResult: boolean, payloadObject: any) => {
+    const {
+        collection,
+        currentUserId,
+        id
+    } = payloadObject
+
+    if (collection !== 'users')
+        return currentResult
+
+    // Check if it is our user
+    const existingDocument = await eventBusRepository.query('GET_DOCUMENT', {
+        collection,
+        id
+    })
+    if (existingDocument[0]?.email !== currentUserId)
+        return false
+
+    return true
+}
+
+export const patchDocument = async (currentResult: boolean, payloadObject: any) => {
+    const {
         collection,
         currentUserId,
         id,
         payload
-    } = payloadObject*/
-    return false
+    } = payloadObject
+
+    if (collection !== 'users')
+        return currentResult
+
+    // Check if it is our user
+    const existingDocument = await eventBusRepository.query('GET_DOCUMENT', {
+        collection,
+        id
+    })
+
+    if (existingDocument[0]?.email !== currentUserId)
+        return false
+
+    if (payload.email !== currentUserId) 
+        return false
+
+    return true
 }

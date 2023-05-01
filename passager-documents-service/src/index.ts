@@ -1,11 +1,29 @@
 import {start, NativeEventBusRepository, TYPE_QUERY} from 'documents-service/dist'
-import { createDocument as createUserDocument } from './users'
+import { 
+    createDocument as createUserDocument,
+    deleteDocument as deleteUserDocument,
+    findDocument as findUserDocument,
+    getDocument as getUserDocument,
+    patchDocument as patchUserDocument
+} from './users'
 
 const eventBusRepository = new NativeEventBusRepository()
 const onGetOperationPermissions = async (type: string, name: string, payloadObject: any) => {
-    const {
-        operationType
-    } = payloadObject
+    try {
+        const {
+            operationType
+        } = payloadObject
+        
+        const result = await hasPermissions(operationType, payloadObject)
+        return result
+        
+    } catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+const hasPermissions = async (operationType: string, payloadObject: any) => {
     let result = false
     switch(operationType){
         case 'create_document':
@@ -16,30 +34,33 @@ const onGetOperationPermissions = async (type: string, name: string, payloadObje
             break
         
         case 'delete_document':
+            result = await deleteUserDocument(result, payloadObject)
             break
         
         case 'delete_subdocument':
             break
 
         case 'find_document':
+            result = await findUserDocument(result, payloadObject)
             break
         
         case 'find_subdocument':
             break
 
         case 'get_document':
+            result = await getUserDocument(result, payloadObject)
             break
 
         case 'get_subdocument':
             break
 
         case 'patch_document':
+            result = await patchUserDocument(result, payloadObject)
             break
 
         case 'patch_subdocument':
             break
     }
-
     return result
 }
 
