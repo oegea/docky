@@ -15,6 +15,14 @@ import {
     patchDocument as patchSharingSettingsDocument
 } from './userSharingSettings'
 
+import {
+    createDocument as createFolderDocument,
+    deleteDocument as deleteFolderDocument,
+    findDocument as findFolderDocument,
+    getDocument as getFolderDocument,
+    patchDocument as patchFolderDocument
+} from './folders'
+
 const eventBusRepository = new NativeEventBusRepository()
 const onGetOperationPermissions = async (type: string, name: string, payloadObject: any) => {
     try {
@@ -37,6 +45,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
         case 'create_document':
             result = await createUserDocument(result, payloadObject)
             result = await createSharingSettingsDocument(result, payloadObject)
+            result = await createFolderDocument(result, payloadObject)
             break
         
         case 'create_subdocument':
@@ -45,6 +54,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
         case 'delete_document':
             result = await deleteUserDocument(result, payloadObject)
             result = await deleteSharingSettingsDocument(result, payloadObject)
+            result = await deleteFolderDocument(result, payloadObject)
             break
         
         case 'delete_subdocument':
@@ -53,6 +63,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
         case 'find_document':
             result = await findUserDocument(result, payloadObject)
             result = await findSharingSettingsDocument(result, payloadObject)
+            result = await findFolderDocument(result, payloadObject)
             break
         
         case 'find_subdocument':
@@ -61,6 +72,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
         case 'get_document':
             result = await getUserDocument(result, payloadObject)
             result = await getSharingSettingsDocument(result, payloadObject)
+            result = await getFolderDocument(result, payloadObject)
             break
 
         case 'get_subdocument':
@@ -69,6 +81,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
         case 'patch_document':
             result = await patchUserDocument(result, payloadObject)
             result = await patchSharingSettingsDocument(result, payloadObject)
+            result = await patchFolderDocument(result, payloadObject)
             break
 
         case 'patch_subdocument':
