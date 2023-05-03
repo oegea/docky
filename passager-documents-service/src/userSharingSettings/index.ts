@@ -3,7 +3,7 @@ import { NativeEventBusRepository } from 'documents-service/dist'
 const USER_SHARING_SETTINGS_COLLECTION_NAME = 'userSharingSettings'
 const USER_SHARING_SETTINGS_FIELDS = ['id', 'email', 'publicKey']
 const eventBusRepository = new NativeEventBusRepository()
-export const createDocument = async (currentResult: boolean, payloadObject: any) => {
+export const createDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
@@ -48,7 +48,7 @@ export const createDocument = async (currentResult: boolean, payloadObject: any)
   return true
 }
 
-export const deleteDocument = async (currentResult: boolean, payloadObject: any) => {
+export const deleteDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection
   } = payloadObject
@@ -58,7 +58,7 @@ export const deleteDocument = async (currentResult: boolean, payloadObject: any)
   return false
 }
 
-export const findDocument = async (currentResult: boolean, payloadObject: any) => {
+export const findDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     payload
@@ -71,7 +71,7 @@ export const findDocument = async (currentResult: boolean, payloadObject: any) =
   return true
 }
 
-export const getDocument = async (currentResult: boolean, payloadObject: any) => {
+export const getDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection
   } = payloadObject
@@ -81,7 +81,7 @@ export const getDocument = async (currentResult: boolean, payloadObject: any) =>
   return true
 }
 
-export const patchDocument = async (currentResult: boolean, payloadObject: any) => {
+export const patchDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,

@@ -3,7 +3,7 @@ import { NativeEventBusRepository } from 'documents-service/dist'
 const FOLDERS_COLLECTION_NAME = 'folders'
 const FOLDERS_FIELDS = ['id', 'key', 'name', 'owner']
 const eventBusRepository = new NativeEventBusRepository()
-export const createDocument = async (currentResult: boolean, payloadObject: any) => {
+export const createDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
@@ -40,7 +40,7 @@ export const createDocument = async (currentResult: boolean, payloadObject: any)
   return true
 }
 
-export const deleteDocument = async (currentResult: boolean, payloadObject: any) => {
+export const deleteDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
@@ -59,7 +59,7 @@ export const deleteDocument = async (currentResult: boolean, payloadObject: any)
   return true
 }
 
-export const findDocument = async (currentResult: boolean, payloadObject: any) => {
+export const findDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
@@ -73,7 +73,7 @@ export const findDocument = async (currentResult: boolean, payloadObject: any) =
   return true
 }
 
-export const getDocument = async (currentResult: boolean, payloadObject: any) => {
+export const getDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
@@ -92,7 +92,7 @@ export const getDocument = async (currentResult: boolean, payloadObject: any) =>
   return true
 }
 
-export const patchDocument = async (currentResult: boolean, payloadObject: any) => {
+export const patchDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,

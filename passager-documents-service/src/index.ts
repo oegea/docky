@@ -16,6 +16,14 @@ import {
 } from './userSharingSettings'
 
 import {
+    createSubDocument as createSharedFolderSubDocument,
+    deleteSubDocument as deleteSharedFolderSubDocument,
+    findSubDocument as findSharedFolderSubDocument,
+    getSubDocument as getSharedFolderSubDocument,
+    patchSubDocument as patchSharedFolderSubDocument
+} from './userSharingSettings/sharedFolders'
+
+import {
     createDocument as createFolderDocument,
     deleteDocument as deleteFolderDocument,
     findDocument as findFolderDocument,
@@ -58,6 +66,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
         
         case 'create_subdocument':
             result = await createPasswordSubDocument(result, payloadObject)
+            result = await createSharedFolderSubDocument(result, payloadObject)
             break
         
         case 'delete_document':
@@ -68,6 +77,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
         
         case 'delete_subdocument':
             result = await deletePasswordSubDocument(result, payloadObject)
+            result = await deleteSharedFolderSubDocument(result, payloadObject)
             break
 
         case 'find_document':
@@ -78,6 +88,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
         
         case 'find_subdocument':
             result = await findPasswordSubDocument(result, payloadObject)
+            result = await findSharedFolderSubDocument(result, payloadObject)
             break
 
         case 'get_document':
@@ -88,6 +99,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
 
         case 'get_subdocument':
             result = await getPasswordSubDocument(result, payloadObject)
+            result = await getSharedFolderSubDocument(result, payloadObject)
             break
 
         case 'patch_document':
@@ -98,6 +110,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
 
         case 'patch_subdocument':
             result = await patchPasswordSubDocument(result, payloadObject)
+            result = await patchSharedFolderSubDocument(result, payloadObject)
             break
     }
     return result

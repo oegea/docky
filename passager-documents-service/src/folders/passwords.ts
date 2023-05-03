@@ -11,7 +11,7 @@ const _canAccessFolder = async ({
 }: {
   currentUserId: string
   parentId: string
-}) => {
+}): Promise<boolean> => {
   // Parent should be a folder owned by currentUserId
   let folderDocument = await eventBusRepository.query('GET_DOCUMENT', {
     collection: FOLDERS_COLLECTION_NAME,
@@ -46,11 +46,10 @@ const _canAccessFolder = async ({
   return true
 }
 
-export const createSubDocument = async (currentResult: boolean, payloadObject: any) => {
+export const createSubDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
-    id,
     subCollection,
     parentId,
     payload
@@ -90,14 +89,12 @@ export const createSubDocument = async (currentResult: boolean, payloadObject: a
   return true
 }
 
-export const deleteSubDocument = async (currentResult: boolean, payloadObject: any) => {
+export const deleteSubDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
-    id,
     subCollection,
-    parentId,
-    payload
+    parentId
   } = payloadObject
 
   if (collection !== FOLDERS_COLLECTION_NAME || subCollection !== PASSWORDS_COLLECTION_NAME) { return currentResult }
@@ -107,14 +104,12 @@ export const deleteSubDocument = async (currentResult: boolean, payloadObject: a
   return true
 }
 
-export const findSubDocument = async (currentResult: boolean, payloadObject: any) => {
+export const findSubDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
-    id,
     subCollection,
-    parentId,
-    payload
+    parentId
   } = payloadObject
 
   if (collection !== FOLDERS_COLLECTION_NAME || subCollection !== PASSWORDS_COLLECTION_NAME) { return currentResult }
@@ -124,14 +119,12 @@ export const findSubDocument = async (currentResult: boolean, payloadObject: any
   return true
 }
 
-export const getSubDocument = async (currentResult: boolean, payloadObject: any) => {
+export const getSubDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,
-    id,
     subCollection,
-    parentId,
-    payload
+    parentId
   } = payloadObject
 
   if (collection !== FOLDERS_COLLECTION_NAME || subCollection !== PASSWORDS_COLLECTION_NAME) { return currentResult }
@@ -141,7 +134,7 @@ export const getSubDocument = async (currentResult: boolean, payloadObject: any)
   return true
 }
 
-export const patchSubDocument = async (currentResult: boolean, payloadObject: any) => {
+export const patchSubDocument = async (currentResult: boolean, payloadObject: any): Promise<boolean> => {
   const {
     collection,
     currentUserId,

@@ -3,8 +3,6 @@ import {
   documentRepository,
   subDocumentRepository
 } from '../../infrastructure/repositories/factory'
-// Entities
-import { documentEntity } from '../entities/factory'
 // Service
 import { CreateDocumentService } from './CreateDocumentService'
 import { CreateSubDocumentService } from './CreateSubDocumentService'
@@ -44,8 +42,8 @@ const deleteDocumentService = (): DeleteDocumentService => new DeleteDocumentSer
 })
 
 const deleteSubDocumentService = (): DeleteSubDocumentService => new DeleteSubDocumentService({
+  eventBusRepository: new NativeEventBusRepository(),
   subDocumentRepository: subDocumentRepository(),
-  getSubDocumentService: getSubDocumentService(),
   getOperationPermissionsService: getOperationPermissionsService(),
   operationPayloadPermissionsValueObject
 })
