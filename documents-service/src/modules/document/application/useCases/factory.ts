@@ -1,20 +1,20 @@
 // Domain
 import {
-    findDocumentRequestValueObject,
-    findSubDocumentRequestValueObject
+  findDocumentRequestValueObject,
+  findSubDocumentRequestValueObject
 } from '../../domain/valueObjects/factory'
 import { documentEntity, subDocumentEntity } from '../../domain/entities/factory'
-import { 
-    createDocumentService,
-    createSubDocumentService, 
-    deleteDocumentService, 
-    deleteSubDocumentService,
-    getDocumentService,
-    getSubDocumentService,
-    findDocumentService,
-    findSubDocumentService,
-    patchDocumentService,
-    patchSubDocumentService 
+import {
+  createDocumentService,
+  createSubDocumentService,
+  deleteDocumentService,
+  deleteSubDocumentService,
+  getDocumentService,
+  getSubDocumentService,
+  findDocumentService,
+  findSubDocumentService,
+  patchDocumentService,
+  patchSubDocumentService
 } from '../../domain/services/factory'
 // Use cases
 import { CreateDocumentUseCase } from './CreateDocumentUseCase'
@@ -29,64 +29,64 @@ import { PatchDocumentUseCase } from './PatchDocumentUseCase'
 import { PatchSubDocumentUseCase } from './PatchSubDocumentUseCase'
 
 const createDocumentUseCase = (): CreateDocumentUseCase => new CreateDocumentUseCase({
-    documentEntity,
-    createDocumentService: createDocumentService()
+  documentEntity,
+  createDocumentService: createDocumentService()
 })
 
 const createSubDocumentUseCase = (): CreateSubDocumentUseCase => new CreateSubDocumentUseCase({
-    subDocumentEntity,
-    createSubDocumentService: createSubDocumentService()
+  subDocumentEntity,
+  createSubDocumentService: createSubDocumentService()
 })
 
 const deleteDocumentUseCase = (): DeleteDocumentUseCase => new DeleteDocumentUseCase({
-    documentEntity,
-    deleteDocumentService: deleteDocumentService()
+  documentEntity,
+  deleteDocumentService: deleteDocumentService()
 })
 
 const deleteSubDocumentUseCase = (): DeleteSubDocumentUseCase => new DeleteSubDocumentUseCase({
-    subDocumentEntity,
-    deleteSubDocumentService: deleteSubDocumentService()
+  subDocumentEntity,
+  deleteSubDocumentService: deleteSubDocumentService()
 })
 
 const getDocumentUseCase = (): GetDocumentUseCase => new GetDocumentUseCase({
-    documentEntity,
-    getDocumentService: getDocumentService()
+  documentEntity,
+  getDocumentService: getDocumentService()
 })
 
 const getSubDocumentUseCase = (): GetSubDocumentUseCase => new GetSubDocumentUseCase({
-    subDocumentEntity,
-    getSubDocumentService: getSubDocumentService()
+  subDocumentEntity,
+  getSubDocumentService: getSubDocumentService()
 })
 
 const findDocumentUseCase = (): FindDocumentUseCase => new FindDocumentUseCase({
-    findDocumentRequestValueObject,
-    findDocumentService: findDocumentService()
+  findDocumentRequestValueObject,
+  findDocumentService: findDocumentService()
 })
 
 const findSubDocumentUseCase = (): FindSubDocumentUseCase => new FindSubDocumentUseCase({
-    findSubDocumentRequestValueObject,
-    findSubDocumentService: findSubDocumentService()
+  findSubDocumentRequestValueObject,
+  findSubDocumentService: findSubDocumentService()
 })
 
 const patchDocumentUseCase = (): PatchDocumentUseCase => new PatchDocumentUseCase({
-    documentEntity,
-    patchDocumentService: patchDocumentService()
+  documentEntity,
+  patchDocumentService: patchDocumentService()
 })
 
 const patchSubDocumentUseCase = (): PatchSubDocumentUseCase => new PatchSubDocumentUseCase({
-    subDocumentEntity,
-    patchSubDocumentService: patchSubDocumentService()
+  subDocumentEntity,
+  patchSubDocumentService: patchSubDocumentService()
 })
 
-export { 
-    createDocumentUseCase, 
-    createSubDocumentUseCase,
-    deleteDocumentUseCase, 
-    deleteSubDocumentUseCase,
-    getDocumentUseCase,
-    getSubDocumentUseCase, 
-    findDocumentUseCase, 
-    findSubDocumentUseCase,
-    patchDocumentUseCase,
-    patchSubDocumentUseCase 
+export {
+  createDocumentUseCase,
+  createSubDocumentUseCase,
+  deleteDocumentUseCase,
+  deleteSubDocumentUseCase,
+  getDocumentUseCase,
+  getSubDocumentUseCase,
+  findDocumentUseCase,
+  findSubDocumentUseCase,
+  patchDocumentUseCase,
+  patchSubDocumentUseCase
 }

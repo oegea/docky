@@ -1,37 +1,38 @@
 import { FindSubDocumentRequestValueObject } from '../../domain/valueObjects/FindSubDocumentRequestValueObject'
 import { FindSubDocumentService } from '../../domain/services/FindSubDocumentService'
-import { 
+import {
   userIdValueObject
 } from 'passager-backend-shared-kernel'
 
 class FindSubDocumentUseCase {
-  private readonly findSubDocumentRequestValueObject: ({ 
-        collection, 
-        parentId,
-        subCollection,
-        criteria 
-    }: {
-        collection: string,
-        parentId: string,
-        subCollection: string,
-        criteria: object
-    }) => Promise<FindSubDocumentRequestValueObject>
+  private readonly findSubDocumentRequestValueObject: ({
+    collection,
+    parentId,
+    subCollection,
+    criteria
+  }: {
+    collection: string
+    parentId: string
+    subCollection: string
+    criteria: object
+  }) => Promise<FindSubDocumentRequestValueObject>
+
   private readonly findSubDocumentService: FindSubDocumentService
 
   constructor ({
     findSubDocumentRequestValueObject,
     findSubDocumentService
   }: {
-    findSubDocumentRequestValueObject: ({ 
-        collection, 
-        parentId,
-        subCollection,
-        criteria 
+    findSubDocumentRequestValueObject: ({
+      collection,
+      parentId,
+      subCollection,
+      criteria
     }: {
-        collection: string,
-        parentId: string,
-        subCollection: string,
-        criteria: object
+      collection: string
+      parentId: string
+      subCollection: string
+      criteria: object
     }) => Promise<FindSubDocumentRequestValueObject>
     findSubDocumentService: FindSubDocumentService
   }) {
@@ -39,30 +40,30 @@ class FindSubDocumentUseCase {
     this.findSubDocumentService = findSubDocumentService
   }
 
-  public async execute ({ 
-    collection, 
+  public async execute ({
+    collection,
     currentUserId,
     parentId,
     subCollection,
-    criteria 
-}: {
-    collection: string,
-    currentUserId: string,
-    parentId: string,
-    subCollection: string,
+    criteria
+  }: {
+    collection: string
+    currentUserId: string
+    parentId: string
+    subCollection: string
     criteria: object
-}): Promise<object> {
+  }): Promise<object> {
     try {
       const currentUserIdValueObject = await userIdValueObject({
         userId: currentUserId
       })
-      const findSubDocumentRequestValueObject = await this.findSubDocumentRequestValueObject({ 
+      const findSubDocumentRequestValueObject = await this.findSubDocumentRequestValueObject({
         collection,
         parentId,
         subCollection,
-        criteria 
+        criteria
       })
-      const subDocumentEntityResult =  await this.findSubDocumentService.execute({ currentUserIdValueObject, findSubDocumentRequestValueObject })
+      const subDocumentEntityResult = await this.findSubDocumentService.execute({ currentUserIdValueObject, findSubDocumentRequestValueObject })
       return subDocumentEntityResult.toJson()
     } catch (e) {
       throw e.message

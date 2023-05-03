@@ -22,16 +22,13 @@ class ValidateLoginService {
   }: {
     validateLoginRequestValueObject: ValidateLoginRequestValueObject
   }): Promise<string> {
-
     // Should not continue if provided code and email is not valid
     const codeIsValid = await this.loginRepository.verifyCode(validateLoginRequestValueObject)
 
-    if (codeIsValid === false)
-        throw new Error('ValidateLoginService: received code is not valid')
+    if (!codeIsValid) { throw new Error('ValidateLoginService: received code is not valid') }
 
     const token = this.tokenGeneratorRepository.generateToken(validateLoginRequestValueObject)
-    return token
-
+    return await token
   }
 }
 

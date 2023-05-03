@@ -1,31 +1,31 @@
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { CreateDocumentService } from '../../domain/services/CreateDocumentService'
-import { 
+import {
   userIdValueObject
 } from 'passager-backend-shared-kernel'
 
 class CreateDocumentUseCase {
-  private readonly documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
+  private readonly documentEntity: ({ id, collection, documentPlainObject }: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
   private readonly createDocumentService: CreateDocumentService
 
   constructor ({
     documentEntity,
     createDocumentService
   }: {
-    documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
+    documentEntity: ({ id, collection, documentPlainObject }: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
     createDocumentService: CreateDocumentService
   }) {
     this.documentEntity = documentEntity
     this.createDocumentService = createDocumentService
   }
 
-  public async execute ({ 
+  public async execute ({
     collection,
-    currentUserId, 
-    document 
+    currentUserId,
+    document
   }: {
-    collection: string, 
-    currentUserId: string,
+    collection: string
+    currentUserId: string
     document: object
   }): Promise<object> {
     try {
@@ -33,7 +33,7 @@ class CreateDocumentUseCase {
         userId: currentUserId
       })
       const documentEntity = await this.documentEntity({ id: null, collection, documentPlainObject: document })
-      const documentEntityResult =  await this.createDocumentService.execute({ currentUserIdValueObject, documentEntity })
+      const documentEntityResult = await this.createDocumentService.execute({ currentUserIdValueObject, documentEntity })
       return documentEntityResult.toJson()
     } catch (e) {
       throw e.message

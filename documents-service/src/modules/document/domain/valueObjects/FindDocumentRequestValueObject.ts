@@ -1,5 +1,4 @@
 class FindDocumentRequestValueObject {
-
   private readonly collection: string
   private readonly criteria: object
 
@@ -7,7 +6,7 @@ class FindDocumentRequestValueObject {
     collection,
     criteria
   }: {
-    collection: string,
+    collection: string
     criteria: object
   }) {
     this.collection = collection
@@ -18,11 +17,9 @@ class FindDocumentRequestValueObject {
     return this.collection
   }
 
-
   getCriteria (): object {
     return this.criteria
-  }  
-
+  }
 }
 
 export { FindDocumentRequestValueObject }

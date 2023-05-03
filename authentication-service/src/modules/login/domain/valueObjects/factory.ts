@@ -3,7 +3,7 @@ import { ValidateLoginRequestValueObject } from './ValidateLoginRequestValueObje
 import { EmailValueObject } from './EmailValueObject'
 import { emailValidatorRepository } from '../../infrastructure/repositories/factory'
 
-const emailValueObject = async({
+const emailValueObject = async ({
   email
 }: {
   email: string
@@ -23,8 +23,7 @@ const startLoginRequestValueObject = async ({
 }: {
   email: string
 }): Promise<StartLoginRequestValueObject> => {
-
-  const emailValueObjectInstance = await emailValueObject({email})
+  const emailValueObjectInstance = await emailValueObject({ email })
 
   const startLoginRequestValueObject = new StartLoginRequestValueObject({
     emailValueObject: emailValueObjectInstance
@@ -35,14 +34,14 @@ const startLoginRequestValueObject = async ({
   return startLoginRequestValueObject
 }
 
-const validateLoginRequestValueObject = async ( {
+const validateLoginRequestValueObject = async ({
   email,
   code
 }: {
   email: string
   code: number
 }): Promise<ValidateLoginRequestValueObject> => {
-  const emailValueObjectInstance = await emailValueObject({email})
+  const emailValueObjectInstance = await emailValueObject({ email })
   const validateLoginRequestValueObject = new ValidateLoginRequestValueObject({
     code,
     emailValueObject: emailValueObjectInstance

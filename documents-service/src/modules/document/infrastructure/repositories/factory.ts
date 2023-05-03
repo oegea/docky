@@ -1,26 +1,26 @@
 // Domain
 import { DocumentRepository } from '../../domain/repositories/DocumentRepository'
-import { SubDocumentRepository } from '../../domain/repositories/SubDocumentRepository'
+import { SubDocumentRepository } from '../../domain/repositories/SubDocumentRepository'
 // Infrastructure repositories
 import { MongoDBDocumentRepository } from './MongoDBDocumentRepository'
 import { MongoDBSubDocumentRepository } from './MongoDBSubDocumentRepository'
 // Infraestructure mappers
-import { 
-    fromMongoDBDocumentToDocumentEntityMapper, 
-    fromMongoDBFindToDocumentEntityListMapper,
-    fromMongoDBFindToSubDocumentEntityListMapper 
+import {
+  fromMongoDBDocumentToDocumentEntityMapper,
+  fromMongoDBFindToDocumentEntityListMapper,
+  fromMongoDBFindToSubDocumentEntityListMapper
 } from '../mapper/factory'
 
 const documentRepository = (): DocumentRepository => new MongoDBDocumentRepository({
-    fromMongoDBDocumentToDocumentEntityMapper,
-    fromMongoDBFindToDocumentEntityListMapper
+  fromMongoDBDocumentToDocumentEntityMapper,
+  fromMongoDBFindToDocumentEntityListMapper
 })
 
 const subDocumentRepository = (): SubDocumentRepository => new MongoDBSubDocumentRepository({
-    fromMongoDBFindToSubDocumentEntityListMapper
+  fromMongoDBFindToSubDocumentEntityListMapper
 })
 
-export { 
-    documentRepository,
-    subDocumentRepository
+export {
+  documentRepository,
+  subDocumentRepository
 }

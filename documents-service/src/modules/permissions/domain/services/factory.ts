@@ -1,5 +1,5 @@
 // Infrastructure
-import { 
+import {
   NativeEventBusRepository
 } from 'passager-backend-shared-kernel'
 // Service
@@ -9,6 +9,6 @@ const getOperationPermissionsService = (): GetOperationPermissionsService => new
   eventBusRepository: new NativeEventBusRepository()
 })
 
-export { 
+export {
   getOperationPermissionsService
 }

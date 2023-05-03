@@ -7,7 +7,7 @@ class StartLoginRequestValueObject {
   private randomNumber: number
 
   constructor ({
-    emailValueObject,
+    emailValueObject
   }: {
     emailValueObject: EmailValueObject
   }) {
@@ -15,34 +15,33 @@ class StartLoginRequestValueObject {
   }
 
   async validate (): Promise<void> {
-
     await this.emailValueObject.validate()
 
     if (
-      this.emailValidationIsEnabled() === true && 
-      this.emailIsSpecificallyAllowed() === false
+      this.emailValidationIsEnabled() &&
+      !this.emailIsSpecificallyAllowed()
     ) {
       this.emailHasAllowedDomain()
     }
   }
 
-  emailValidationIsEnabled(): boolean {
+  emailValidationIsEnabled (): boolean {
     return (process.env.PASS_AUTH_LIMIT_ACCESS_BY_EMAIL === 'true')
   }
 
-  emailIsSpecificallyAllowed(): boolean {
+  emailIsSpecificallyAllowed (): boolean {
     const allowedEmails = process.env.PASS_AUTH_ALLOWED_EMAILS.split(CONFIG_SPLIT_MARK)
     const foundEmails = allowedEmails.find((allowedEmail) => allowedEmail === this.getEmail())
     return (foundEmails !== undefined)
   }
 
-  emailHasAllowedDomain(): void {
+  emailHasAllowedDomain (): void {
     const allowedDomains = process.env.PASS_AUTH_ALLOWED_DOMAINS.split(CONFIG_SPLIT_MARK)
     const currentDomain = this.getDomainFromEmail()
 
     const foundDomains = allowedDomains.find((domain) => domain === currentDomain)
 
-    if (foundDomains === undefined){
+    if (foundDomains === undefined) {
       throw new Error('StartLoginRequestValueObject: email is not authorized to login')
     }
   }
@@ -59,7 +58,7 @@ class StartLoginRequestValueObject {
     return this.emailValueObject.getEmail()
   }
 
-  getDomainFromEmail(): string {
+  getDomainFromEmail (): string {
     return this.getEmail().split('@')[1] || ''
   }
 }

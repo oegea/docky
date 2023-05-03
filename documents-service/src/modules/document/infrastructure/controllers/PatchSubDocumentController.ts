@@ -2,9 +2,7 @@ import { SharedController } from 'passager-backend-shared-kernel'
 import { patchSubDocumentUseCase } from '../../application/useCases/factory'
 
 class PatchSubDocumentController extends SharedController {
-
   public async safeInternalExecute (collection: string, parentId: string, subCollection: string, id: string, document: any): Promise<any> {
-
     const useCase = patchSubDocumentUseCase()
     const documentPatchResult = await useCase.execute({
       collection,
@@ -23,13 +21,13 @@ class PatchSubDocumentController extends SharedController {
     const document = this.req.body
 
     const useCase = patchSubDocumentUseCase()
-    const documentPatchResult = await useCase.execute({ 
-      collection, 
+    const documentPatchResult = await useCase.execute({
+      collection,
       currentUserId: this.req.user.email,
-      parentId, 
-      subCollection, 
-      id, 
-      document 
+      parentId,
+      subCollection,
+      id,
+      document
     })
 
     this.success(documentPatchResult)

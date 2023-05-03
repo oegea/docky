@@ -1,5 +1,5 @@
 // Infrastructure
-import { 
+import {
   documentRepository,
   subDocumentRepository
 } from '../../infrastructure/repositories/factory'
@@ -19,80 +19,82 @@ import { PatchSubDocumentService } from './PatchSubDocumentService'
 // Other modules services
 import { getOperationPermissionsService } from '../../../permissions/domain/services/factory'
 import { operationPayloadPermissionsValueObject } from '../../../permissions/domain/valueObjects/factory'
+import {
+  NativeEventBusRepository
+} from 'passager-backend-shared-kernel'
 
 const createDocumentService = (): CreateDocumentService => new CreateDocumentService({
   documentRepository: documentRepository(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const createSubDocumentService = (): CreateSubDocumentService => new CreateSubDocumentService({
-  documentEntity,
+  eventBusRepository: new NativeEventBusRepository(),
   subDocumentRepository: subDocumentRepository(),
-  getDocumentService: getDocumentService(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const deleteDocumentService = (): DeleteDocumentService => new DeleteDocumentService({
   documentRepository: documentRepository(),
   getDocumentService: getDocumentService(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const deleteSubDocumentService = (): DeleteSubDocumentService => new DeleteSubDocumentService({
   subDocumentRepository: subDocumentRepository(),
   getSubDocumentService: getSubDocumentService(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const findDocumentService = (): FindDocumentService => new FindDocumentService({
   documentRepository: documentRepository(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const findSubDocumentService = (): FindSubDocumentService => new FindSubDocumentService({
   subDocumentRepository: subDocumentRepository(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const getDocumentService = (): GetDocumentService => new GetDocumentService({
   documentRepository: documentRepository(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const getSubDocumentService = (): GetSubDocumentService => new GetSubDocumentService({
   subDocumentRepository: subDocumentRepository(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const patchDocumentService = (): PatchDocumentService => new PatchDocumentService({
   documentRepository: documentRepository(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
 const patchSubDocumentService = (): PatchSubDocumentService => new PatchSubDocumentService({
   subDocumentRepository: subDocumentRepository(),
   getOperationPermissionsService: getOperationPermissionsService(),
-  operationPayloadPermissionsValueObject: operationPayloadPermissionsValueObject
+  operationPayloadPermissionsValueObject
 })
 
-export { 
-  createDocumentService, 
-  createSubDocumentService, 
-  deleteDocumentService, 
-  deleteSubDocumentService, 
-  findDocumentService, 
+export {
+  createDocumentService,
+  createSubDocumentService,
+  deleteDocumentService,
+  deleteSubDocumentService,
+  findDocumentService,
   findSubDocumentService,
-  getDocumentService, 
-  getSubDocumentService, 
+  getDocumentService,
+  getSubDocumentService,
   patchDocumentService,
-  patchSubDocumentService 
+  patchSubDocumentService
 }

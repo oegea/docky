@@ -7,16 +7,16 @@ import { UserIdValueObject } from 'passager-backend-shared-kernel'
 class GetSubDocumentService {
   private readonly subDocumentRepository: SubDocumentRepository
   private readonly getOperationPermissionsService: GetOperationPermissionsService
-  private readonly operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+  private readonly operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string, currentUserIdValueObject: UserIdValueObject, id: string, subCollection: string, parentId: string, operationType: string, payload: any }) => Promise<OperationPayloadPermissionsValueObject>
 
   constructor ({
     subDocumentRepository,
     getOperationPermissionsService,
     operationPayloadPermissionsValueObject
   }: {
-    subDocumentRepository: SubDocumentRepository,
-    getOperationPermissionsService: GetOperationPermissionsService,
-    operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+    subDocumentRepository: SubDocumentRepository
+    getOperationPermissionsService: GetOperationPermissionsService
+    operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string, currentUserIdValueObject: UserIdValueObject, id: string, subCollection: string, parentId: string, operationType: string, payload: any }) => Promise<OperationPayloadPermissionsValueObject>
   }) {
     this.subDocumentRepository = subDocumentRepository
     this.getOperationPermissionsService = getOperationPermissionsService
@@ -27,10 +27,9 @@ class GetSubDocumentService {
     currentUserIdValueObject,
     subDocumentEntity
   }: {
-    currentUserIdValueObject: UserIdValueObject,
+    currentUserIdValueObject: UserIdValueObject
     subDocumentEntity: SubDocumentEntity
   }): Promise<SubDocumentEntity> {
-
     const operationPayloadPermissionsValueObject = await this.operationPayloadPermissionsValueObject({
       collection: subDocumentEntity.getCollection(),
       currentUserIdValueObject,
@@ -43,13 +42,11 @@ class GetSubDocumentService {
     const hasPermission = await this.getOperationPermissionsService.execute({
       operationPayloadPermissionsValueObject
     })
-    if (!hasPermission)
-      throw new Error('GetSubDocumentService: insufficient permissions to perform this operation')
+    if (!hasPermission) { throw new Error('GetSubDocumentService: insufficient permissions to perform this operation') }
 
     const getSubDocumentResult = await this.subDocumentRepository.get(subDocumentEntity)
 
-    if (getSubDocumentResult === null)
-        throw new Error('GetSubDocumentService: error while getting a document')
+    if (getSubDocumentResult === null) { throw new Error('GetSubDocumentService: error while getting a document') }
 
     return getSubDocumentResult
   }

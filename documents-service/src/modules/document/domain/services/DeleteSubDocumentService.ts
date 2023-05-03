@@ -9,7 +9,7 @@ class DeleteSubDocumentService {
   private readonly subDocumentRepository: SubDocumentRepository
   private readonly getSubDocumentService: GetSubDocumentService
   private readonly getOperationPermissionsService: GetOperationPermissionsService
-  private readonly operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+  private readonly operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string, currentUserIdValueObject: UserIdValueObject, id: string, subCollection: string, parentId: string, operationType: string, payload: any }) => Promise<OperationPayloadPermissionsValueObject>
 
   constructor ({
     subDocumentRepository,
@@ -17,10 +17,10 @@ class DeleteSubDocumentService {
     getOperationPermissionsService,
     operationPayloadPermissionsValueObject
   }: {
-    subDocumentRepository: SubDocumentRepository,
-    getSubDocumentService: GetSubDocumentService,
-    getOperationPermissionsService: GetOperationPermissionsService,
-    operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+    subDocumentRepository: SubDocumentRepository
+    getSubDocumentService: GetSubDocumentService
+    getOperationPermissionsService: GetOperationPermissionsService
+    operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string, currentUserIdValueObject: UserIdValueObject, id: string, subCollection: string, parentId: string, operationType: string, payload: any }) => Promise<OperationPayloadPermissionsValueObject>
   }) {
     this.subDocumentRepository = subDocumentRepository
     this.getSubDocumentService = getSubDocumentService
@@ -32,10 +32,9 @@ class DeleteSubDocumentService {
     currentUserIdValueObject,
     subDocumentEntity
   }: {
-    currentUserIdValueObject: UserIdValueObject,
+    currentUserIdValueObject: UserIdValueObject
     subDocumentEntity: SubDocumentEntity
   }): Promise<Boolean> {
-
     const operationPayloadPermissionsValueObject = await this.operationPayloadPermissionsValueObject({
       collection: subDocumentEntity.getCollection(),
       currentUserIdValueObject,
@@ -49,14 +48,12 @@ class DeleteSubDocumentService {
     const hasPermission = await this.getOperationPermissionsService.execute({
       operationPayloadPermissionsValueObject
     })
-    if (!hasPermission)
-      throw new Error('DeleteSubDocumentService: insufficient permissions to perform this operation')
+    if (!hasPermission) { throw new Error('DeleteSubDocumentService: insufficient permissions to perform this operation') }
 
     try {
-        await this.getSubDocumentService.execute({currentUserIdValueObject, subDocumentEntity})
-    }
-    catch(e){
-        return false
+      await this.getSubDocumentService.execute({ currentUserIdValueObject, subDocumentEntity })
+    } catch (e) {
+      return false
     }
 
     const deleteResult = await this.subDocumentRepository.delete(subDocumentEntity)

@@ -33,13 +33,12 @@ class StartLoginService {
 
     // Store it
     const isSuccessfullSave = await this.loginRepository.save(startLoginRequestValueObject)
-    if (isSuccessfullSave === false)
-      throw new Error('StartLoginService: error while saving random verification code') 
+    if (!isSuccessfullSave) { throw new Error('StartLoginService: error while saving random verification code') }
 
     // Send e-mail
     const email = startLoginRequestValueObject.getEmail()
     const isSuccessfullEmailSending = await this.emailSenderRepository.send(
-      email, 
+      email,
       `Please verify your e-mail to use ${process.env.COMMON_APP_NAME}`,
       `
         Hello,
@@ -62,8 +61,7 @@ class StartLoginService {
     `
     )
 
-    if (isSuccessfullEmailSending === false)
-      throw new Error('StartLoginService: error while sending verification email') 
+    if (!isSuccessfullEmailSending) { throw new Error('StartLoginService: error while sending verification email') }
   }
 }
 

@@ -3,56 +3,54 @@ import { LoginRepository } from '../../domain/repositories/LoginRepository'
 import { StartLoginRequestValueObject } from '../../domain/valueObjects/StartLoginRequestValueObject'
 import { ValidateLoginRequestValueObject } from '../../domain/valueObjects/ValidateLoginRequestValueObject'
 // Infrastructure
-import {MongoDBConnection} from 'passager-backend-shared-kernel'
+import { MongoDBConnection } from 'passager-backend-shared-kernel'
 class MongoDBLoginRepository implements LoginRepository {
+  getMongoDbAuthCollection (): any {
+    const mongoDbClient = MongoDBConnection.getConnection()
 
-    getMongoDbAuthCollection () {
-        const mongoDbClient = MongoDBConnection.getConnection()
+    const database = mongoDbClient.db(process.env.COMMON_MONGODB_DATABASE)
+    const collection = database.collection(process.env.PASS_AUTH_COLLECTION)
 
-        const database = mongoDbClient.db(process.env.COMMON_MONGODB_DATABASE)
-        const collection = database.collection(process.env.PASS_AUTH_COLLECTION)
+    return collection
+  }
 
-        return collection
+  async save (startLoginRequestValueObject: StartLoginRequestValueObject): Promise<boolean> {
+    const collection = this.getMongoDbAuthCollection()
+    try {
+      await collection.deleteMany({
+        email: startLoginRequestValueObject.getEmail()
+      })
+
+      await collection.insertOne({
+        email: startLoginRequestValueObject.getEmail(),
+        number: startLoginRequestValueObject.getRandomNumber(),
+        createdAt: new Date(Date.now())
+      })
+    } catch (e) {
+      console.error(e)
+      return false
     }
 
-    async save (startLoginRequestValueObject: StartLoginRequestValueObject): Promise<boolean> {
-        
-        const collection = this.getMongoDbAuthCollection()
-        try{
-            await collection.deleteMany({
-                email: startLoginRequestValueObject.getEmail()
-            });
+    return true
+  }
 
-            await collection.insertOne({
-                email: startLoginRequestValueObject.getEmail(),
-                number: startLoginRequestValueObject.getRandomNumber(),
-                createdAt: new Date(Date.now())
-            })
-        }catch(e) {
-            console.error(e)
-            return false
-        }
-
-        return true
-    }
-
-  async verifyCode(validateLoginRequestValueObject: ValidateLoginRequestValueObject): Promise<boolean> {
+  async verifyCode (validateLoginRequestValueObject: ValidateLoginRequestValueObject): Promise<boolean> {
     const email = validateLoginRequestValueObject.getEmail()
     const number = validateLoginRequestValueObject.getCode()
     const collection = this.getMongoDbAuthCollection()
 
     const result = await collection.findOne({
-        email,
-        number
-    });
+      email,
+      number
+    })
 
     if (!result) {
-        return false
+      return false
     }
 
     await collection.deleteMany({
-        email
-    });
+      email
+    })
 
     return true
   }

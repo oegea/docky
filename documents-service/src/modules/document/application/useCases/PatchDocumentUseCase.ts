@@ -1,33 +1,33 @@
 import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { PatchDocumentService } from '../../domain/services/PatchDocumentService'
-import { 
+import {
   userIdValueObject
 } from 'passager-backend-shared-kernel'
 
 class PatchDocumentUseCase {
-  private readonly documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
+  private readonly documentEntity: ({ id, collection, documentPlainObject }: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
   private readonly patchDocumentService: PatchDocumentService
 
   constructor ({
     documentEntity,
     patchDocumentService
   }: {
-    documentEntity: ({id, collection, documentPlainObject}: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
+    documentEntity: ({ id, collection, documentPlainObject }: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>
     patchDocumentService: PatchDocumentService
   }) {
     this.documentEntity = documentEntity
     this.patchDocumentService = patchDocumentService
   }
 
-  public async execute ({ 
-    collection, 
+  public async execute ({
+    collection,
     currentUserId,
-    id, 
-    document 
+    id,
+    document
   }: {
-    collection: string, 
-    currentUserId: string,
-    id: string, 
+    collection: string
+    currentUserId: string
+    id: string
     document: object
   }): Promise<object> {
     try {
@@ -39,7 +39,7 @@ class PatchDocumentUseCase {
         collection,
         documentPlainObject: document
       })
-      const result =  await this.patchDocumentService.execute({ currentUserIdValueObject, documentEntity })
+      const result = await this.patchDocumentService.execute({ currentUserIdValueObject, documentEntity })
       return result.toJson()
     } catch (e) {
       throw e.message

@@ -21,15 +21,15 @@ const getSubDocumentController = (req, res): SharedController => new GetSubDocum
 const patchDocumentController = (req, res): SharedController => new PatchDocumentController(req, res)
 const patchSubDocumentController = (req, res): SharedController => new PatchSubDocumentController(req, res)
 
-export { 
-    createDocumentController, 
-    createSubDocumentController, 
-    deleteDocumentController, 
-    deleteSubDocumentController,
-    findDocumentController, 
-    findSubDocumentController,
-    getDocumentController, 
-    getSubDocumentController,
-    patchDocumentController,
-    patchSubDocumentController
+export {
+  createDocumentController,
+  createSubDocumentController,
+  deleteDocumentController,
+  deleteSubDocumentController,
+  findDocumentController,
+  findSubDocumentController,
+  getDocumentController,
+  getSubDocumentController,
+  patchDocumentController,
+  patchSubDocumentController
 }

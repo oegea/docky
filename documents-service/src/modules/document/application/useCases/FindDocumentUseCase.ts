@@ -1,6 +1,6 @@
 import { FindDocumentRequestValueObject } from '../../domain/valueObjects/FindDocumentRequestValueObject'
 import { FindDocumentService } from '../../domain/services/FindDocumentService'
-import { 
+import {
   userIdValueObject
 } from 'passager-backend-shared-kernel'
 
@@ -19,13 +19,13 @@ class FindDocumentUseCase {
     this.findDocumentService = findDocumentService
   }
 
-  public async execute ({ 
+  public async execute ({
     collection,
-    currentUserId, 
-    criteria 
+    currentUserId,
+    criteria
   }: {
-    collection: string, 
-    currentUserId: string,
+    collection: string
+    currentUserId: string
     criteria: object
   }): Promise<object> {
     try {
@@ -33,7 +33,7 @@ class FindDocumentUseCase {
         userId: currentUserId
       })
       const findDocumentRequestValueObject = await this.findDocumentRequestValueObject({ collection, criteria })
-      const documentEntityResult =  await this.findDocumentService.execute({ currentUserIdValueObject, findDocumentRequestValueObject })
+      const documentEntityResult = await this.findDocumentService.execute({ currentUserIdValueObject, findDocumentRequestValueObject })
       return documentEntityResult.toJson()
     } catch (e) {
       throw e.message

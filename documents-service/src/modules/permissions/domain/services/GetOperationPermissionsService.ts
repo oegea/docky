@@ -1,11 +1,10 @@
-import { 
-    EventBusRepository
+import {
+  EventBusRepository
 } from 'passager-backend-shared-kernel'
 import { OperationPayloadPermissionsValueObject } from '../valueObjects/OperationPayloadPermissionsValueObject'
 
 class GetOperationPermissionsService {
-
-  private eventBusRepository: EventBusRepository
+  private readonly eventBusRepository: EventBusRepository
 
   constructor ({
     eventBusRepository
@@ -15,8 +14,7 @@ class GetOperationPermissionsService {
     this.eventBusRepository = eventBusRepository
   }
 
-  public async execute ({operationPayloadPermissionsValueObject}: {operationPayloadPermissionsValueObject: OperationPayloadPermissionsValueObject}): Promise<Boolean> {
-
+  public async execute ({ operationPayloadPermissionsValueObject }: {operationPayloadPermissionsValueObject: OperationPayloadPermissionsValueObject}): Promise<Boolean> {
     const collection = operationPayloadPermissionsValueObject.getCollection()
     const currentUserId = operationPayloadPermissionsValueObject
       .getCurrentUserIdValueObject()
@@ -27,8 +25,7 @@ class GetOperationPermissionsService {
     const operationType = operationPayloadPermissionsValueObject.getOperationType()
     const payload = operationPayloadPermissionsValueObject.getPayload()
 
-    if (currentUserId === 'SYSTEM')
-      return true
+    if (currentUserId === 'SYSTEM') { return true }
 
     const hasPermissions = await this.eventBusRepository.query(
       'GET_OPERATION_PERMISSIONS', {
@@ -42,9 +39,8 @@ class GetOperationPermissionsService {
       }
     )
 
-    if (hasPermissions === null)
-      return false
-    
+    if (hasPermissions === null) { return false }
+
     return hasPermissions[0]
   }
 }

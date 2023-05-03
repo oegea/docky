@@ -7,16 +7,16 @@ import { UserIdValueObject } from 'passager-backend-shared-kernel'
 class PatchDocumentService {
   private readonly documentRepository: DocumentRepository
   private readonly getOperationPermissionsService: GetOperationPermissionsService
-  private readonly operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+  private readonly operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string, currentUserIdValueObject: UserIdValueObject, id: string, subCollection: string, parentId: string, operationType: string, payload: any }) => Promise<OperationPayloadPermissionsValueObject>
 
   constructor ({
     documentRepository,
     getOperationPermissionsService,
     operationPayloadPermissionsValueObject
   }: {
-    documentRepository: DocumentRepository,
-    getOperationPermissionsService: GetOperationPermissionsService,
-    operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string; currentUserIdValueObject: UserIdValueObject; id: string; subCollection: string; parentId: string; operationType: string; payload: any; }) => Promise<OperationPayloadPermissionsValueObject>
+    documentRepository: DocumentRepository
+    getOperationPermissionsService: GetOperationPermissionsService
+    operationPayloadPermissionsValueObject: ({ collection, currentUserIdValueObject, id, subCollection, parentId, operationType, payload }: { collection: string, currentUserIdValueObject: UserIdValueObject, id: string, subCollection: string, parentId: string, operationType: string, payload: any }) => Promise<OperationPayloadPermissionsValueObject>
   }) {
     this.documentRepository = documentRepository
     this.getOperationPermissionsService = getOperationPermissionsService
@@ -27,10 +27,9 @@ class PatchDocumentService {
     currentUserIdValueObject,
     documentEntity
   }: {
-    currentUserIdValueObject: UserIdValueObject,
+    currentUserIdValueObject: UserIdValueObject
     documentEntity: DocumentEntity
   }): Promise<DocumentEntity> {
-
     const operationPayloadPermissionsValueObject = await this.operationPayloadPermissionsValueObject({
       collection: documentEntity.getCollection(),
       currentUserIdValueObject,
@@ -44,13 +43,11 @@ class PatchDocumentService {
     const hasPermission = await this.getOperationPermissionsService.execute({
       operationPayloadPermissionsValueObject
     })
-    if (!hasPermission)
-      throw new Error('PatchDocumentService: insufficient permissions to perform this operation')
+    if (!hasPermission) { throw new Error('PatchDocumentService: insufficient permissions to perform this operation') }
 
     const documentUpdateResult = await this.documentRepository.patch(documentEntity)
 
-    if (documentUpdateResult === null)
-        throw new Error('PatchDocumentService: error while patching a document')
+    if (documentUpdateResult === null) { throw new Error('PatchDocumentService: error while patching a document') }
 
     return documentUpdateResult
   }

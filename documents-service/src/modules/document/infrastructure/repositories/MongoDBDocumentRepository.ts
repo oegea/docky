@@ -10,141 +10,136 @@ import { ObjectId } from 'mongodb'
 import { MongoDBConnection } from 'passager-backend-shared-kernel'
 
 class MongoDBDocumentRepository implements DocumentRepository {
+  private readonly fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper
+  private readonly fromMongoDBFindToDocumentEntityListMapper: ({ collection, mongoDBFindResult }: {collection: string, mongoDBFindResult: any }) => FromMongoDBFindToDocumentEntityListMapper
 
-    private readonly fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper
-    private readonly fromMongoDBFindToDocumentEntityListMapper: ({ collection, mongoDBFindResult}: {collection: string, mongoDBFindResult : any }) => FromMongoDBFindToDocumentEntityListMapper
+  constructor ({
+    fromMongoDBDocumentToDocumentEntityMapper,
+    fromMongoDBFindToDocumentEntityListMapper
+  }: {
+    fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper
+    fromMongoDBFindToDocumentEntityListMapper: ({ collection, mongoDBFindResult }: {collection: string, mongoDBFindResult: any }) => FromMongoDBFindToDocumentEntityListMapper
+  }) {
+    this.fromMongoDBDocumentToDocumentEntityMapper = fromMongoDBDocumentToDocumentEntityMapper
+    this.fromMongoDBFindToDocumentEntityListMapper = fromMongoDBFindToDocumentEntityListMapper
+  }
 
-    constructor({
-        fromMongoDBDocumentToDocumentEntityMapper,
-        fromMongoDBFindToDocumentEntityListMapper
-    }: {
-        fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper,
-        fromMongoDBFindToDocumentEntityListMapper: ({ collection, mongoDBFindResult}: {collection: string, mongoDBFindResult : any }) => FromMongoDBFindToDocumentEntityListMapper
-    }) {
-        this.fromMongoDBDocumentToDocumentEntityMapper = fromMongoDBDocumentToDocumentEntityMapper
-        this.fromMongoDBFindToDocumentEntityListMapper = fromMongoDBFindToDocumentEntityListMapper
+  getMongoDbCollection (collectionName: string) {
+    const mongoDbClient = MongoDBConnection.getConnection()
+
+    const database = mongoDbClient.db(process.env.COMMON_MONGODB_DATABASE)
+    const collection = database.collection(collectionName)
+
+    return collection
+  }
+
+  async create (documentEntity: DocumentEntity): Promise<DocumentEntity> {
+    const collectionName = documentEntity.getCollection()
+    const document = documentEntity.getPlainObject()
+    const collection = this.getMongoDbCollection(collectionName)
+    try {
+      await collection.insertOne(document)
+    } catch (e) {
+      console.error(e)
+      return null
     }
 
-    getMongoDbCollection (collectionName: string) {
-        const mongoDbClient = MongoDBConnection.getConnection()
+    // Map to DocumentEntity
+    const documentEntityResult = await this.fromMongoDBDocumentToDocumentEntityMapper({
+      collection: collectionName,
+      documentPlainObject: document
+    }).map()
 
-        const database = mongoDbClient.db(process.env.COMMON_MONGODB_DATABASE)
-        const collection = database.collection(collectionName)
+    return documentEntityResult
+  }
 
-        return collection
+  async delete (documentEntity: DocumentEntity): Promise<Boolean> {
+    const collectionName = documentEntity.getCollection()
+    const id = documentEntity.getId()
+
+    const collection = this.getMongoDbCollection(collectionName)
+    try {
+      await collection.deleteMany({ _id: new ObjectId(id) })
+    } catch (e) {
+      console.error(e)
+      return false
     }
 
-    async create (documentEntity: DocumentEntity): Promise<DocumentEntity> {
-        
-        const collectionName = documentEntity.getCollection()
-        const document = documentEntity.getPlainObject()
-        const collection = this.getMongoDbCollection(collectionName)
-        try{
-            await collection.insertOne(document)
-        }catch(e) {
-            console.error(e)
-            return null
-        }
+    return true
+  }
 
-        // Map to DocumentEntity
-        const documentEntityResult = await this.fromMongoDBDocumentToDocumentEntityMapper({
-            collection: collectionName,
-            documentPlainObject: document
-        }).map()
+  async get (documentEntity: DocumentEntity): Promise<DocumentEntity> {
+    const collectionName = documentEntity.getCollection()
+    const id = documentEntity.getId()
 
-        return documentEntityResult
+    const collection = this.getMongoDbCollection(collectionName)
+    const result = await this.getMongoDBDocumentById(collection, id)
+
+    if (result === null) { return null }
+
+    // Map to DocumentEntity
+    const documentEntityResult = await this.fromMongoDBDocumentToDocumentEntityMapper({
+      collection: collectionName,
+      documentPlainObject: result
+    }).map()
+
+    return documentEntityResult
+  }
+
+  private async getMongoDBDocumentById (collection: any, id: string): Promise<Object> {
+    let result = null
+    try {
+      result = await collection.findOne({ _id: new ObjectId(id) })
+    } catch (e) {
+      console.error(e)
+      return null
     }
 
-    async delete (documentEntity: DocumentEntity): Promise<Boolean> {
-        const collectionName = documentEntity.getCollection()
-        const id = documentEntity.getId()
+    return result
+  }
 
-        const collection = this.getMongoDbCollection(collectionName)
-        try{
-           await collection.deleteMany({'_id': new ObjectId(id)})
-        }catch(e) {
-            console.error(e)
-            return false
-        }
+  async find (findDocumentRequestValueObject: FindDocumentRequestValueObject): Promise<DocumentEntityListValueObject> {
+    const collectionName = findDocumentRequestValueObject.getCollection()
+    const criteria = findDocumentRequestValueObject.getCriteria()
 
-        return true
+    const collection = this.getMongoDbCollection(collectionName)
+
+    let result: DocumentEntityListValueObject
+    try {
+      const resultCursor = await collection.find(criteria)
+      result = await this.fromMongoDBFindToDocumentEntityListMapper({ collection: collectionName, mongoDBFindResult: resultCursor }).map()
+    } catch (e) {
+      console.error(e)
+      return null
     }
 
-    async get (documentEntity: DocumentEntity): Promise<DocumentEntity> {
-        const collectionName = documentEntity.getCollection()
-        const id = documentEntity.getId()
+    return result
+  }
 
-        const collection = this.getMongoDbCollection(collectionName)
-        const result = await this.getMongoDBDocumentById(collection, id)
-        
-        if(result === null)
-            return null
+  async patch (documentEntity: DocumentEntity): Promise<DocumentEntity> {
+    const id = documentEntity.getId()
+    const collectionName = documentEntity.getCollection()
+    const document = documentEntity.getPlainObject()
+    const collection = this.getMongoDbCollection(collectionName)
 
-        // Map to DocumentEntity
-        const documentEntityResult = await this.fromMongoDBDocumentToDocumentEntityMapper({
-            collection: collectionName,
-            documentPlainObject: result
-        }).map()
+    try {
+      await collection.updateOne({ _id: new ObjectId(id) }, {
+        $set: document
+      })
 
-        return documentEntityResult
+      const result = await this.getMongoDBDocumentById(collection, id)
+
+      if (result === null) { return null }
+
+      return await this.fromMongoDBDocumentToDocumentEntityMapper({
+        collection: collectionName,
+        documentPlainObject: result
+      }).map()
+    } catch (e) {
+      console.error(e)
+      return null
     }
-
-    private async getMongoDBDocumentById(collection: any, id: string): Promise<Object> {
-        let result = null
-        try{
-            result = await collection.findOne({'_id': new ObjectId(id)})
-        }catch(e) {
-            console.error(e)
-            return null
-        }
-        
-        return result
-    }
-
-    async find(findDocumentRequestValueObject: FindDocumentRequestValueObject): Promise<DocumentEntityListValueObject> {
-        const collectionName = findDocumentRequestValueObject.getCollection()
-        const criteria = findDocumentRequestValueObject.getCriteria()
-
-        const collection = this.getMongoDbCollection(collectionName)
-        
-        let result: DocumentEntityListValueObject
-        try{
-            const resultCursor = await collection.find(criteria)
-            result = await this.fromMongoDBFindToDocumentEntityListMapper({collection: collectionName, mongoDBFindResult: resultCursor}).map()
-        }catch(e) {
-            console.error(e)
-            return null
-        }
-
-        return result
-    }
-
-    async patch(documentEntity: DocumentEntity): Promise<DocumentEntity> {
-        const id = documentEntity.getId()
-        const collectionName = documentEntity.getCollection()
-        const document = documentEntity.getPlainObject()
-        const collection = this.getMongoDbCollection(collectionName)
-        
-        try{
-            await collection.updateOne({'_id': new ObjectId(id)}, {
-                "$set": document
-            })
-
-            const result = await this.getMongoDBDocumentById(collection, id)
-
-            if (result === null)
-                return null
-
-            return await this.fromMongoDBDocumentToDocumentEntityMapper({
-                collection: collectionName,
-                documentPlainObject: result
-            }).map()
-            
-        }catch(e) {
-            console.error(e)
-            return null
-        }
-    }
+  }
 }
 
 export { MongoDBDocumentRepository }

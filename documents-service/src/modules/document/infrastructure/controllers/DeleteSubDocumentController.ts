@@ -2,9 +2,7 @@ import { SharedController } from 'passager-backend-shared-kernel'
 import { deleteSubDocumentUseCase } from '../../application/useCases/factory'
 
 class DeleteSubDocumentController extends SharedController {
-
   public async safeInternalExecute (collection: string, parentId: string, subCollection: string, id: string): Promise<any> {
-
     const useCase = deleteSubDocumentUseCase()
     const documentDeletionResult = await useCase.execute({
       collection,
@@ -22,12 +20,12 @@ class DeleteSubDocumentController extends SharedController {
     const { collection, parentId, subCollection, id } = this.req.params
 
     const useCase = deleteSubDocumentUseCase()
-    const documentDeletionResult = await useCase.execute({ 
+    const documentDeletionResult = await useCase.execute({
       collection,
-      currentUserId: this.req.user.email, 
-      parentId, 
-      subCollection, 
-      id 
+      currentUserId: this.req.user.email,
+      parentId,
+      subCollection,
+      id
     })
 
     this.success(documentDeletionResult)

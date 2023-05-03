@@ -23,6 +23,14 @@ import {
     patchDocument as patchFolderDocument
 } from './folders'
 
+import {
+    createSubDocument as createPasswordSubDocument,
+    deleteSubDocument as deletePasswordSubDocument,
+    findSubDocument as findPasswordSubDocument,
+    getSubDocument as getPasswordSubDocument,
+    patchSubDocument as patchPasswordSubDocument
+} from './folders/passwords'
+
 const eventBusRepository = new NativeEventBusRepository()
 const onGetOperationPermissions = async (type: string, name: string, payloadObject: any) => {
     try {
@@ -49,6 +57,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
             break
         
         case 'create_subdocument':
+            result = await createPasswordSubDocument(result, payloadObject)
             break
         
         case 'delete_document':
@@ -58,6 +67,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
             break
         
         case 'delete_subdocument':
+            result = await deletePasswordSubDocument(result, payloadObject)
             break
 
         case 'find_document':
@@ -67,6 +77,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
             break
         
         case 'find_subdocument':
+            result = await findPasswordSubDocument(result, payloadObject)
             break
 
         case 'get_document':
@@ -76,6 +87,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
             break
 
         case 'get_subdocument':
+            result = await getPasswordSubDocument(result, payloadObject)
             break
 
         case 'patch_document':
@@ -85,6 +97,7 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
             break
 
         case 'patch_subdocument':
+            result = await patchPasswordSubDocument(result, payloadObject)
             break
     }
     return result

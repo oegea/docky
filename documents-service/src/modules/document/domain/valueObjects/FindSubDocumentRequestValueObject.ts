@@ -1,5 +1,4 @@
 class FindSubDocumentRequestValueObject {
-
   private readonly collection: string
   private readonly parentId: string
   private readonly subCollection: string
@@ -11,9 +10,9 @@ class FindSubDocumentRequestValueObject {
     subCollection,
     criteria
   }: {
-    collection: string,
-    parentId: string,
-    subCollection: string,
+    collection: string
+    parentId: string
+    subCollection: string
     criteria: object
   }) {
     this.collection = collection
@@ -28,8 +27,8 @@ class FindSubDocumentRequestValueObject {
 
   getCriteria (): object {
     return this.criteria
-  } 
-  
+  }
+
   getParentId (): string {
     return this.parentId
   }
@@ -37,7 +36,6 @@ class FindSubDocumentRequestValueObject {
   getSubCollection (): string {
     return this.subCollection
   }
-
 }
 
 export { FindSubDocumentRequestValueObject }

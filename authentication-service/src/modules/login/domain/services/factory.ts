@@ -1,7 +1,7 @@
 // Domain
-import { 
+import {
   emailSenderRepository,
-  loginRepository, 
+  loginRepository,
   randomNumberGeneratorRepository,
   tokenGeneratorRepository
 } from '../../infrastructure/repositories/factory'
@@ -14,7 +14,6 @@ const startLoginService = (): StartLoginService => new StartLoginService({
   loginRepository: loginRepository(),
   randomNumberGeneratorRepository: randomNumberGeneratorRepository()
 })
-
 
 const validateLoginService = (): ValidateLoginService => new ValidateLoginService({
   loginRepository: loginRepository(),

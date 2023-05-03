@@ -7,59 +7,59 @@ import { FromMongoDBFindToDocumentEntityListMapper } from './FromMongoDBFindToDo
 import { FromMongoDBFindToSubDocumentEntityListMapper } from './FromMongoDBFindToSubDocumentEntityListMapper'
 
 const fromMongoDBDocumentToDocumentEntityMapper = ({
-    collection,
-    documentPlainObject
+  collection,
+  documentPlainObject
 }: {
-    collection: string,
-    documentPlainObject: object
-}) => new FromMongoDBDocumentToDocumentEntityMapper({collection, documentEntity, documentPlainObject})
+  collection: string
+  documentPlainObject: object
+}) => new FromMongoDBDocumentToDocumentEntityMapper({ collection, documentEntity, documentPlainObject })
 
 const fromMongoDBSubDocumentToSubDocumentEntityMapper = ({
-    collection,
-    documentPlainObject,
-    parentId,
-    subCollection
+  collection,
+  documentPlainObject,
+  parentId,
+  subCollection
 }: {
-    collection: string,
-    documentPlainObject: object,
-    parentId: string,
-    subCollection: string
+  collection: string
+  documentPlainObject: object
+  parentId: string
+  subCollection: string
 }) => new FromMongoDBSubDocumentToSubDocumentEntityMapper({
-    collection,
-    documentPlainObject,
-    parentId,
-    subCollection,
-    subDocumentEntity
+  collection,
+  documentPlainObject,
+  parentId,
+  subCollection,
+  subDocumentEntity
 })
 
 const fromMongoDBFindToDocumentEntityListMapper = ({
-    collection,
-    mongoDBFindResult
-} : {
-    collection: string,
-    mongoDBFindResult : any
+  collection,
+  mongoDBFindResult
+}: {
+  collection: string
+  mongoDBFindResult: any
 }) => new FromMongoDBFindToDocumentEntityListMapper({
-    collection,
-    mongoDBFindResult,
-    fromMongoDBDocumentToDocumentEntityMapper
+  collection,
+  mongoDBFindResult,
+  fromMongoDBDocumentToDocumentEntityMapper
 })
 
 const fromMongoDBFindToSubDocumentEntityListMapper = ({
-    collection,
-    parentId,
-    subCollection,
-    mongoDBFindResult
-} : {
-    collection: string,
-    parentId: string,
-    subCollection: string,
-    mongoDBFindResult : Array<object>
+  collection,
+  parentId,
+  subCollection,
+  mongoDBFindResult
+}: {
+  collection: string
+  parentId: string
+  subCollection: string
+  mongoDBFindResult: object[]
 }) => new FromMongoDBFindToSubDocumentEntityListMapper({
-    collection,
-    parentId,
-    subCollection,
-    mongoDBFindResult,
-    fromMongoDBSubDocumentToSubDocumentEntityMapper
+  collection,
+  parentId,
+  subCollection,
+  mongoDBFindResult,
+  fromMongoDBSubDocumentToSubDocumentEntityMapper
 })
 
 export { fromMongoDBDocumentToDocumentEntityMapper, fromMongoDBSubDocumentToSubDocumentEntityMapper, fromMongoDBFindToDocumentEntityListMapper, fromMongoDBFindToSubDocumentEntityListMapper }

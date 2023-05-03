@@ -17,10 +17,10 @@ const loginRepository = (): LoginRepository => new MongoDBLoginRepository()
 const randomNumberGeneratorRepository = (): RandomNumberGeneratorRepository => new NativeRandomNumberGeneratorRepository()
 const tokenGeneratorRepository = (): TokenGeneratorRepository => new JwtTokenGeneratorRepository()
 
-export { 
-    emailSenderRepository, 
-    emailValidatorRepository, 
-    loginRepository, 
-    randomNumberGeneratorRepository,
-    tokenGeneratorRepository
+export {
+  emailSenderRepository,
+  emailValidatorRepository,
+  loginRepository,
+  randomNumberGeneratorRepository,
+  tokenGeneratorRepository
 }
