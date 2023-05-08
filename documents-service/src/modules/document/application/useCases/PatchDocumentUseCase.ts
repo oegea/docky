@@ -2,7 +2,7 @@ import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { PatchDocumentService } from '../../domain/services/PatchDocumentService'
 import {
   userIdValueObject
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 
 class PatchDocumentUseCase {
   private readonly documentEntity: ({ id, collection, documentPlainObject }: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>

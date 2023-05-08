@@ -1,4 +1,4 @@
-import { SharedController } from 'passager-backend-shared-kernel'
+import { SharedController } from '@useful-tools/docky-shared-kernel'
 import { validateLoginUseCase } from '../../application/useCases/factory'
 
 class ValidateLoginController extends SharedController {

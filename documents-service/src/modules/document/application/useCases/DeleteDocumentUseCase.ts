@@ -2,7 +2,7 @@ import { DocumentEntity } from '../../domain/entities/DocumentEntity'
 import { DeleteDocumentService } from '../../domain/services/DeleteDocumentService'
 import {
   userIdValueObject
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 
 class DeleteDocumentUseCase {
   private readonly documentEntity: ({ id, collection, documentPlainObject }: {id: string, collection: string, documentPlainObject: object}) => Promise<DocumentEntity>

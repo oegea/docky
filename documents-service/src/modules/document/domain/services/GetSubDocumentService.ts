@@ -2,7 +2,7 @@ import { SubDocumentRepository } from '../repositories/SubDocumentRepository'
 import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 import { GetOperationPermissionsService } from '../../../permissions/domain/services/GetOperationPermissionsService'
 import { OperationPayloadPermissionsValueObject } from '../../../permissions/domain/valueObjects/OperationPayloadPermissionsValueObject'
-import { UserIdValueObject } from 'passager-backend-shared-kernel'
+import { UserIdValueObject } from '@useful-tools/docky-shared-kernel'
 
 class GetSubDocumentService {
   private readonly subDocumentRepository: SubDocumentRepository

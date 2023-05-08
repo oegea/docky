@@ -1,4 +1,4 @@
-import {NativeEventBusRepository} from 'documents-service/dist'
+import {NativeEventBusRepository} from '@useful-tools/docky-documents-service/dist'
 
 const USERS_COLLECTION_NAME = 'users'
 const USER_FIELDS = ['id', 'displayName', 'email', 'initialized', 'photoURL', 'privateKey']

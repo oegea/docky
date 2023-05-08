@@ -2,7 +2,7 @@ import { FindSubDocumentRequestValueObject } from '../../domain/valueObjects/Fin
 import { FindSubDocumentService } from '../../domain/services/FindSubDocumentService'
 import {
   userIdValueObject
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 
 class FindSubDocumentUseCase {
   private readonly findSubDocumentRequestValueObject: ({

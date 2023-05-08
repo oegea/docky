@@ -8,7 +8,7 @@ import { GetDocumentController } from './GetDocumentController'
 import { GetSubDocumentController } from './GetSubDocumentController'
 import { PatchDocumentController } from './PatchDocumentController'
 import { PatchSubDocumentController } from './PatchSubDocumentController'
-import { SharedController } from 'passager-backend-shared-kernel'
+import { SharedController } from '@useful-tools/docky-shared-kernel'
 
 const createDocumentController = (req, res): SharedController => new CreateDocumentController(req, res)
 const createSubDocumentController = (req, res): SharedController => new CreateSubDocumentController(req, res)

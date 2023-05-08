@@ -5,9 +5,11 @@ import { NativeEventBusRepository } from './infrastructure/repositories/NativeEv
 import { EventBusRepository, TYPE_COMMAND, TYPE_QUERY } from './domain/repositories/EventBusRepository'
 import { userIdValueObject } from './domain/valueObjects/factory'
 import { UserIdValueObject } from './domain/valueObjects/UserIdValueObject'
+import { loadConfig } from './infrastructure/loadConfig'
 export { 
     EventBusRepository,
     expressValidateTokenMiddleware, 
+    loadConfig,
     MongoDBConnection, 
     NativeEventBusRepository,
     SharedController ,

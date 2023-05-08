@@ -1,5 +1,5 @@
 import { OperationPayloadPermissionsValueObject } from './OperationPayloadPermissionsValueObject'
-import { UserIdValueObject } from 'passager-backend-shared-kernel'
+import { UserIdValueObject } from '@useful-tools/docky-shared-kernel'
 
 const operationPayloadPermissionsValueObject = async ({
   collection,

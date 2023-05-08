@@ -8,9 +8,8 @@ export const expressValidateTokenMiddleware = (req, res, next) => {
 
   jwt.verify(token, process.env.COMMON_TOKEN_SECRET as string, (err: any, user: any) => {
 
-    if (err) return res.sendStatus(403)
-
-    req.user = user
+    if (err) req.user = null
+    else req.user = user
 
     next()
   })

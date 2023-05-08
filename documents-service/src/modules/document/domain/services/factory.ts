@@ -19,7 +19,7 @@ import { getOperationPermissionsService } from '../../../permissions/domain/serv
 import { operationPayloadPermissionsValueObject } from '../../../permissions/domain/valueObjects/factory'
 import {
   NativeEventBusRepository
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 
 const createDocumentService = (): CreateDocumentService => new CreateDocumentService({
   documentRepository: documentRepository(),

@@ -26,17 +26,17 @@ class StartLoginRequestValueObject {
   }
 
   emailValidationIsEnabled (): boolean {
-    return (process.env.PASS_AUTH_LIMIT_ACCESS_BY_EMAIL === 'true')
+    return (process.env.AUTH_LIMIT_ACCESS_BY_EMAIL === 'true')
   }
 
   emailIsSpecificallyAllowed (): boolean {
-    const allowedEmails = process.env.PASS_AUTH_ALLOWED_EMAILS.split(CONFIG_SPLIT_MARK)
+    const allowedEmails = process.env.AUTH_ALLOWED_EMAILS.split(CONFIG_SPLIT_MARK)
     const foundEmails = allowedEmails.find((allowedEmail) => allowedEmail === this.getEmail())
     return (foundEmails !== undefined)
   }
 
   emailHasAllowedDomain (): void {
-    const allowedDomains = process.env.PASS_AUTH_ALLOWED_DOMAINS.split(CONFIG_SPLIT_MARK)
+    const allowedDomains = process.env.AUTH_ALLOWED_DOMAINS.split(CONFIG_SPLIT_MARK)
     const currentDomain = this.getDomainFromEmail()
 
     const foundDomains = allowedDomains.find((domain) => domain === currentDomain)

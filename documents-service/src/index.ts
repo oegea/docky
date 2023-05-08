@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv'
+
 import express from 'express'
 import {
   createDocumentController,
@@ -16,12 +16,12 @@ import {
 import {
   EventBusRepository,
   expressValidateTokenMiddleware,
+  loadConfig,
   NativeEventBusRepository,
   TYPE_COMMAND,
   TYPE_QUERY
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 
-dotenv.config({ path: '../.env' })
 const app = express()
 
 app.use(expressValidateTokenMiddleware)
@@ -125,14 +125,15 @@ const setupEvents = async () => {
   })
 }
 
-const start = async () => await setupEvents().then(() => app.listen(process.env.DOCS_PORT, () => {
+const startDocumentsService = async () => await setupEvents().then(() => app.listen(process.env.DOCS_PORT, () => {
   console.log(`Documents service is running on port ${process.env.DOCS_PORT}`)
 }))
 
 export {
   EventBusRepository,
+  loadConfig,
   NativeEventBusRepository,
-  start,
+  startDocumentsService,
   TYPE_COMMAND,
-  TYPE_QUERY
+  TYPE_QUERY,
 }

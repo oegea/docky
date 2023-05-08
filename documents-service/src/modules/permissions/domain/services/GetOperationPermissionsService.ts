@@ -1,6 +1,6 @@
 import {
   EventBusRepository
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 import { OperationPayloadPermissionsValueObject } from '../valueObjects/OperationPayloadPermissionsValueObject'
 
 class GetOperationPermissionsService {

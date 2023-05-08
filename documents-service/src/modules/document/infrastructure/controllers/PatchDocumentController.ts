@@ -1,4 +1,4 @@
-import { SharedController } from 'passager-backend-shared-kernel'
+import { SharedController } from '@useful-tools/docky-shared-kernel'
 import { patchDocumentUseCase } from '../../application/useCases/factory'
 
 class PatchDocumentController extends SharedController {

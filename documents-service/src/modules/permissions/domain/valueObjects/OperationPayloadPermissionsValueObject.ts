@@ -1,4 +1,4 @@
-import { UserIdValueObject } from 'passager-backend-shared-kernel'
+import { UserIdValueObject } from '@useful-tools/docky-shared-kernel'
 
 class OperationPayloadPermissionsValueObject {
   private readonly collection: string

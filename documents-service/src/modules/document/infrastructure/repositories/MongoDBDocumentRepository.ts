@@ -7,7 +7,7 @@ import { FromMongoDBDocumentToDocumentEntityMapper } from '../mapper/FromMongoDB
 import { FromMongoDBFindToDocumentEntityListMapper } from '../mapper/FromMongoDBFindToDocumentEntityListMapper'
 // Infrastructure
 import { ObjectId } from 'mongodb'
-import { MongoDBConnection } from 'passager-backend-shared-kernel'
+import { MongoDBConnection } from '@useful-tools/docky-shared-kernel'
 
 class MongoDBDocumentRepository implements DocumentRepository {
   private readonly fromMongoDBDocumentToDocumentEntityMapper: ({ collection, documentPlainObject }: { collection: string, documentPlainObject: object }) => FromMongoDBDocumentToDocumentEntityMapper

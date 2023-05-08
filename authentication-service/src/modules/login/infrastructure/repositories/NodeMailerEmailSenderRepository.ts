@@ -6,14 +6,14 @@ import nodemailer from 'nodemailer'
 class NodeMailerEmailSenderRepository implements EmailSenderRepository {
   async send (to: string, subject: string, text: string): Promise<boolean> {
     const transport = nodemailer.createTransport({
-      host: process.env.PASS_AUTH_SMTP_HOST,
-      port: process.env.PASS_AUTH_SMTP_PORT,
+      host: process.env.AUTH_SMTP_HOST,
+      port: process.env.AUTH_SMTP_PORT,
       auth: {
-        user: process.env.PASS_AUTH_SMTP_USER,
-        pass: process.env.PASS_AUTH_SMTP_PASSWORD
+        user: process.env.AUTH_SMTP_USER,
+        pass: process.env.AUTH_SMTP_PASSWORD
       }
     })
-    const sender = process.env.PASS_AUTH_SMTP_SENDER
+    const sender = process.env.AUTH_SMTP_SENDER
 
     return await new Promise((resolve/*, reject */) => {
       const mailOptions = {

@@ -2,7 +2,7 @@ import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 import { PatchSubDocumentService } from '../../domain/services/PatchSubDocumentService'
 import {
   userIdValueObject
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 
 class PatchSubDocumentUseCase {
   private readonly subDocumentEntity: ({ collection, documentPlainObject, id, parentId, subCollection }: { collection: string, documentPlainObject: object, id: string, parentId: string, subCollection: string }) => Promise<SubDocumentEntity>

@@ -1,4 +1,4 @@
-import { SharedController } from 'passager-backend-shared-kernel'
+import { SharedController } from '@useful-tools/docky-shared-kernel'
 import { deleteSubDocumentUseCase } from '../../application/useCases/factory'
 
 class DeleteSubDocumentController extends SharedController {

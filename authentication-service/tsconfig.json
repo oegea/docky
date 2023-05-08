@@ -10,6 +10,6 @@
     "include": ["src/**/*"],
     "lib": ["es2015"],
     "references": [
-        { "passager-backend-shared-kernel": "../shared" }
+        { "@useful-tools/docky-shared-kernel": "../shared" }
     ]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "authentication-service",
+  "name": "@useful-tools/docky-authentication-service",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
@@ -9,17 +9,16 @@
     "build": "clear && echo ⌛️ Compiling code... && tsc && echo ✅ Build completed successfully! && echo 💻 Start it by running npm run start:background",
     "test": "jest",
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix",
-    "preinstall": "npm link ../shared"
+    "lint:fix": "eslint src/**/*.ts --fix"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@useful-tools/docky-shared-kernel": "^1.0.0",
     "@types/express": "^4.17.13",
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.4",
     "deep-email-validator": "^0.1.21",
-    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.9.1",

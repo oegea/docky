@@ -1,4 +1,4 @@
-import { NativeEventBusRepository } from 'documents-service/dist'
+import { NativeEventBusRepository } from '@useful-tools/docky-documents-service/dist'
 
 const FOLDERS_COLLECTION_NAME = 'folders'
 const PASSWORDS_COLLECTION_NAME = 'passwords'

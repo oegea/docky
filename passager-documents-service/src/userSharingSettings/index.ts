@@ -1,4 +1,4 @@
-import { NativeEventBusRepository } from 'documents-service/dist'
+import { NativeEventBusRepository } from '@useful-tools/docky-documents-service/dist'
 
 const USER_SHARING_SETTINGS_COLLECTION_NAME = 'userSharingSettings'
 const USER_SHARING_SETTINGS_FIELDS = ['id', 'email', 'publicKey']

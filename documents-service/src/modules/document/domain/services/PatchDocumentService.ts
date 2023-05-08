@@ -2,7 +2,7 @@ import { DocumentEntity } from '../entities/DocumentEntity'
 import { DocumentRepository } from '../repositories/DocumentRepository'
 import { GetOperationPermissionsService } from '../../../permissions/domain/services/GetOperationPermissionsService'
 import { OperationPayloadPermissionsValueObject } from '../../../permissions/domain/valueObjects/OperationPayloadPermissionsValueObject'
-import { UserIdValueObject } from 'passager-backend-shared-kernel'
+import { UserIdValueObject } from '@useful-tools/docky-shared-kernel'
 
 class PatchDocumentService {
   private readonly documentRepository: DocumentRepository

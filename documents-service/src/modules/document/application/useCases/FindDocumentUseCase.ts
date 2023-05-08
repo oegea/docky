@@ -2,7 +2,7 @@ import { FindDocumentRequestValueObject } from '../../domain/valueObjects/FindDo
 import { FindDocumentService } from '../../domain/services/FindDocumentService'
 import {
   userIdValueObject
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 
 class FindDocumentUseCase {
   private readonly findDocumentRequestValueObject: ({ collection, criteria }: {collection: string, criteria: object}) => Promise<FindDocumentRequestValueObject>

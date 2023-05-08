@@ -7,7 +7,7 @@ import { FindSubDocumentRequestValueObject } from '../../domain/valueObjects/Fin
 import { FromMongoDBFindToSubDocumentEntityListMapper } from '../mapper/FromMongoDBFindToSubDocumentEntityListMapper'
 // Infrastructure
 import { ObjectId } from 'mongodb'
-import { MongoDBConnection } from 'passager-backend-shared-kernel'
+import { MongoDBConnection } from '@useful-tools/docky-shared-kernel'
 
 class MongoDBSubDocumentRepository implements SubDocumentRepository {
   private readonly fromMongoDBFindToSubDocumentEntityListMapper: ({

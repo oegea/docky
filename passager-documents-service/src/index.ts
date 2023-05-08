@@ -1,4 +1,5 @@
-import {start, NativeEventBusRepository, TYPE_QUERY} from 'documents-service/dist'
+import * as dotenv from 'dotenv'
+import {loadConfig, startDocumentsService, NativeEventBusRepository, TYPE_QUERY} from '@useful-tools/docky-documents-service/dist'
 import { 
     createDocument as createUserDocument,
     deleteDocument as deleteUserDocument,
@@ -39,12 +40,39 @@ import {
     patchSubDocument as patchPasswordSubDocument
 } from './folders/passwords'
 
+dotenv.config({ path: '../.env' })
+
+loadConfig({
+    commonAppName: process.env.COMMON_APP_NAME,
+    commonOrganizationName: process.env.COMMON_ORGANIZATION_NAME,
+    commonMongoDbConnectionString: process.env.COMMON_MONGODB_CONNECTION_STRING,
+    commonTokenSecret: process.env.COMMON_TOKEN_SECRET,
+    commonMongoDbDatabase: process.env.COMMON_MONGODB_DATABASE,
+    authCollection: process.env.AUTH_COLLECTION,
+    authPort: Number(process.env.AUTH_PORT),
+    authSmtpHost: process.env.AUTH_SMTP_HOST,
+    authSmtpPort: Number(process.env.AUTH_SMTP_PORT),
+    authSmtpUser: process.env.AUTH_SMTP_USER,
+    authSmtpPassword: process.env.AUTH_SMTP_PASSWORD,
+    authSmtpSender: process.env.AUTH_SMTP_SENDER,
+    authLimitAccessByEmail: Boolean(process.env.AUTH_LIMIT_ACCESS_BY_EMAIL),
+    authAllowedDomains: process.env.AUTH_ALLOWED_DOMAINS,
+    authAllowedEmails: process.env.AUTH_ALLOWED_EMAILS,
+    docsPort: Number(process.env.DOCS_PORT)
+})
+
 const eventBusRepository = new NativeEventBusRepository()
 const onGetOperationPermissions = async (type: string, name: string, payloadObject: any) => {
     try {
         const {
+            currentUserId,
             operationType
         } = payloadObject
+
+        if (currentUserId === null) {
+            console.log('Trying to query without being logged in')
+            return false
+        }
         
         const result = await hasPermissions(operationType, payloadObject)
         return result
@@ -117,4 +145,4 @@ const hasPermissions = async (operationType: string, payloadObject: any) => {
 }
 
 eventBusRepository.subscribe(TYPE_QUERY, 'GET_OPERATION_PERMISSIONS', onGetOperationPermissions)
-start()
+startDocumentsService()

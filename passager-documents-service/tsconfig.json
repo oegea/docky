@@ -9,10 +9,5 @@
         "strictNullChecks": true
     },
     "include": ["src/**/*"],
-    "lib": ["es2015"],
-    "references": [
-        { 
-            "documents-service": "../documents-service"
-        }
-    ]
+    "lib": ["es2015"]
 }

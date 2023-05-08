@@ -2,7 +2,7 @@ import { SubDocumentRepository } from '../repositories/SubDocumentRepository'
 import { SubDocumentEntity } from '../../domain/entities/SubDocumentEntity'
 import { GetOperationPermissionsService } from '../../../permissions/domain/services/GetOperationPermissionsService'
 import { OperationPayloadPermissionsValueObject } from '../../../permissions/domain/valueObjects/OperationPayloadPermissionsValueObject'
-import { EventBusRepository, UserIdValueObject } from 'passager-backend-shared-kernel'
+import { EventBusRepository, UserIdValueObject } from '@useful-tools/docky-shared-kernel'
 
 class DeleteSubDocumentService {
   private readonly subDocumentRepository: SubDocumentRepository

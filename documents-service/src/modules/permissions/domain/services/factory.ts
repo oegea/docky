@@ -1,7 +1,7 @@
 // Infrastructure
 import {
   NativeEventBusRepository
-} from 'passager-backend-shared-kernel'
+} from '@useful-tools/docky-shared-kernel'
 // Service
 import { GetOperationPermissionsService } from './GetOperationPermissionsService'
 

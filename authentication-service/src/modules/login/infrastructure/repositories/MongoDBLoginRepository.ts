@@ -3,13 +3,13 @@ import { LoginRepository } from '../../domain/repositories/LoginRepository'
 import { StartLoginRequestValueObject } from '../../domain/valueObjects/StartLoginRequestValueObject'
 import { ValidateLoginRequestValueObject } from '../../domain/valueObjects/ValidateLoginRequestValueObject'
 // Infrastructure
-import { MongoDBConnection } from 'passager-backend-shared-kernel'
+import { MongoDBConnection } from '@useful-tools/docky-shared-kernel'
 class MongoDBLoginRepository implements LoginRepository {
   getMongoDbAuthCollection (): any {
     const mongoDbClient = MongoDBConnection.getConnection()
 
     const database = mongoDbClient.db(process.env.COMMON_MONGODB_DATABASE)
-    const collection = database.collection(process.env.PASS_AUTH_COLLECTION)
+    const collection = database.collection(process.env.AUTH_COLLECTION)
 
     return collection
   }
