@@ -85,6 +85,7 @@ const onGetOperationPermissions = async (type: string, name: string, payloadObje
     }
 }
 
+const eventBusRepository = new NativeEventBusRepository()
 eventBusRepository.subscribe(TYPE_QUERY, 'GET_OPERATION_PERMISSIONS', onGetOperationPermissions)
 ```
 
