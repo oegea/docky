@@ -4,11 +4,11 @@
 ![Code Size](https://shields.io/github/languages/code-size/oegea/docky) 
 ![Last Commit](https://shields.io/github/last-commit/oegea/docky)
 
-## About @useful-tools
+## About @useful-tools
 
 This is part of [@useful-tools](https://github.com/oegea/useful-tools), a set of NPM packages intended to provide quick-to-learn and to use tools to build javascript applications.
 
-## About Docky
+## About Docky
 
 Docky are a set of NPM packages which allow to quickly build a fully-functional REST API without needing to invest time on setting up specific endpoint and operations.
 
@@ -18,7 +18,7 @@ Additionally, an `authentication` service is offered to generate jwt tokens afte
 
 All of this, offering an extensible mechanism that allows to define wethever an operation is authorized or not. 
 
-## How to use it
+## How to use it
 
 Install required packages by running:
 
