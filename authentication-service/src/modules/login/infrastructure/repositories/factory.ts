@@ -6,7 +6,7 @@ import { RandomNumberGeneratorRepository } from '../../domain/repositories/Rando
 import { TokenGeneratorRepository } from '../../domain/repositories/TokenGeneratorRepository'
 // Infrastructure repositories
 import { DeepEmailValidatorRepository } from './DeepEmailValidatorRepository'
-import { MongoDBLoginRepository } from './MongoDbLoginRepository'
+import { MongoDBLoginRepository } from './MongoDBLoginRepository'
 import { NativeRandomNumberGeneratorRepository } from './NativeRandomNumberGeneratorRepository'
 import { NodeMailerEmailSenderRepository } from './NodeMailerEmailSenderRepository'
 import { JwtTokenGeneratorRepository } from './JwtTokenGeneratorRepository'
