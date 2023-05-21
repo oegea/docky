@@ -36,6 +36,8 @@ class SharedController {
     }
 
     protected error(message?: any): void {
+      if (process.env.NODE_ENV === 'development')
+        console.dir(message)
       this.res.status(500).json({success: false, message})
     }
   }
