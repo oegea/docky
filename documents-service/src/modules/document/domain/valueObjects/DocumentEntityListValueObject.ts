@@ -7,7 +7,7 @@ class DocumentEntityListValueObject {
     this.documents = []
   }
 
-  addDocument ({ document }: {document: DocumentEntity}): void {
+  addDocument ({ document }: {document: DocumentEntity}): void {
     this.documents.push(document)
   }
 
