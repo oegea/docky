@@ -39,8 +39,7 @@ loadConfig({
     authSmtpSender: process.env.AUTH_SMTP_SENDER,
     authLimitAccessByEmail: Boolean(process.env.AUTH_LIMIT_ACCESS_BY_EMAIL),
     authAllowedDomains: process.env.AUTH_ALLOWED_DOMAINS,
-    authAllowedEmails: process.env.AUTH_ALLOWED_EMAILS,
-    docsPort: Number(process.env.DOCS_PORT)
+    authAllowedEmails: process.env.AUTH_ALLOWED_EMAILS
 })
 
 startAuthenticationService()

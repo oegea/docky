@@ -2,7 +2,7 @@
 import express from 'express'
 
 
-import { setupHttpEntryPoints } from './httpEntrypoints'
+import { setupHttpEntryPoints } from './httpEntryPoints'
 import { setupEventEntryPoints } from './eventBusEntryPoints'
 
 import {
