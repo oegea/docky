@@ -1,6 +1,6 @@
 {
   "name": "@useful-tools/docky-documents-service",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -9,12 +9,15 @@
     "build": "clear && echo ⌛️ Compiling code... && tsc && echo ✅ Build completed successfully! && echo 💻 Start it by running npm run start:background",
     "test": "jest",
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix"
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "release:patch": "rm -rf ./package-lock.json && rm -rf ./node_modules && rm -rf dist && npm i && npm run build && npm version patch && npm publish",
+    "release:minor": "rm -rf ./package-lock.json && rm -rf ./node_modules && rm -rf dist && npm i && npm run build && npm version minor && npm publish",
+    "release:major": "rm -rf ./package-lock.json && rm -rf ./node_modules && rm -rf dist && npm i && npm run build && npm version major && npm publish"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@useful-tools/docky-shared-kernel": "^1.0.2",
+    "@useful-tools/docky-shared-kernel": "^1.1.0",
     "@types/express": "^4.17.13",
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.4",
