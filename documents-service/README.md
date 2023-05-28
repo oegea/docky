@@ -61,39 +61,43 @@ npm install @useful-tools/documents-service
 
 # How to use
 
+## Import required 
+
 First, it is needed to import some methods and constants:
 
 ```javascript
-import {loadConfig, startDocumentsService, NativeEventBusRepository, TYPE_QUERY} from '@useful-tools/docky-documents-service/dist'
+import {loadConfig, startDocumentsService, NativeEventBusRepository, TYPE_QUERY} from '@useful-tools/docky-documents-service/dist/index.js'
 ```
 
-Then, it is needed to load configuration parameters by using the `loadConfig` method:
+## Load configuration parameters
+
+Before starting the server, it is needed to load configuration parameters by using the `loadConfig` method:
 
 ```javascript
 loadConfig({
-    commonAppName: process.env.COMMON_APP_NAME,
-    commonOrganizationName: process.env.COMMON_ORGANIZATION_NAME,
-    commonMongoDbConnectionString: process.env.COMMON_MONGODB_CONNECTION_STRING,
-    commonTokenSecret: process.env.COMMON_TOKEN_SECRET,
-    commonMongoDbDatabase: process.env.COMMON_MONGODB_DATABASE,
-    authCollection: process.env.AUTH_COLLECTION,
-    authPort: Number(process.env.AUTH_PORT),
-    authSmtpHost: process.env.AUTH_SMTP_HOST,
-    authSmtpPort: Number(process.env.AUTH_SMTP_PORT),
-    authSmtpUser: process.env.AUTH_SMTP_USER,
-    authSmtpPassword: process.env.AUTH_SMTP_PASSWORD,
-    authSmtpSender: process.env.AUTH_SMTP_SENDER,
-    authLimitAccessByEmail: Boolean(process.env.AUTH_LIMIT_ACCESS_BY_EMAIL),
-    authAllowedDomains: process.env.AUTH_ALLOWED_DOMAINS,
-    authAllowedEmails: process.env.AUTH_ALLOWED_EMAILS,
-    docsPort: Number(process.env.DOCS_PORT)
+    commonAppName: 'My App Name',
+    commonOrganizationName: 'My organization name',
+    commonMongoDbConnectionString: 'mongodb connection string',
+    commonTokenSecret: 'Authentication secret token with which jwt signature can be verified',
+    commonMongoDbDatabase: 'MongoDB database name',
+    docsPort: Number(3002)
 })
 ```
+Please refer to the following table to know which configuration parameters are available:
 
-Importing these parameters from an .env file is encouraged.
-Some of these parameters are required by the authentication service, however although them are not required by the documents service, it is needed to include them when calling the `loadConfig` method.
+| Parameter | Type | Description |
+| --- | --- | --- |
+| commonAppName | `string` | Name of the app. |
+| commonOrganizationName | `string` | Name of the organization that hosts the app. May be the same as the app name, or may be your own name if you publish the app as an independent developer. |
+| commonMongoDbConnectionString | `string` | Connection string to connect to the MongoDB database. |
+| commonTokenSecret | `string` | Secret token with which jwt signature can be verified, it is important to be sure that it matches with the authentication service configuration. Leave it as undefined if you do not want to use the built-in authentication service. |
+| commonMongoDbDatabase | `string` | Name of the MongoDB database. |
+| docsPort | `number` | Port in which the documents service will be listening. |
 
-Then, it is needed to start the documents service by calling the `startDocumentsService` method:
+
+## Start the server
+
+Once the configuration is loaded, start the server by using the `startDocumentsService` method:
 
 ```javascript
 startDocumentsService()
