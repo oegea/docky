@@ -1,6 +1,6 @@
 {
   "name": "@useful-tools/docky-shared-kernel",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/src/index.js",
   "scripts": {
@@ -9,9 +9,9 @@
     "test": "jest",
     "lint": "eslint",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "release:patch": "rm -rf dist && npm run build && npm version patch && npm publish",
-    "release:minor": "rm -rf dist && npm run build && npm version minor && npm publish",
-    "release:major": "rm -rf dist && npm run build && npm version major && npm publish"
+    "release:patch": "rm -rf ./package-lock.json && rm -rf ./node_modules && rm -rf dist && npm i && npm run build && npm version patch && npm publish",
+    "release:minor": "rm -rf ./package-lock.json && rm -rf ./node_modules && rm -rf dist && npm i && npm run build && npm version minor && npm publish",
+    "release:major": "rm -rf ./package-lock.json && rm -rf ./node_modules && rm -rf dist && npm i && npm run build && npm version major && npm publish"
   },
   "author": "",
   "license": "ISC",
