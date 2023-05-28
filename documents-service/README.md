@@ -271,7 +271,7 @@ const result = await eventBusRepository.query('GET_DOCUMENT', {
 const document = result[0]
 ```
 
-## Get a specific subdocument
+## Get a specific subdocument
 
 `GET_SUBDOCUMENT`query can be used to get a specific subdocument by its id. The following example shows how to invoke the query by using the event bus:
 
