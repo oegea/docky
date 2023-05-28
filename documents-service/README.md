@@ -12,7 +12,7 @@ Currently, only MongoDB is supported as database to store documents. However, as
 
 # Main concepts
 
-## Documents
+## Documents
 
 A document is a JSON object stored in the database base. Every document has an automatically generated unique id, and belongs to a collection of the database.
 Generally, a collection corresponds to a table in a relational database, or to a collection in a non-relational database, and a document is represented in the database as a row of a table or a document of a collection.
