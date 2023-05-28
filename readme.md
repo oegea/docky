@@ -12,7 +12,7 @@ This is part of [@useful-tools](https://github.com/oegea/useful-tools), a set of
 
 Docky are a set of NPM packages which allow to quickly build a fully-functional REST API without needing to invest time on setting up specific endpoint and operations.
 
-Instead of that, it brings a Firebase-like approach, offering a `documents` service through which perform CRUD operations on a non-relational database.
+Instead of that, it brings a Firebase-like approach, offering a `documents` service through which perform CRUD operations on a database.
 
 Additionally, an `authentication` service is offered to generate jwt tokens after validating the user's e-mail ownership.
 
@@ -21,7 +21,7 @@ All of this, offering extensible mechanisms to customize the service to meet the
 ## Main components
 
 * [@useful-tools/authentication-service](./authentication-service/) - Offers a basic authentication flow, in which the user is required to validate his e-mail address by confirming a code sent to it. Once a user is logged, a JWT token is signed and provieded to the client. This is an optional component, and is not required in case the final application does not need to authenticate users, or in case a third-party authentication service is preferred to manage the authentication of the users.
-* [@useful-tools/documents-service](./documents-service/) - Offers a set of endpoints to perform CRUD operations on a non-relational database. It is the core component of Docky. The documents service offers the possibility to extend the default behavior of the endpoints by defining when an operation is authorized or denied, additionally it is possible to add custom Express middlewares or add custom endpoints by interacting with the Express app object.
+* [@useful-tools/documents-service](./documents-service/) - Offers a set of endpoints to perform CRUD operations on a database. It is the core component of Docky. The documents service offers the possibility to extend the default behavior of the endpoints by defining when an operation is authorized or denied, additionally it is possible to add custom Express middlewares or add custom endpoints by interacting with the Express app object.
 
 ## Install and running it
 
