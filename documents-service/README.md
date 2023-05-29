@@ -1,7 +1,7 @@
 # Docky documentation
 
-- [Go back](../readme.md)
-- [Docky authenticadtion service](../authentication-service/README.md)
+- [Home](../readme.md)
+- [Docky authentication service](../authentication-service/README.md)
 - [Docky documents service](../documents-service/README.md)
 
 # What is docky documents service
