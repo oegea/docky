@@ -1,3 +1,5 @@
+- [Go back](../README.md)
+
 # What is docky authentication service
 
 Docky authentication service is a library to quickly provide an REST API to authenticate users and log them in.
