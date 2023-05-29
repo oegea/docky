@@ -1,4 +1,8 @@
-- [Go back](../README.md)
+# Docky documentation
+
+- [Go back](../readme.md)
+- [Docky authenticadtion service](../authentication-service/README.md)
+- [Docky documents service](../documents-service/README.md)
 
 # What is docky documents service
 
