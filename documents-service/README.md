@@ -66,8 +66,6 @@ The following example shows how to create a basic `docky` service with plain jav
 ```javascript
 import {loadConfig, startDocumentsService, NativeEventBusRepository, TYPE_QUERY} from '@useful-tools/docky-documents-service/dist/index.js'
 
-import { baseConfig } from './defaultConfig.js'
-
 loadConfig({
     commonAppName: 'Random app name',
     commonOrganizationName: 'Random organization name',
