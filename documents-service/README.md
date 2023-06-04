@@ -432,9 +432,3 @@ setupExpressService()
 ```
 
 This method should be called only when it is required, and must be executed after any `addMiddleware` statement.
-
-# Projects using Docky
-
-There are some projects that use Docky as a base to build their own services. You can check them out to see how Docky is used in real projects:
-
-* [Passager's REST API](https://github.com/oegea/passager-password-manager/tree/main/backend)

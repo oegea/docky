@@ -32,6 +32,12 @@ Please refer to the documentation of each package to know how to use it:
 * [@useful-tools/authentication-service](./authentication-service/)
 * [@useful-tools/documents-service](./documents-service/)
 
+# Projects using Docky
+
+There are some projects that use Docky as a base to build their own services. You can check them out to see how Docky is used in real projects:
+
+* [Passager's REST API](https://github.com/oegea/passager-password-manager/tree/main/backend)
+
 ## About @useful-tools
 
 This is part of [@useful-tools](https://github.com/oegea/useful-tools), a set of NPM packages intended to provide quick-to-learn and to use tools to build javascript applications.
