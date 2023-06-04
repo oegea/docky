@@ -16,6 +16,10 @@ import {
 
 const app = express()
 
+app.use(expressValidateTokenMiddleware)
+app.use(expressEnableCorsMiddleware)
+app.use(express.json())
+
 const addMiddleware = (middlewareFunction: any): void => {
   app.use(middlewareFunction)
 }
@@ -25,10 +29,6 @@ const getExpressApp = (): express.Application => {
 }
 
 const setupExpressService = async () => {
-  app.use(expressValidateTokenMiddleware)
-  app.use(expressEnableCorsMiddleware)
-  app.use(express.json())
-  
   await setupHttpEntryPoints(app)
   await setupEventEntryPoints()
 }
