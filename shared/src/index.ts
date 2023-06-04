@@ -1,5 +1,6 @@
 import { MongoDBConnection } from './infrastructure/MongoDBConnection'
 import { expressValidateTokenMiddleware } from './infrastructure/expressValidateTokenMiddleware'
+import { expressEnableCorsMiddleware } from './infrastructure/expressEnableCorsMiddleware'
 import { SharedController } from './infrastructure/controllers/SharedController'
 import { NativeEventBusRepository } from './infrastructure/repositories/NativeEventBusRepository'
 import { EventBusRepository, TYPE_COMMAND, TYPE_QUERY } from './domain/repositories/EventBusRepository'
@@ -9,6 +10,7 @@ import { loadConfig } from './infrastructure/loadConfig'
 export { 
     EventBusRepository,
     expressValidateTokenMiddleware, 
+    expressEnableCorsMiddleware,
     loadConfig,
     MongoDBConnection, 
     NativeEventBusRepository,

@@ -113,6 +113,7 @@ Before starting the server, it is needed to load configuration parameters by usi
 ```javascript
 loadConfig({
     commonAppName: 'My App Name',
+    commonDisableCors: false,
     commonOrganizationName: 'My organization name',
     commonMongoDbConnectionString: 'mongodb connection string',
     commonTokenSecret: 'Authentication secret token with which jwt signature can be verified',
@@ -125,6 +126,7 @@ Please refer to the following table to know which configuration parameters are a
 | Parameter | Type | Description |
 | --- | --- | --- |
 | commonAppName | `string` | Name of the app. |
+| commonDisableCors | `boolean` | True if cors should be disabled, false otherwise. CORS is enabled by default |
 | commonOrganizationName | `string` | Name of the organization that hosts the app. May be the same as the app name, or may be your own name if you publish the app as an independent developer. |
 | commonMongoDbConnectionString | `string` | Connection string to connect to the MongoDB database. |
 | commonTokenSecret | `string` | Secret token with which jwt signature can be verified, it is important to be sure that it matches with the authentication service configuration. Leave it as undefined if you do not want to use the built-in authentication service. |

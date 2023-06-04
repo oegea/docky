@@ -1,13 +1,13 @@
 
 import express from 'express'
 
-
 import { setupHttpEntryPoints } from './httpEntryPoints'
 import { setupEventEntryPoints } from './eventBusEntryPoints'
 
 import {
   EventBusRepository,
   expressValidateTokenMiddleware,
+  expressEnableCorsMiddleware,
   loadConfig,
   NativeEventBusRepository,
   TYPE_COMMAND,
@@ -15,8 +15,6 @@ import {
 } from '@useful-tools/docky-shared-kernel'
 
 const app = express()
-app.use(expressValidateTokenMiddleware)
-app.use(express.json())
 
 const addMiddleware = (middlewareFunction: any): void => {
   app.use(middlewareFunction)
@@ -27,6 +25,10 @@ const getExpressApp = (): express.Application => {
 }
 
 const setupExpressService = async () => {
+  app.use(expressValidateTokenMiddleware)
+  app.use(expressEnableCorsMiddleware)
+  app.use(express.json())
+  
   await setupHttpEntryPoints(app)
   await setupEventEntryPoints()
 }

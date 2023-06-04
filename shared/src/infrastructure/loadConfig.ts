@@ -4,6 +4,7 @@ export const loadConfig = (parameters: {
     commonMongoDbConnectionString: string,
     commonTokenSecret: string,
     commonMongoDbDatabase: string,
+    commonDisableCors: boolean,
     authCollection: string,
     authPort: number,
     authSmtpHost: string,
@@ -17,6 +18,7 @@ export const loadConfig = (parameters: {
     docsPort: number
 }): void => {
     process.env.COMMON_APP_NAME = parameters.commonAppName
+    process.env.COMMON_DISABLE_CORS = parameters.commonDisableCors ? 'true' : 'false'
     process.env.COMMON_ORGANIZATION_NAME = parameters.commonOrganizationName
     process.env.COMMON_MONGODB_CONNECTION_STRING = parameters.commonMongoDbConnectionString
     process.env.COMMON_TOKEN_SECRET = parameters.commonTokenSecret

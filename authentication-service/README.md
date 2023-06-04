@@ -31,26 +31,23 @@ import {loadConfig, startAuthenticationService} from '@useful-tools/docky-authen
 dotenv.config({ path: '../.env' })
 
 loadConfig({
-    commonAppName: process.env.COMMON_APP_NAME,
-    commonOrganizationName: process.env.COMMON_ORGANIZATION_NAME,
-    commonMongoDbConnectionString: process.env.COMMON_MONGODB_CONNECTION_STRING,
-    commonTokenSecret: process.env.COMMON_TOKEN_SECRET,
-    commonMongoDbDatabase: process.env.COMMON_MONGODB_DATABASE,
-    authCollection: process.env.AUTH_COLLECTION,
-    authPort: Number(process.env.AUTH_PORT),
-    authSmtpHost: process.env.AUTH_SMTP_HOST,
-    authSmtpPort: Number(process.env.AUTH_SMTP_PORT),
-    authSmtpUser: process.env.AUTH_SMTP_USER,
-    authSmtpPassword: process.env.AUTH_SMTP_PASSWORD,
-    authSmtpSender: process.env.AUTH_SMTP_SENDER,
-    authLimitAccessByEmail: Boolean(process.env.AUTH_LIMIT_ACCESS_BY_EMAIL),
-    authAllowedDomains: process.env.AUTH_ALLOWED_DOMAINS,
-    authAllowedEmails: process.env.AUTH_ALLOWED_EMAILS
+    commonAppName: 'My app name',
+    commonDisableCors: false, /* true to disable cors access */
+    commonOrganizationName: 'My org name',
+    commonMongoDbConnectionString: 'Connection string to mongo',
+    commonTokenSecret: 'JWT token secret',
+    commonMongoDbDatabase: 'MongoDB database name',
+    authCollection: 'Collection name to store authentication details',
+    authPort: Number(3001),
+    authSmtpHost: 'SMTP host to send emails',
+    authSmtpPort: Number(465),
+    authSmtpUser: 'SMTP user',
+    authSmtpPassword: 'SMTP password',
+    authSmtpSender: 'sender@example.com'
+    authLimitAccessByEmail: true, /* true to limit who can log in with the two following params */
+    authAllowedDomains: 'my-organization-domain.com,other-organization-domain.com',
+    authAllowedEmails: 'specific-allowed-email@gmail.com,other-allowed-email@outlook.com'
 })
 
 startAuthenticationService()
 ```
-
-This documentation is still under construction. While it is finished, you can take a look to Passager's REST API, which is built on top of Docky's authentication service:
-
-* [Passager's REST API](https://github.com/oegea/passager-password-manager/tree/main/backend)
