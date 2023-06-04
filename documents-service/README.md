@@ -1,7 +1,7 @@
 # Docky documentation
 
-- [Go back](../readme.md)
-- [Docky authenticadtion service](../authentication-service/README.md)
+- [Home](../readme.md)
+- [Docky authentication service](../authentication-service/README.md)
 - [Docky documents service](../documents-service/README.md)
 
 # What is docky documents service
@@ -65,8 +65,6 @@ The following example shows how to create a basic `docky` service with plain jav
 
 ```javascript
 import {loadConfig, startDocumentsService, NativeEventBusRepository, TYPE_QUERY} from '@useful-tools/docky-documents-service/dist/index.js'
-
-import { baseConfig } from './defaultConfig.js'
 
 loadConfig({
     commonAppName: 'Random app name',

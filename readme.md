@@ -4,13 +4,15 @@
 ![Code Size](https://shields.io/github/languages/code-size/oegea/docky) 
 ![Last Commit](https://shields.io/github/last-commit/oegea/docky)
 
-## About @useful-tools
+## Available documentation
 
-This is part of [@useful-tools](https://github.com/oegea/useful-tools), a set of NPM packages intended to provide quick-to-learn and to use tools to build javascript applications.
+- [Home](./readme.md)
+- [Docky authentication service](./authentication-service/README.md)
+- [Docky documents service](./documents-service/README.md)
 
 ## About Docky
 
-Docky are a set of NPM packages which allow to quickly build a fully-functional REST API without needing to invest time on setting up specific endpoint and operations.
+Docky is a tool to quickly build a fully-functional REST API without needing to invest time on setting up specific endpoint and operations.
 
 Instead of that, it brings a Firebase-like approach, offering a `documents` service through which perform CRUD operations on a database.
 
@@ -29,3 +31,7 @@ Please refer to the documentation of each package to know how to use it:
 
 * [@useful-tools/authentication-service](./authentication-service/)
 * [@useful-tools/documents-service](./documents-service/)
+
+## About @useful-tools
+
+This is part of [@useful-tools](https://github.com/oegea/useful-tools), a set of NPM packages intended to provide quick-to-learn and to use tools to build javascript applications.
