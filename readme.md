@@ -37,6 +37,7 @@ Please refer to the documentation of each package to know how to use it:
 There are some projects that use Docky as a base to build their own services. You can check them out to see how Docky is used in real projects:
 
 * [Passager's REST API](https://github.com/oegea/passager-password-manager/tree/main/backend)
+* [Palabrario](https://www.palabrario.es/)
 
 ## About @useful-tools
 
