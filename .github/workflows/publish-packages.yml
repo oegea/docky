@@ -1,4 +1,4 @@
-name: Build and Publish packages
+name: Publish to NPM
 on:
   push:
     branches:
@@ -53,6 +53,10 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+
+      - name: Sleep for 10 seconds
+        run: sleep 10s
+        shell: bash
 
   publish-authentication-service:
     runs-on: ubuntu-latest
