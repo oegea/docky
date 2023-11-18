@@ -41,7 +41,7 @@ jobs:
 
       - name: Publish
         run: 
-          cd shared && npm publish --verbose
+          cd shared && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -154,7 +154,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Commit changes
-        run: git add . && git commit -m "Increment adocuments-service version [skip ci]"
+        run: git add . && git commit -m "Increment documents-service version [skip ci]"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
