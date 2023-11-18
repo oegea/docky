@@ -40,9 +40,11 @@ jobs:
         run: cd shared && npm version patch -m "Increment shared-kernel version [skip ci]"
 
       - name: Publish
-        run: cd shared && npm publish
+        run: |
+          echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
+          npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Push changes
         uses: ad-m/github-push-action@master

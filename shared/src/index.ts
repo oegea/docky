@@ -7,6 +7,7 @@ import { EventBusRepository, TYPE_COMMAND, TYPE_QUERY } from './domain/repositor
 import { userIdValueObject } from './domain/valueObjects/factory'
 import { UserIdValueObject } from './domain/valueObjects/UserIdValueObject'
 import { loadConfig } from './infrastructure/loadConfig'
+//
 export { 
     EventBusRepository,
     expressValidateTokenMiddleware, 
