@@ -40,8 +40,7 @@ jobs:
         run: cd shared && npm version patch -m "Increment shared-kernel version [skip ci]"
 
       - name: Publish
-        run: |
-          echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
+        run: 
           cd shared && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -90,8 +89,7 @@ jobs:
         run: cd authentication-service && npm version patch -m "Increment authentication-service version [skip ci]"
 
       - name: Publish
-        run: |
-          echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
+        run: 
           cd authentication-service && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -140,8 +138,7 @@ jobs:
         run: cd documents-service && npm version patch -m "Increment documents-service version [skip ci]"
 
       - name: Publish
-        run: |
-          echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
+        run: 
           cd documents-service && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
