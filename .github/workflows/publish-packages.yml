@@ -1,0 +1,49 @@
+name: Build and Publish packages
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'shared/**'
+      - 'authentication-service/**'
+      - 'documents-service/**'
+
+jobs:
+  publish-shared-kernel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
+      - name: Configure Git User
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: cd shared && npm ci
+
+      - name: Build
+        run: cd shared && npm run build
+
+      - name: Increment package version
+        run: cd shared && npm version patch -m "Increment shared-kernel version [skip ci]"
+
+      - name: Publish
+        run: cd shared && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
