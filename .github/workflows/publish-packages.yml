@@ -11,6 +11,8 @@ on:
 jobs:
   publish-shared-kernel:
     runs-on: ubuntu-latest
+    env:
+      TERM: xterm
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -30,9 +32,6 @@ jobs:
 
       - name: Install Dependencies
         run: cd shared && npm ci
-
-      - name: Set TERM environment variable
-        run: export TERM=xterm
 
       - name: Build
         run: cd shared && npm run build
