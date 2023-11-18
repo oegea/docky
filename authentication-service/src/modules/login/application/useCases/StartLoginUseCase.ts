@@ -1,4 +1,4 @@
-import { StartLoginRequestValueObject } from '../../domain/valueObjects/startLoginRequestValueObject'
+import { StartLoginRequestValueObject } from '../../domain/valueObjects/StartLoginRequestValueObject'
 import { StartLoginService } from '../../domain/services/StartLoginService'
 
 class StartLoginUseCase {

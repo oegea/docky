@@ -1,6 +1,6 @@
 {
   "name": "@useful-tools/docky-documents-service",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "main": "src/index.ts",
   "scripts": {

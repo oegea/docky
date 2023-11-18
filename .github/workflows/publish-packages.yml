@@ -64,6 +64,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Pull changes
+        run: git pull
           
       - name: Configure Git User
         run: |
@@ -107,12 +110,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TERM: xterm
-    needs: publish-shared-kernel
+    needs: publish-authentication-service
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Pull changes
+        run: git pull
           
       - name: Configure Git User
         run: |
