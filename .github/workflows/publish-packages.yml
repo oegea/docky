@@ -54,3 +54,103 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+
+  publish-authentication-service:
+    runs-on: ubuntu-latest
+    env:
+      TERM: xterm
+    needs: publish-shared-kernel
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Configure Git User
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: cd authentication-service && npm ci
+
+      - name: Update shared-kernel
+        run: cd authentication-service && npm update --save @useful-tools/docky-shared-kernel
+
+      - name: Build
+        run: cd authentication-service && npm run build
+
+      - name: Increment package version
+        run: cd authentication-service && npm version patch -m "Increment authentication-service version [skip ci]"
+
+      - name: Publish
+        run: |
+          echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
+          cd authentication-service && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Commit changes
+        run: git add . && git commit -m "Increment authentication-service version [skip ci]"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+  publish-documents-service:
+    runs-on: ubuntu-latest
+    env:
+      TERM: xterm
+    needs: publish-shared-kernel
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Configure Git User
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: cd documents-service && npm ci
+
+      - name: Update shared-kernel
+        run: cd documents-service && npm update --save @useful-tools/docky-shared-kernel
+
+      - name: Build
+        run: cd documents-service && npm run build
+
+      - name: Increment package version
+        run: cd documents-service && npm version patch -m "Increment documents-service version [skip ci]"
+
+      - name: Publish
+        run: |
+          echo //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }} > .npmrc
+          cd documents-service && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Commit changes
+        run: git add . && git commit -m "Increment adocuments-service version [skip ci]"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
