@@ -1,8 +1,15 @@
 # Docky
 
-[![License](https://shields.io/badge/license-AGPL-green)](LICENSE.md)
-![Code Size](https://shields.io/github/languages/code-size/oegea/docky) 
-![Last Commit](https://shields.io/github/last-commit/oegea/docky)
+<p align="center">
+  <img src="./logo.png" alt="Docky logo" width="200" height="200">
+</p>
+
+<!-- Same badges but now centered -->
+<p align="center">
+  <a href="LICENSE"><img src="https://shields.io/badge/license-AGPL-green" alt="License"></a>
+  <img src="https://shields.io/github/languages/code-size/oegea/docky" alt="Code Size">
+  <img src="https://shields.io/github/last-commit/oegea/docky" alt="Last Commit">
+</p>
 
 ## Available documentation
 
