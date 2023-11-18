@@ -29,7 +29,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
-        run: cd shared && i
+        run: cd shared && ci
+
+      - name: Set TERM environment variable
+        run: export TERM=xterm
 
       - name: Build
         run: cd shared && npm run build
