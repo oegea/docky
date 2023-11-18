@@ -15,7 +15,7 @@ jobs:
       TERM: xterm
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           
@@ -25,9 +25,9 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
@@ -45,6 +45,9 @@ jobs:
           cd shared && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: Commit changes
+        run: git add . && git commit -m "Increment shared-kernel version [skip ci]"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
