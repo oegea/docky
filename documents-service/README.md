@@ -91,7 +91,7 @@ It is recommended to make this example work, and then follow the next sections t
 Install the package by running:
 
 ```bash
-npm install @useful-tools/documents-service
+npm install @useful-tools/docky-documents-service
 ```
 
 # How to use
