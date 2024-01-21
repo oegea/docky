@@ -17,7 +17,7 @@ This JWT token can then be used to authorize operations on the documents service
 Install the package by running:
 
 ```bash
-npm install @useful-tools/authentication-service
+npm install @useful-tools/docky-authentication-service
 ```
 
 # How to use
