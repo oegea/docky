@@ -39,7 +39,10 @@ class MongoDBLoginRepository implements LoginRepository {
         })
 
         // each document from ipLimitCollection has expirationTime, attempts and ipAddress
-        const attempts = (result?.attempts || 0)+1
+        let attempts = 1
+        if (result && result.expirationTime > Date.now()) {
+          attempts = result.attempts + 1
+        }
         if (result) {
           // Remove
           await ipLimitCollection.deleteMany({
@@ -50,7 +53,7 @@ class MongoDBLoginRepository implements LoginRepository {
         await ipLimitCollection.insertOne({
           ipAddress,
           attempts,
-          expirationTime: new Date(Date.now() + Number(process.env.AUTH_LIMIT_ATTEMPTS_PER_IP_WAIT_TIME))
+          expirationTime: Date.now() + Number(process.env.AUTH_LIMIT_ATTEMPTS_PER_IP_WAIT_TIME)
         })
       }
       
@@ -118,7 +121,7 @@ class MongoDBLoginRepository implements LoginRepository {
     }
 
     // If expirationTime is less than now, then is false
-    if (result.expirationTime < new Date()) {
+    if (result.expirationTime < Date.now()) {
       return false
     }
 
