@@ -10,6 +10,8 @@ const app = express()
 app.use(expressEnableCorsMiddleware)
   
 app.get('/login/:email', (req, res) => {
+  // get current ip
+  // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
   startLoginController(req, res).execute()
 })
 
