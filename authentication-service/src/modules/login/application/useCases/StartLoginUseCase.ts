@@ -2,23 +2,23 @@ import { StartLoginRequestValueObject } from '../../domain/valueObjects/StartLog
 import { StartLoginService } from '../../domain/services/StartLoginService'
 
 class StartLoginUseCase {
-  private readonly startLoginRequestValueObject: ({ email }: {email: string}) => Promise<StartLoginRequestValueObject>
+  private readonly startLoginRequestValueObject: ({ email, ipAddress }: {email: string, ipAddress: string}) => Promise<StartLoginRequestValueObject>
   private readonly startLoginService: StartLoginService
 
   constructor ({
     startLoginRequestValueObject,
     startLoginService
   }: {
-    startLoginRequestValueObject: ({ email }: {email: string}) => Promise<StartLoginRequestValueObject>
+    startLoginRequestValueObject: ({ email, ipAddress }: {email: string, ipAddress: string}) => Promise<StartLoginRequestValueObject>
     startLoginService: StartLoginService
   }) {
     this.startLoginRequestValueObject = startLoginRequestValueObject
     this.startLoginService = startLoginService
   }
 
-  public async execute ({ email }: {email: string}): Promise<void> {
+  public async execute ({ email, ipAddress }: {email: string, ipAddress: string}): Promise<void> {
     try {
-      const startLoginRequestValueObject = await this.startLoginRequestValueObject({ email })
+      const startLoginRequestValueObject = await this.startLoginRequestValueObject({ email, ipAddress })
       return await this.startLoginService.execute({ startLoginRequestValueObject })
     } catch (e) {
       throw e.message

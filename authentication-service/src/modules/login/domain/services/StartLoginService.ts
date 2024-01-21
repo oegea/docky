@@ -3,6 +3,8 @@ import { RandomNumberGeneratorRepository } from '../repositories/RandomNumberGen
 import { LoginRepository } from '../repositories/LoginRepository'
 import { EmailSenderRepository } from '../repositories/EmailSenderRepository'
 
+const WAIT_TIME = 3000
+
 class StartLoginService {
   private readonly emailSenderRepository: EmailSenderRepository
   private readonly loginRepository: LoginRepository
@@ -27,6 +29,21 @@ class StartLoginService {
   }: {
     startLoginRequestValueObject: StartLoginRequestValueObject
   }): Promise<void> {
+
+    // For security purposes, we'll wait sometime before returning the token
+    await new Promise((resolve) => setTimeout(resolve, WAIT_TIME))
+
+    // Are there limits by ip attempts?
+    const attempsByIp = Number(process.env.AUTH_LIMIT_ATTEMPTS_PER_IP)
+    if (attempsByIp !== undefined && Number(attempsByIp) > 0) {
+      const waitTime = process.env.AUTH_LIMIT_ATTEMPTS_PER_IP_WAIT_TIME
+      const ipAddress = startLoginRequestValueObject.getIpAddress()
+      const hasReachedLimit = await this.loginRepository.hasIpReachedLimit(ipAddress, attempsByIp)
+      if (hasReachedLimit) {
+        throw new Error('StartLoginService: reached limit of attempts by ip')
+      }
+    }
+
     // Generate a random number
     const randomNumber = await this.randomNumberGeneratorRepository.generateRandomNumber(1000000, 9999999)
     startLoginRequestValueObject.setRandomNumber(randomNumber)

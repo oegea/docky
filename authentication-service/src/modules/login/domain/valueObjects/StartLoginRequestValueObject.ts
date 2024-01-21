@@ -5,13 +5,17 @@ const CONFIG_SPLIT_MARK: string = ', '
 class StartLoginRequestValueObject {
   private readonly emailValueObject: EmailValueObject
   private randomNumber: number
+  private readonly ipAddress: string
 
   constructor ({
-    emailValueObject
+    emailValueObject,
+    ipAddress
   }: {
-    emailValueObject: EmailValueObject
+    emailValueObject: EmailValueObject,
+    ipAddress: string
   }) {
     this.emailValueObject = emailValueObject
+    this.ipAddress = ipAddress
   }
 
   async validate (): Promise<void> {
@@ -60,6 +64,10 @@ class StartLoginRequestValueObject {
 
   getDomainFromEmail (): string {
     return this.getEmail().split('@')[1] || ''
+  }
+
+  getIpAddress (): string {
+    return this.ipAddress
   }
 }
 

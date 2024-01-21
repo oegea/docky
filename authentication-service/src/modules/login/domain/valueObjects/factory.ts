@@ -19,14 +19,17 @@ const emailValueObject = async ({
 }
 
 const startLoginRequestValueObject = async ({
-  email
+  email,
+  ipAddress
 }: {
-  email: string
+  email: string,
+  ipAddress: string
 }): Promise<StartLoginRequestValueObject> => {
   const emailValueObjectInstance = await emailValueObject({ email })
 
   const startLoginRequestValueObject = new StartLoginRequestValueObject({
-    emailValueObject: emailValueObjectInstance
+    emailValueObject: emailValueObjectInstance,
+    ipAddress
   })
 
   await startLoginRequestValueObject.validate()

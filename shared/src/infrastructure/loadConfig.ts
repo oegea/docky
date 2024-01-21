@@ -16,7 +16,7 @@ export const loadConfig = (parameters: {
     authAllowedDomains: string,
     authAllowedEmails: string,
     docsPort: number,
-    authLimitAttemptsPerIp: boolean,
+    authLimitAttemptsPerIp: number,
     authLimitAttemptsWaitSeconds: number,
 }): void => {
     process.env.COMMON_APP_NAME = parameters.commonAppName
