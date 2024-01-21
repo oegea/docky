@@ -48,6 +48,13 @@ class MongoDBLoginRepository implements LoginRepository {
       return false
     }
 
+    return true
+  }
+
+  async removeCode (validateLoginRequestValueObject: ValidateLoginRequestValueObject): Promise<boolean> {
+    const email = validateLoginRequestValueObject.getEmail()
+    const collection = this.getMongoDbAuthCollection()
+
     await collection.deleteMany({
       email
     })
