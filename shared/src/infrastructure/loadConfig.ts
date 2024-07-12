@@ -18,7 +18,7 @@ export const loadConfig = (parameters: {
     docsPort: number,
     authLimitAttemptsPerIp: number,
     authLimitAttemptsWaitTime: number,
-    htmlEmailTemplate: string
+    htmlEmailTemplate: string | undefined
 }): void => {
     process.env.COMMON_APP_NAME = parameters.commonAppName
     process.env.COMMON_DISABLE_CORS = parameters.commonDisableCors ? 'true' : 'false'
