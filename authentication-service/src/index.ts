@@ -2,16 +2,17 @@ import express from 'express'
 import { startLoginController, validateLoginController } from './modules/login/infrastructure/controllers/factory'
 import {
   loadConfig,
-  expressEnableCorsMiddleware
+  expressEnableCorsMiddleware,
+  expressValidateTokenMiddleware
 } from '@useful-tools/docky-shared-kernel'
 
 const app = express()
 
+app.use(expressValidateTokenMiddleware)
 app.use(expressEnableCorsMiddleware)
+app.use(express.json())
   
 app.get('/login/:email', (req, res) => {
-  // get current ip
-  // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
   startLoginController(req, res).execute()
 })
 
