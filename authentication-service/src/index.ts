@@ -27,4 +27,12 @@ export const startAuthenticationService = async (): Promise<express.Application>
   return app
 }
 
+export const addMiddleware = (middlewareFunction: any): void => {
+  app.use(middlewareFunction)
+}
+
+export const getExpressApp = (): express.Application => {
+  return app
+}
+
 export {loadConfig}

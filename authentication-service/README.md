@@ -51,3 +51,8 @@ loadConfig({
 
 startAuthenticationService()
 ```
+# Extending the Express app
+
+The Express app can be extended by using the methods `addMiddleware` and `getExpressApp`. The first one is used to add a custom middleware to the Express app. The second one is used to get the Express app, which can be used (among other things), to add custom routes to the app.
+
+You can find some examples by looking at the [Docky documents service readme file](../documents-service/README.md).
