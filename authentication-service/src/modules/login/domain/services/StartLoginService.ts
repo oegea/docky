@@ -54,29 +54,39 @@ class StartLoginService {
 
     // Send e-mail
     const email = startLoginRequestValueObject.getEmail()
-    const isSuccessfullEmailSending = await this.emailSenderRepository.send(
-      email,
-      `Please verify your e-mail to use ${process.env.COMMON_APP_NAME}`,
+    let isSuccessfullEmailSending = false
+    if (process.env.HTML_EMAIL_TEMPLATE) {
+      isSuccessfullEmailSending = await this.emailSenderRepository.sendHtml(
+        email,
+        `Please verify your e-mail to use ${process.env.COMMON_APP_NAME}`,
+        process.env.HTML_EMAIL_TEMPLATE.replace('[code]', `${randomNumber}`)
+      )
+      return
+    } else {
+      isSuccessfullEmailSending = await this.emailSenderRepository.send(
+        email,
+        `Please verify your e-mail to use ${process.env.COMMON_APP_NAME}`,
+        `
+          Hello,
+  
+          Your code to identify on ${process.env.COMMON_APP_NAME} is ${randomNumber}.
+  
+          Thank you for using ${process.env.COMMON_APP_NAME}.
+  
+          This e-mail has been sent by ${process.env.COMMON_ORGANIZATION_NAME}.
+  
+          --
+  
+          Hola,
+  
+          Tu código para identificarte en ${process.env.COMMON_APP_NAME} es ${randomNumber}.
+  
+          Gracias por usar ${process.env.COMMON_APP_NAME}.
+  
+          Este correo electrónico ha sido enviado por ${process.env.COMMON_ORGANIZATION_NAME}.
       `
-        Hello,
-
-        Your code to identify on ${process.env.COMMON_APP_NAME} is ${randomNumber}.
-
-        Thank you for using ${process.env.COMMON_APP_NAME}.
-
-        This e-mail has been sent by ${process.env.COMMON_ORGANIZATION_NAME}.
-
-        --
-
-        Hola,
-
-        Tu código para identificarte en ${process.env.COMMON_APP_NAME} es ${randomNumber}.
-
-        Gracias por usar ${process.env.COMMON_APP_NAME}.
-
-        Este correo electrónico ha sido enviado por ${process.env.COMMON_ORGANIZATION_NAME}.
-    `
-    )
+      )
+    }
 
     if (!isSuccessfullEmailSending) { throw new Error('StartLoginService: error while sending verification email') }
   }

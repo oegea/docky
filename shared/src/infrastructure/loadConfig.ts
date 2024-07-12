@@ -18,6 +18,7 @@ export const loadConfig = (parameters: {
     docsPort: number,
     authLimitAttemptsPerIp: number,
     authLimitAttemptsWaitTime: number,
+    htmlEmailTemplate: string
 }): void => {
     process.env.COMMON_APP_NAME = parameters.commonAppName
     process.env.COMMON_DISABLE_CORS = parameters.commonDisableCors ? 'true' : 'false'
@@ -38,4 +39,5 @@ export const loadConfig = (parameters: {
     process.env.DOCS_PORT = parameters.docsPort?.toString()
     process.env.AUTH_LIMIT_ATTEMPTS_PER_IP = parameters.authLimitAttemptsPerIp?.toString()
     process.env.AUTH_LIMIT_ATTEMPTS_PER_IP_WAIT_TIME = parameters.authLimitAttemptsWaitTime?.toString()
+    process.env.HTML_EMAIL_TEMPLATE = parameters.htmlEmailTemplate
 }
