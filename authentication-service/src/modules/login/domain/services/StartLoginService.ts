@@ -55,7 +55,7 @@ class StartLoginService {
     // Send e-mail
     const email = startLoginRequestValueObject.getEmail()
     let isSuccessfullEmailSending = false
-    if (process.env.HTML_EMAIL_TEMPLATE) {
+    if (process.env.HTML_EMAIL_TEMPLATE !== undefined) {
       isSuccessfullEmailSending = await this.emailSenderRepository.sendHtml(
         email,
         `Please verify your e-mail to use ${process.env.COMMON_APP_NAME}`,
