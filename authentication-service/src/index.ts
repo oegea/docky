@@ -36,4 +36,4 @@ export const getExpressApp = (): express.Application => {
   return app
 }
 
-export {loadConfig}
+export {express, loadConfig}

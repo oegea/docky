@@ -45,6 +45,7 @@ const startDocumentsService = async (): Promise<express.Application> => {
 
 export {
   addMiddleware,
+  express,
   getExpressApp,
   setupExpressService,
   EventBusRepository,
