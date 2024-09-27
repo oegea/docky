@@ -3,16 +3,20 @@ import { EmailValueObject } from './EmailValueObject'
 class ValidateLoginRequestValueObject {
   private readonly code: number
   private readonly emailValueObject: EmailValueObject
+  private readonly sessionDetails: any
 
   constructor ({
     code,
-    emailValueObject
+    emailValueObject,
+    sessionDetails
   }: {
     code: number
-    emailValueObject: EmailValueObject
+    emailValueObject: EmailValueObject,
+    sessionDetails?: any
   }) {
     this.code = code
     this.emailValueObject = emailValueObject
+    this.sessionDetails = sessionDetails
   }
 
   async validate (): Promise<void> {
@@ -25,6 +29,10 @@ class ValidateLoginRequestValueObject {
 
   getEmail (): string {
     return this.emailValueObject.getEmail()
+  }
+
+  getSessionDetails (): any {
+    return this.sessionDetails
   }
 }
 
