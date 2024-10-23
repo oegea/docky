@@ -1,5 +1,4 @@
 interface ClientIPAddressRepository {
-    get: () => Promise<string>
+  get: () => Promise<string>
 }
 export { ClientIPAddressRepository }
-  

@@ -13,11 +13,10 @@ app.use(expressEnableCorsMiddleware)
 app.use(express.json())
 
 export const startAuthenticationService = async (): Promise<express.Application> => {
-
   app.get('/login/:email', (req, res) => {
     startLoginController(req, res).execute()
   })
-  
+
   app.get('/login/:email/validate/:code', (req, res) => {
     validateLoginController(req, res).execute()
   })
@@ -37,4 +36,4 @@ export const getExpressApp = (): express.Application => {
   return app
 }
 
-export {express, loadConfig, startLoginController, validateLoginController}
+export { express, loadConfig, startLoginController, validateLoginController }

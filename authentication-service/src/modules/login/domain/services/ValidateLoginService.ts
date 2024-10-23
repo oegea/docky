@@ -27,13 +27,15 @@ class ValidateLoginService {
     // For security purposes, we'll wait sometime before returning the token
     await new Promise((resolve) => setTimeout(resolve, WAIT_TIME))
 
-    // Should not continue if provided code and email is not valid
-    const codeIsValid = await this.loginRepository.verifyCode(validateLoginRequestValueObject)
+    if (!validateLoginRequestValueObject.shouldSkipCodeValidation()) {
+      // Should not continue if provided code and email is not valid
+      const codeIsValid = await this.loginRepository.verifyCode(validateLoginRequestValueObject)
 
-    // Remove the code from the database even if it is not valid
-    await this.loginRepository.removeCode(validateLoginRequestValueObject)
+      // Remove the code from the database even if it is not valid
+      await this.loginRepository.removeCode(validateLoginRequestValueObject)
 
-    if (!codeIsValid) { throw new Error('ValidateLoginService: received code is not valid') }
+      if (!codeIsValid) { throw new Error('ValidateLoginService: received code is not valid') }
+    }
 
     const token = this.tokenGeneratorRepository.generateToken(validateLoginRequestValueObject)
     return await token

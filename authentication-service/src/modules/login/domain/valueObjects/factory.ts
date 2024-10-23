@@ -22,7 +22,7 @@ const startLoginRequestValueObject = async ({
   email,
   ipAddress
 }: {
-  email: string,
+  email: string
   ipAddress: string
 }): Promise<StartLoginRequestValueObject> => {
   const emailValueObjectInstance = await emailValueObject({ email })
@@ -40,17 +40,20 @@ const startLoginRequestValueObject = async ({
 const validateLoginRequestValueObject = async ({
   email,
   code,
-  sessionDetails
+  sessionDetails,
+  skipCodeValidation
 }: {
   email: string
-  code: number,
+  code: number
   sessionDetails?: any
+  skipCodeValidation?: boolean
 }): Promise<ValidateLoginRequestValueObject> => {
   const emailValueObjectInstance = await emailValueObject({ email })
   const validateLoginRequestValueObject = new ValidateLoginRequestValueObject({
     code,
     emailValueObject: emailValueObjectInstance,
-    sessionDetails
+    sessionDetails,
+    skipCodeValidation
   })
 
   await validateLoginRequestValueObject.validate()

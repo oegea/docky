@@ -8,8 +8,10 @@ class ValidateLoginController extends SharedController {
 
     const number = parseInt(code)
 
+    const skipCodeValidation = this.req.skipCodeValidation === 'true'
+
     const useCase = validateLoginUseCase()
-    const token = await useCase.execute({ email, code: number, sessionDetails })
+    const token = await useCase.execute({ email, code: number, sessionDetails, skipCodeValidation })
     this.success(token)
   }
 }

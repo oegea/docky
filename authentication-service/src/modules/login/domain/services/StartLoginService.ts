@@ -29,7 +29,6 @@ class StartLoginService {
   }: {
     startLoginRequestValueObject: StartLoginRequestValueObject
   }): Promise<void> {
-
     // For security purposes, we'll wait sometime before returning the token
     await new Promise((resolve) => setTimeout(resolve, WAIT_TIME))
 

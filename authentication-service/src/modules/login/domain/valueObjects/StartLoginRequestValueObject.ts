@@ -11,7 +11,7 @@ class StartLoginRequestValueObject {
     emailValueObject,
     ipAddress
   }: {
-    emailValueObject: EmailValueObject,
+    emailValueObject: EmailValueObject
     ipAddress: string
   }) {
     this.emailValueObject = emailValueObject

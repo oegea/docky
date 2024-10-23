@@ -4,19 +4,23 @@ class ValidateLoginRequestValueObject {
   private readonly code: number
   private readonly emailValueObject: EmailValueObject
   private readonly sessionDetails: any
+  private readonly skipCodeValidation: boolean
 
   constructor ({
     code,
     emailValueObject,
-    sessionDetails
+    sessionDetails,
+    skipCodeValidation = false
   }: {
     code: number
-    emailValueObject: EmailValueObject,
+    emailValueObject: EmailValueObject
     sessionDetails?: any
+    skipCodeValidation?: boolean
   }) {
     this.code = code
     this.emailValueObject = emailValueObject
     this.sessionDetails = sessionDetails
+    this.skipCodeValidation = skipCodeValidation
   }
 
   async validate (): Promise<void> {
@@ -29,6 +33,10 @@ class ValidateLoginRequestValueObject {
 
   getEmail (): string {
     return this.emailValueObject.getEmail()
+  }
+
+  shouldSkipCodeValidation (): boolean {
+    return this.skipCodeValidation
   }
 
   getSessionDetails (): any {

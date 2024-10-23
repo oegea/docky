@@ -28,7 +28,6 @@ class MongoDBLoginRepository implements LoginRepository {
   async save (startLoginRequestValueObject: StartLoginRequestValueObject): Promise<boolean> {
     const collection = this.getMongoDbAuthCollection()
     try {
-
       const attempsByIp = Number(process.env.AUTH_LIMIT_ATTEMPTS_PER_IP)
       if (attempsByIp !== undefined && Number(attempsByIp) > 0) {
         const ipLimitCollection = this.getMongoDbIpLimitCollection()
@@ -56,7 +55,7 @@ class MongoDBLoginRepository implements LoginRepository {
           expirationTime: Date.now() + Number(process.env.AUTH_LIMIT_ATTEMPTS_PER_IP_WAIT_TIME)
         })
       }
-      
+
       await collection.deleteMany({
         email: startLoginRequestValueObject.getEmail()
       })
